@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta content="This shows CRM Steele Rose" name="description" />
+    <object th:include="fragments/head :: head" th:remove="tag"></object>
+
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="page-container-bg-solid">
+<div th:include="fragments/topmenuheader :: header"></div>
+
+<div class="panel panel-default">
+    <div th:unless="${show_client.id == null}" class="panel-heading"><h4> Client Details</h4></div>
+    <div class="panel-body">
+       <!-- <form th:object="${show_client}" th:action="@{submit_message}" action="#" method="post">-->
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="panel-heading">Client Info</div>
+                        <div class="panel-body" style="padding-left: 5px;">
+                            Name: <b th:text="*{show_client.name}" /> <br/>
+                            Contact Person: <b th:text="*{show_client.contact}" /> <br/>
+                            Telephone: <b th:text="${show_client.phone}" /> <br/>
+                            Email: <span th:text="${show_client.email}" /><br/>
+
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <form th:action="@{/submit_message}" method="post" style="max-width: 420px; margin: 0 auto;">
+                        <div class="border border-secondary rounded p-3">
+                            <div>
+                                <input type="hidden" class="form-control" name="id" th:field="*{show_client.id}"/>
+                                <p>
+                                    <input type="text" name="message" class="form-control" placeholder="Enter your comments" required autofocus/>
+                                </p>
+                                <p>
+                                    <input type="text" name="author" class="form-control" placeholder="Enter your name" required autofocus/>
+                                </p>
+                                <p class="text-center">
+                                    <input type="submit" value="Add" class="btn btn-primary" />
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                            <tr th:each="task : ${linkedComments}">
+                                <td th:text="${task.message}"></td>
+                                <td th:text="${task.author}"></td>
+                                <td th:text="${task.createdAt}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+      <!--  </form>-->
+    </div>
+</div>
+
+<!--
+<div th:include="fragments/homefooter :: footer"></div>-->
+
+</body>
+</html>

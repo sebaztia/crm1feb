@@ -60,8 +60,8 @@ public class LegacyClientController {
         return "show_legacy_client";
     }
 
-    @GetMapping("/showClientEmailForm/{id}")
-    public String showClientEmailForm(@PathVariable( value = "id") Integer id, Model model) {
+    @GetMapping("/listClientEmailForm/{id}")
+    public String listClientEmailForm(@PathVariable( value = "id") Integer id, Model model) {
 
         LegacyClient dto = legacyClientService.getLegacyClientById(id);
 

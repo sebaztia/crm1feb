@@ -3,11 +3,13 @@ package com.crm.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -24,6 +26,7 @@ public class Client implements Serializable {
     private String phone;
     @NotEmpty
     private String contact;
+    @Email
     private String email;
     private String address;
 
@@ -38,6 +41,10 @@ public class Client implements Serializable {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Comments> commentsSet;
 
     public Client() {
     }

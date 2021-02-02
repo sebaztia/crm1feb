@@ -1,20 +1,25 @@
 package com.crm.controller;
 
-import com.crm.model.CallList;
-import com.crm.model.Client;
-import com.crm.model.Company;
-import com.crm.model.Staff;
+import com.crm.config.Utility;
+import com.crm.model.*;
 import com.crm.service.ClientService;
+import com.crm.service.CommentsService;
 import com.crm.service.CompanyService;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.utility.RandomString;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ResourceNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -22,12 +27,14 @@ public class ClientController {
 
     private CompanyService companyService;
     private ClientService clientService;
-
+    private CommentsService commentsService;
+    private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
-    public ClientController(CompanyService companyService, ClientService clientService) {
+    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService) {
         this.companyService = companyService;
         this.clientService = clientService;
+        this.commentsService = commentsService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -59,7 +66,7 @@ public class ClientController {
             return "add_client";
         }
        clientService.saveClient(client);
-        return "redirect:/showClient";
+        return "redirect:/listClient";
     }
     @RequestMapping("editClient/clientSave")
     public String editSave(@ModelAttribute("client") @Valid Client client, BindingResult result, Model model) {
@@ -69,10 +76,10 @@ public class ClientController {
             return "add_client";
         }
         clientService.saveClient(client);
-        return "redirect:/showClient";
+        return "redirect:/listClient";
     }
-    @RequestMapping("/showClient")
-    public String showClient(Model model) {
+    @RequestMapping("/listClient")
+    public String listClient(Model model) {
 
         model.addAttribute("clientList", clientService.findAll());
         return "clients_list";
@@ -82,7 +89,38 @@ public class ClientController {
     public String deleteClient(@PathVariable("id") Long id) {
         clientService.deleteCompany(id);
 
-        return "redirect:/showClient";
+        return "redirect:/listClient";
+    }
+    @GetMapping("showClient/{id}")
+    public String showClient(@PathVariable(value = "id") long id, Model model) {
+
+        Client client = clientService.getClientById(id);
+        List<Comments> commentsList = commentsService.findByClient(client);
+
+        model.addAttribute("show_client", client);
+        model.addAttribute("linkedComments", commentsList);
+        return "sow_client";
+    }
+
+    @PostMapping("/submit_message")
+    public String submit_message(HttpServletRequest request, Model model) {
+        String message = request.getParameter("message");
+        logger.info("====== message: " + message);
+        String author = request.getParameter("author");
+        logger.info("====== author: " + author);
+        Long id = Long.valueOf(request.getParameter("id"));
+        logger.info("====== ididid: " + id);
+
+
+        Client client = clientService.getClientById(id);
+        Comments comments = new Comments(message, author, client);
+        commentsService.save(comments);
+        List<Comments> commentsList = commentsService.findByClient(client);
+
+        model.addAttribute("show_client", client);
+        model.addAttribute("linkedComments", commentsList);
+
+        return "sow_client";
     }
 
     /*@PostMapping("/posts/{postId}/comments")
