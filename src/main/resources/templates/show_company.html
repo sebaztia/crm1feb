@@ -35,7 +35,7 @@
     </p>
 </div>
 
-<!--<form action="#" th:action="@{showCompany}" th:object="${show_company}" method="GET">-->
+<form action="#" th:action="@{showCompany}" th:object="${show_company}" method="GET">
 
     <div class="content">
         <div class="animated fadeIn">
@@ -57,23 +57,23 @@
                                         </tr>
                                         <tr>
                                             <th> Company Name </th><!--<td>:</td>-->
-                                            <td th:text="*{show_company.name}" ></td>
+                                            <td th:text="*{name}" ></td>
                                         </tr>
                                         <tr>
                                             <th> Email </th>
-                                            <td th:text="*{show_company.email}" ></td>
+                                            <td th:text="*{email}" ></td>
                                         </tr>
                                         <tr>
                                             <th> Contact Person </th>
-                                            <td th:text="*{show_company.contact}" ></td>
+                                            <td th:text="*{contact}" ></td>
                                         </tr>
                                         <tr>
                                             <th> Telephone </th>
-                                            <td th:text="*{show_company.telephone}" ></td>
+                                            <td th:text="*{telephone}" ></td>
                                         </tr>
                                         <tr>
                                             <th> Address </th>
-                                            <td th:text="*{show_company.address}" style="max-width: 250px;"></td>
+                                            <td th:text="*{address}" style="max-width: 250px;"></td>
                                         </tr>
 
                                     </table></td> <td> &nbsp; </td>
@@ -103,7 +103,7 @@
                                             </tr>
                                             <tr th:each="task : ${linkedClients}">
                                                  <!--<td th:text="${task.id}">1</td>-->
-                                                <td><a th:href="@{showClient/{id}(id=${task.id})}" th:text="${task.name}"></a></td>
+                                                <td><a th:href="@{/showClient/{id}(id=${task.id})}" th:text="${task.name}"></a></td>
                                                 <!--<td th:text="${task.name}">Record Date</td>-->
                                                 <!--<td th:text="${#dates.format(task.recordDate, 'dd-MM-yyyy HH:MM')}">Record Date</td>
                                                 <td><a href="view.html" th:href="@{'/' + ${task.id}}" th:text="${task.id}">Title ...</a></td>
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-<!--</form>-->
+</form>
 <hr>
 
 
