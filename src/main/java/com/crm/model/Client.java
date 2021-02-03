@@ -29,6 +29,7 @@ public class Client implements Serializable {
     @Email
     private String email;
     private String address;
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)

@@ -4,6 +4,7 @@ import com.crm.model.Client;
 import com.crm.model.Comments;
 import com.crm.repository.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class CommentsService {
     }
 
     public List<Comments> findByClient(Client client) {
-        return commentsRepository.findByClient(client);
+        return commentsRepository.findByClient(client, new Sort(Sort.Direction.DESC, "id"));
     }
 
     public void save(Comments comments) {

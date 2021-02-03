@@ -49,9 +49,9 @@
 
                         </div>
                         <div class="card-body">
-                            <table align="center" width="1200px" >
+                            <table align="center" width="1300px" >
                                 <tr>
-                                    <td width="50%"><table width="100%" class="table table-bordered table-striped">
+                                    <td width="40%"><table width="100%" class="table table-bordered table-striped">
                                         <tr>
                                             <th colspan="2" style="color: green" class="text-center"> Company Info </th>
                                         </tr>
@@ -79,15 +79,10 @@
                                     </table></td> <td> &nbsp; </td>
                                     <td valign="top">
 
-
-
-
-
-                                        <!-- <div layout:fragment="content">-->
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
-                                                <th colspan="4" style="color: green" class="text-center"> Clients List </th>
+                                                <th colspan="5" style="color: green" class="text-center"> Clients List </th>
                                             </tr>
                                             <tr>
                                                 <!--<td> ID </td>-->
@@ -95,11 +90,12 @@
                                                 <td> Phone  </td>
                                                 <td> Contact </td>
                                                 <td> Email </td>
+                                                <td> Status </td>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:if="${linkedClients.empty}">
-                                                <td colspan="4">No Clients for this Company</td>
+                                                <td colspan="5">No Clients for this Company</td>
                                             </tr>
                                             <tr th:each="task : ${linkedClients}">
                                                  <!--<td th:text="${task.id}">1</td>-->
@@ -111,6 +107,7 @@
                                                 <td th:text="${task.phone}"></td>
                                                 <td th:text="${task.contact}"></td>
                                                 <td th:text="${task.email}"></td>
+                                                <td th:text="${task.status}"></td>
                                                <!-- <td><a th:href="@{/showReference/{id}(id=${task.id})}" th:text="${task.refNumber}">Ref ...</a></td>
                                           -->  </tr>
                                             </tbody>

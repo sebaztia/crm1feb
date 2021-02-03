@@ -2,9 +2,7 @@ package com.crm.controller;
 
 import com.crm.config.Utility;
 import com.crm.model.*;
-import com.crm.service.ClientService;
-import com.crm.service.CommentsService;
-import com.crm.service.CompanyService;
+import com.crm.service.*;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.slf4j.LoggerFactory;
@@ -20,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -28,13 +27,18 @@ public class ClientController {
     private CompanyService companyService;
     private ClientService clientService;
     private CommentsService commentsService;
+    private UserService userService;
+    private ClientStatusService clientStatusService;
+
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
-    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService) {
+    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService, ClientStatusService clientStatusService) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
+        this.userService = userService;
+        this.clientStatusService = clientStatusService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -45,6 +49,8 @@ public class ClientController {
         client.setCompany(company);
         model.addAttribute("company", company);
         model.addAttribute("client", client);
+        List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+        model.addAttribute("statusList", statusList);
 
         return "add_client";
     }
@@ -55,6 +61,8 @@ public class ClientController {
 
         model.addAttribute("company", company);
         model.addAttribute("client", client);
+        List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+        model.addAttribute("statusList", statusList);
         return "add_client";
     }
 
@@ -63,6 +71,8 @@ public class ClientController {
         if (result.hasErrors()) {
             Company company = client.getCompany();
             model.addAttribute("company", company);
+            List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+            model.addAttribute("statusList", statusList);
             return "add_client";
         }
        clientService.saveClient(client);
@@ -73,6 +83,8 @@ public class ClientController {
         if (result.hasErrors()) {
             Company company = client.getCompany();
             model.addAttribute("company", company);
+            List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+            model.addAttribute("statusList", statusList);
             return "add_client";
         }
         clientService.saveClient(client);
@@ -99,26 +111,28 @@ public class ClientController {
 
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
+
+        List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+        model.addAttribute("statusList", statusList);
         return "sow_client";
     }
 
     @PostMapping("/submit_message")
     public String submit_message(HttpServletRequest request, Model model) {
         String message = request.getParameter("message");
-        logger.info("====== message: " + message);
-        String author = request.getParameter("author");
-        logger.info("====== author: " + author);
+        String author = userService.findByEmail(request.getUserPrincipal().getName()).getUsername();
         Long id = Long.valueOf(request.getParameter("id"));
-        logger.info("====== ididid: " + id);
-
 
         Client client = clientService.getClientById(id);
         Comments comments = new Comments(message, author, client);
         commentsService.save(comments);
+        List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+        model.addAttribute("statusList", statusList);
         List<Comments> commentsList = commentsService.findByClient(client);
 
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
+
 
         return "sow_client";
     }

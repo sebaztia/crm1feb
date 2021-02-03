@@ -12,7 +12,7 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#data-table').DataTable();
+            $('#data-table').DataTable({'orderFixed': [0, 'desc']});
         });
     </script>
     <object th:include="fragments/head :: head" th:remove="tag"></object>
@@ -52,7 +52,7 @@
                                 <th>Contact Person</th>
                                 <th>Company Name</th>
                                 <th>Email</th>
-                                <th>Address</th>
+                                <th>Status</th>
                                 <th>Options</th>
                             </tr>
                             </thead>
@@ -67,7 +67,7 @@
                                 <td th:text="${client.contact}">Contact</td>
                                 <td th:text="${client.company.name}">Company Name</td>
                                 <td th:text="${client.email}">Email</td>
-                                <td th:text="${client.address}">Address</td>
+                                <td th:text="${client.status}">status</td>
 
                                 <td>
                                     <a th:href="@{editClient/{id}(id=${client.id})}" class="btn btn-primary">Edit</a>
