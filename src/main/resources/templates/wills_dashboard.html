@@ -71,10 +71,10 @@
                 }
             },
             title: {
-                text: 'Company by Region'
+                text: 'Clients Cleared Count'
             },
             tooltip: {
-                pointFormat: "${point.y:,.0f}"
+                pointFormat: "count: {point.y:,.0f}"
             },
             plotOptions: {
                 pie: {
@@ -86,8 +86,8 @@
                 name: 'Regions',
                 colorByPoint:true,
                 data: [{
-                    name: 'Northeast',
-                    y: /*[[${northeastSales}]]*/ 0
+                    name: 'Clients YES Checked',
+                    y: /*[[${yesClient}]]*/ 0
                 },{
                     name: 'South',
                     y: /*[[${southSales}]]*/ 0
@@ -95,8 +95,8 @@
                     name: 'Midwest',
                     y: /*[[${midwestSales}]]*/ 0
                 },{
-                    name: 'West',
-                    y: /*[[${westSales}]]*/ 0
+                    name: 'Clients NO Checked',
+                    y: /*[[${noClient}]]*/ 0
                 }]
             }]
         });

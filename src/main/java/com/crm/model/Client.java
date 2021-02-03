@@ -30,6 +30,7 @@ public class Client implements Serializable {
     private String email;
     private String address;
     private String status;
+    private Boolean cleared;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)

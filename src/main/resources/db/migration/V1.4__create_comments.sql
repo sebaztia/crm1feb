@@ -16,10 +16,14 @@ CREATE TABLE IF NOT EXISTS `comments` (
     PRIMARY KEY (`id`)
     ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+ALTER TABLE `client`
+ADD COLUMN `status` VARCHAR(45) NULL AFTER `updated_at`,
+ADD COLUMN `cleared` TINYINT NULL AFTER `status`;
+
 INSERT INTO `client_status` VALUES (21,'To Call');
-INSERT INTO `client_status` VALUES (22,'Wills instruction taken');
-INSERT INTO `client_status` VALUES (23,'Wills instruction signed');
-INSERT INTO `client_status` VALUES (24,'Wills instruction written');
-INSERT INTO `client_status` VALUES (25,'Wills Signed');
-INSERT INTO `client_status` VALUES (26,'Wills Checked');
-INSERT INTO `client_status` VALUES (27,'Wills Stored');
+INSERT INTO `client_status` VALUES (22,'Will instructions taken');
+INSERT INTO `client_status` VALUES (23,'Will instructions signed');
+INSERT INTO `client_status` VALUES (24,'Will instructions written');
+INSERT INTO `client_status` VALUES (25,'Will Signed');
+INSERT INTO `client_status` VALUES (26,'Will Checked');
+INSERT INTO `client_status` VALUES (27,'Will Stored');

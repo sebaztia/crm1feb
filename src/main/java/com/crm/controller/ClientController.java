@@ -132,8 +132,6 @@ public class ClientController {
 
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
-
-
         return "sow_client";
     }
 

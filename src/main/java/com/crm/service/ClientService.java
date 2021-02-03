@@ -27,4 +27,7 @@ public class ClientService {
     public Client getClientById(Long id) { return clientRepository.findOne(id); }
 
     public void deleteCompany(Long id) { clientRepository.delete(id); }
+
+    public Integer countByClearedTrue() { return clientRepository.countByClearedTrue(); }
+    public Integer countByClearedFalseOrClearedNull() { return clientRepository.countByClearedFalseOrClearedNull(); }
 }

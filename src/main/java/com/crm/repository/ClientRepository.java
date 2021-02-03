@@ -12,4 +12,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findByCompany(Company company, Sort sort);
     List<Client> findByCompany(Company company);
+    Integer countByClearedTrue();
+    Integer countByClearedFalseOrClearedNull();
 }
