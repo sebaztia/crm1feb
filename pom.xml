@@ -42,12 +42,21 @@
 
         <!-- Use MySQL Connector-J -->
 
-        <dependency>
+       <!-- <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
             <version>8.0.17</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+            <version>42.2.18</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.projectlombok</groupId>
