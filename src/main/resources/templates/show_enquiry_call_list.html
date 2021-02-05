@@ -66,7 +66,12 @@
                                 <td th:text="${calls.id}">Client ID</td>
                                 <!--<td th:text="${calls.recordDate}">Client Name</td>-->
                                 <td th:text="${#dates.format(calls.recordDate, 'dd-MM-yyyy HH:mm')}">Record Date</td>
-                                <td th:text="${calls.contactName}">Client Name</td>
+
+                                <td th:if="${calls.clientId == null}" th:text="${calls.contactName}">Client Name</td>
+                                <td th:unless="${calls.clientId == null}">
+                                    <a th:href="@{showClient/{id}(id=${calls.clientId})}" th:text="${calls.contactName}">  </a>
+                                </td>
+
                                 <td th:text="${calls.staff.staffName}">Staff Name</td>
                                 <td>
                                     <a th:href="@{/callListEdit/{id}(id=${calls.id})}" class="btn btn-primary">Details</a>

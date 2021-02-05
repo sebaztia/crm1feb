@@ -13,12 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,16 +31,20 @@ public class ClientController {
     private CommentsService commentsService;
     private UserService userService;
     private ClientStatusService clientStatusService;
+    private CallListService callListService;
+    private StaffService staffService;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
-    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService, ClientStatusService clientStatusService) {
+    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService, ClientStatusService clientStatusService, CallListService callListService, StaffService staffService) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
         this.userService = userService;
         this.clientStatusService = clientStatusService;
+        this.callListService = callListService;
+        this.staffService = staffService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -66,20 +72,8 @@ public class ClientController {
         return "add_client";
     }
 
-    @RequestMapping("clientAdd/clientSave")
-    public String save(@ModelAttribute("client") @Valid Client client, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            Company company = client.getCompany();
-            model.addAttribute("company", company);
-            List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
-            model.addAttribute("statusList", statusList);
-            return "add_client";
-        }
-       clientService.saveClient(client);
-        return "redirect:/listClient";
-    }
-    @RequestMapping("editClient/clientSave")
-    public String editSave(@ModelAttribute("client") @Valid Client client, BindingResult result, Model model) {
+    @RequestMapping("clientSave")
+    public String save(@ModelAttribute("client") @Valid Client client, BindingResult result, Model model, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             Company company = client.getCompany();
             model.addAttribute("company", company);
@@ -88,7 +82,8 @@ public class ClientController {
             return "add_client";
         }
         clientService.saveClient(client);
-        return "redirect:/listClient";
+        attributes.addAttribute("id", client.getId());
+        return "redirect:/showClient/{id}";
     }
     @RequestMapping("/listClient")
     public String listClient(Model model) {
@@ -133,6 +128,29 @@ public class ClientController {
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
         return "sow_client";
+    }
+
+    @PostMapping("show_client_save")
+    public String showClientSave(@ModelAttribute("show_client") Client client, BindingResult result, Model model, RedirectAttributes attributes) {
+        logger.info("lllllllllllllll=== " + client);
+        clientService.saveClient(client);
+        Boolean deceased = client.getDeceased();
+        if (null != deceased && deceased) {
+            logger.info("deceased=== TRue" );
+            if (null == callListService.getCallListByClientId(client.getId())) {
+                CallList callList = new CallList();
+                callList.setContactName(client.getName());
+                callList.setRecordDate(new Date());
+                callList.setContactNumber(client.getPhone());
+                callList.setQuery("This client is DECEASED, the status is " + client.getStatus() + ".");
+                callList.setClientId(client.getId());
+                callList.setStaff(staffService.findByStaffName("Stacie"));
+                callListService.saveCallList(callList);
+            }
+        }
+
+        attributes.addAttribute("id", client.getId());
+        return "redirect:/showClient/{id}";
     }
 
     /*@PostMapping("/posts/{postId}/comments")

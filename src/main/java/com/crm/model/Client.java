@@ -31,6 +31,7 @@ public class Client implements Serializable {
     private String address;
     private String status;
     private Boolean cleared;
+    private Boolean deceased;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)
@@ -68,5 +69,24 @@ public class Client implements Serializable {
     @PreUpdate
     public void onPreUpdate() {
         this.updatedAt = new Date();
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", contact='" + contact + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", status='" + status + '\'' +
+                ", cleared=" + cleared +
+                ", deceased=" + deceased +
+                ", company=" + company +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", commentsSet=" + commentsSet +
+                '}';
     }
 }

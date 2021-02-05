@@ -11,4 +11,5 @@ public interface CallListRepository extends JpaRepository<CallList, Integer> {
 
     List<CallList> findAllByArchiveFalseOrArchiveNull();
     List<CallList> findAllByArchiveTrue();
+    CallList findByClientId(Long clientId);
 }

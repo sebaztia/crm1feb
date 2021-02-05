@@ -22,4 +22,6 @@ public class StaffService {
     public void deleteStaff(Integer id) { staffRepository.delete(id); }
 
     public Staff saveStaff(Staff staff) { return staffRepository.save(staff); }
+
+    public Staff findByStaffName(String staffName) { return staffRepository.findByStaffName(staffName); }
 }

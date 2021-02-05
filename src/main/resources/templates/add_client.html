@@ -18,7 +18,7 @@
     <div th:if="${client.id == null}" class="panel-heading"><h4>New Client</h4></div>
     <div th:unless="${client.id == null}" class="panel-heading"><h4>Edit Client</h4></div>
     <div class="panel-body">
-        <form th:object="${client}" th:action="@{clientSave}" action="#" method="post">
+        <form th:object="${client}" th:action="@{/clientSave}" action="#" method="post">
 
             <div class="container">
                 <div class="row">
@@ -70,11 +70,14 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label> Cleared: &nbsp; </label> <input type="checkbox" id="cleared" th:field="*{cleared}" th:checked="*{cleared}">
-                            <br>
+                       <!-- <div class="form-group">
+                            <label> EXEC: &nbsp; </label> <input type="checkbox" id="cleared" th:field="*{cleared}" th:checked="*{cleared}">&nbsp;&nbsp;
                         </div>
-
+                        <div class="form-group">
+                            <label> DECEASED: &nbsp; </label> <input type="checkbox" id="deceased" th:field="*{deceased}" th:checked="*{deceased}">
+                        </div>-->
+                        <input type="hidden" class="form-control" th:field="*{cleared}"/>
+                        <input type="hidden" class="form-control" th:field="*{deceased}"/>
                     </div>
                 </div>
                 <div class="row">

@@ -1,8 +1,6 @@
 package com.crm.service;
 
 import com.crm.model.CallList;
-import com.crm.model.Category;
-import com.crm.model.Product;
 import com.crm.model.Staff;
 import com.crm.repository.CallListRepository;
 import com.crm.repository.StaffRepository;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CallListService {
@@ -42,6 +39,8 @@ public class CallListService {
         return callListRepository.findOne(id);
     }
 
+    public CallList getCallListByClientId(Long clientId) { return callListRepository.findByClientId(clientId); }
+
     public List<CallList> getAllArchiveList() {
         return callListRepository.findAllByArchiveTrue();
     }
@@ -55,14 +54,12 @@ public class CallListService {
     public void rollbackCallListById(Integer id) {
         CallList callList = callListRepository.findOne(id);
         callList.setArchive(false);
-
         this.callListRepository.save(callList);
     }
 
     public void emailActionDone(Integer id) {
         CallList callList = callListRepository.findOne(id);
         callList.setEmailDone(true);
-
         this.callListRepository.save(callList);
     }
 

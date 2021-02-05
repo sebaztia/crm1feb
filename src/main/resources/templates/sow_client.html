@@ -3,89 +3,146 @@
 <head>
     <title>Steele Rose CRM Management</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <meta content="This shows CRM Steele Rose" name="description" />
+    <meta content="This shows CRM Steele Rose" name="description"/>
     <object th:include="fragments/head :: head" th:remove="tag"></object>
 
-    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
-<style type="text/css">
-    .comment {
-        list-style: none;
-        position: relative;
-        margin: 0 0 1rem;
-    }
-    .comment-wrap {
-        position: relative;
-        background: #a2e5eb;
-        color: #434343;
-        padding: 1rem;
-        border-radius: 8px;
-        display: grid;
-        margin: 0 0 2px;
-        grid-template-columns: 30% 1fr 100px;
-    }
-    .comment-author {
-        font-family: Gotham Narrow SSm A,Gotham Narrow SSm B,Rubik,Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,Sans-Serif;
-        font-style: normal;
-        font-weight: 800;
-        font-weight: 400;
-        font-size: 1.4rem;
-    }
-    .comment-content {
-        overflow: hidden;
-    }
-</style>
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .comment {
+            list-style: none;
+            position: relative;
+            margin: 0 0 1rem;
+        }
+
+        .comment-wrap {
+            position: relative;
+            background: #a2e5eb;
+            color: #434343;
+            padding: 1rem;
+            border-radius: 8px;
+            display: grid;
+            margin: 0 0 2px;
+            grid-template-columns: 30% 1fr 100px;
+        }
+
+        .comment-author {
+            font-family: Gotham Narrow SSm A, Gotham Narrow SSm B, Rubik, Lato, Lucida Grande, Lucida Sans Unicode, Tahoma, Sans-Serif;
+            font-style: normal;
+            font-weight: 800;
+            font-weight: 400;
+            font-size: 1.4rem;
+        }
+
+        .comment-content {
+            overflow: hidden;
+        }
+    </style>
 </head>
 
-<body class="page-container-bg-solid">
+<body>
 <div th:include="fragments/topmenuheader :: header"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="panel-heading"> <span style="align-content: center">Client Info</span> </div>
-                        <div class="panel-body" style="padding-left: 1px;">
-                            <div class="col-md-4">
-                                Name: <b th:text="*{show_client.name}" /> <br/>
-                                Contact Person: <b th:text="*{show_client.contact}" /> <br/>
-                            </div>
-                            <div class="col-md-4">
-                                Telephone: <b th:text="${show_client.phone}" /> <br/>
-                                Email: <span th:text="${show_client.email}" /><br/>
-                            </div>
-                            <div class="col-md-4">
-                                Status:<select class="form-control" th:field="*{show_client.status}">
-                                        <option th:each="status : ${statusList}"
-                                            th:value="${status.status}"
-                                            th:text="${status.status}">
-                                        </option>
-                                        </select> <br/>
-                                <a href="/showWillsPage" class="btn btn-info">Dashboard</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                                <a th:href="@{/editClient/{id}(id=${show_client.id})}" class="btn btn-primary">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="checkbox" disabled="disabled" id="cleared" th:field="*{show_client.cleared}" th:checked="*{show_client.cleared}"> &nbsp;&nbsp; Yes
-                            </div>
-                        </div>
+<div class="container">
+    <form th:object="${show_client}" th:action="@{/show_client_save}" action="#" method="post">
+        <input type="hidden" class="form-control" th:field="*{id}"/>
+        <input type="hidden" class="form-control" th:field="*{name}"/>
+        <input type="hidden" class="form-control" th:field="*{phone}"/>
+        <input type="hidden" class="form-control" th:field="*{contact}"/>
+        <input type="hidden" class="form-control" th:field="*{email}"/>
+        <input type="hidden" class="form-control" th:field="*{address}"/>
+
+        <input type="hidden" class="form-control" th:field="*{company}"/>
+        <input type="hidden" class="form-control" th:field="*{createdAt}"/>
+        <input type="hidden" class="form-control" th:field="*{updatedAt}"/>
+
+        <div class="row" style="padding-top: 15px;">
+            <div class="col-md-10">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 style="align-content: center">Client Info</h3></div>
+                </div>
+
+                <div class="panel-body" style="padding-left: 1px;">
+                    <div class="col-md-4">
+                        Date: <b th:text="${#dates.format(show_client.createdAt, 'dd-MM-yyyy')}"/> <br/><br>
+                        Name: <b th:text="*{name}"/> <br/>
+                        Contact Person: <b th:text="*{contact}"/> <br/>
+                    </div>
+                    <div class="col-md-4"><br/><br/>
+                        Telephone: <b th:text="${show_client.phone}"/> <br/>
+                        Email: <span th:text="${show_client.email}"/><br/>
+                    </div>
+                    <div class="col-md-4">
+                        <br/><br/>
+                        <select class="form-control" th:field="*{status}">
+                            <option th:each="status : ${statusList}"
+                                    th:value="${status.status}"
+                                    th:text="${status.status}">
+                            </option>
+                        </select>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="row">
-                        <form th:action="@{/submit_message}" method="post" style="max-width: 420px; margin: 0 auto;">
-                            <div class="col-md-8">
-                            <input type="hidden" class="form-control" name="id" th:field="*{show_client.id}"/>
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="message" id="message-text" placeholder="Write your comments" required autofocus></textarea>
-                                    </div>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="submit" value="Send" class="btn btn-default" />
-                            </div>
-                        </form>
-                </div>
+        <div class="row" style="padding-top: 25px;">
+            <div class="col-md-4">
 
-                <div class="row">
+            </div>
+            <div class="col-md-6">
+                <a href="/showWillsPage" class="btn btn-info">Dashboard</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a th:href="@{/editClient/{id}(id=${show_client.id})}" class="btn btn-primary">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" id="cleared" th:field="*{cleared}"
+                       th:checked="*{cleared}"> &nbsp;&nbsp; EXEC &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <input type="checkbox" id="deceased" th:field="*{deceased}"
+                       th:checked="*{cleared}"> &nbsp;&nbsp; DECEASED &nbsp;&nbsp;&nbsp;&nbsp;
+
+                <input type="submit" class="btn btn-success" value="UPDATE">
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<div id="exTab2" class="container">
+    <ul class="nav nav-tabs">
+        <li>
+            <a href="#1" data-toggle="tab">FINANCIAL</a>
+        </li>
+        <li class="active"><a href="#2" data-toggle="tab">COMMENTS</a>
+        </li>
+        <li><a href="#3" data-toggle="tab">Solution</a>
+        </li>
+    </ul>
+
+    <div class="tab-content ">
+        <div class="tab-pane" id="1">
+            <h3>Need to write content</h3>
+        </div>
+
+        <div class="tab-pane active" id="2">
+            <div class="row" style="padding-top: 60px;">
+                <form th:action="@{/submit_message}" method="post" style="max-width: 420px; margin: 0 auto;">
                     <div class="col-md-8">
-                        <table class="table table-bordered table-striped">
-                            <tbody>
-                            <tr th:each="task : ${linkedComments}">
-                                <li class="comment">
+                        <input type="hidden" class="form-control" name="id" th:field="*{show_client.id}"/>
+                        <textarea class="form-control" name="message" id="message-text"
+                                  placeholder="Write your comments..."
+                                  required autofocus></textarea>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" value="Send" class="btn btn-default"/>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row" style="padding-top: 30px;">
+                <div class="col-md-10">
+
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr th:each="task : ${linkedComments}">
+                            <li class="comment">
                                 <div class="comment-wrap">
                                     <div class="comment-author-wrap">
                                         <div class="comment-author">
@@ -93,36 +150,41 @@
                                             <strong th:text="${task.author}"> author </strong>
                                         </div>
                                         <label class="col-form-label">Date:</label>
-                                        <strong th:text="${#dates.format(task.createdAt, 'dd-MM-yyyy HH:mm')}"> Date </strong>
+                                        <strong th:text="${#dates.format(task.createdAt, 'dd-MM-yyyy HH:mm')}">
+                                            Date </strong>
                                     </div>
                                     <div class="comment-content">
-                                        <p><span th:text="${task.message}"> message </span></p>
+                                        <span th:text="${task.message}"> message </span>
                                     </div>
                                     <div class="comment-actions">
                                         <div class="reply">
                                         </div>
                                     </div>
                                 </div>
-                                </li>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                            </li>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <div class="row">
-
-                    <div class="col-md-5">
-                 <!--
-                            &lt;!&ndash;<a href="/client/add" class="btn btn-success">Add Client</a>&ndash;&gt;
-                            <a th:href="@{/clientAdd/{id}(id=*{id})}" class="btn btn-success">Add Client</a>-->
-                            <a th:class="pull-right" href="/showWillsPage" class="btn btn-default">Dashboard</a>
-
-                       <!-- <td>
-                            <a class="btn btn-danger navbar-right" th:href="@{/company}">Cancel</a>
-                        </td>-->
-                    </div>
                 </div>
             </div>
+
+        </div>
+
+        <div class="tab-pane" id="3">
+            <h3>clearfix to the overview soon.</h3>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>

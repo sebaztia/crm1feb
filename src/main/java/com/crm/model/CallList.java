@@ -28,6 +28,10 @@ class CallList {
 
     @Column(name = "ref_number")
     private String refNumber;
+
+    @Column(name = "client_id")
+    private Long clientId;
+
     @NotEmpty
     @Column(name = "contact_number")
     private String contactNumber;

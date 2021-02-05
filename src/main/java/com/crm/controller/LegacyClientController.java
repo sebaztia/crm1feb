@@ -67,7 +67,7 @@ public class LegacyClientController {
 
         EmailDto emailDto = new EmailDto();
         //   emailDto.setCallListDto(d);
-        emailDto.setSubject("CRM Client Information");
+        emailDto.setSubject("CRM Legacy Client Information");
         emailDto.setText("Hi, \nPlease find the below client details." +
                 "\n\nFull Name: " + dto.getFullName() +
                 "\nReference Number: " + dto.getRefNumber() +
