@@ -1,25 +1,17 @@
 package com.crm.controller;
 
-import com.crm.config.Utility;
 import com.crm.model.*;
 import com.crm.service.*;
-import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.utility.RandomString;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ResourceNotFoundException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -33,11 +25,13 @@ public class ClientController {
     private ClientStatusService clientStatusService;
     private CallListService callListService;
     private StaffService staffService;
+    private FileUploadService fileUploadService;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
-    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService, ClientStatusService clientStatusService, CallListService callListService, StaffService staffService) {
+    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService,
+                            ClientStatusService clientStatusService, CallListService callListService, StaffService staffService, FileUploadService fileUploadService) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
@@ -45,6 +39,7 @@ public class ClientController {
         this.clientStatusService = clientStatusService;
         this.callListService = callListService;
         this.staffService = staffService;
+        this.fileUploadService = fileUploadService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -60,6 +55,7 @@ public class ClientController {
 
         return "add_client";
     }
+
     @GetMapping(value = "editClient/{id}")
     public String editClient(@PathVariable("id") Long id, Model model) {
         Client client = clientService.getClientById(id);
@@ -85,6 +81,7 @@ public class ClientController {
         attributes.addAttribute("id", client.getId());
         return "redirect:/showClient/{id}";
     }
+
     @RequestMapping("/listClient")
     public String listClient(Model model) {
 
@@ -98,6 +95,7 @@ public class ClientController {
 
         return "redirect:/listClient";
     }
+
     @GetMapping("showClient/{id}")
     public String showClient(@PathVariable(value = "id") long id, Model model) {
 
@@ -109,6 +107,8 @@ public class ClientController {
 
         List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
+        List<FileUpload> allFileNameInBucket = fileUploadService.getAllByClientId(id);
+        model.addAttribute("s3FileNames", allFileNameInBucket);
         return "sow_client";
     }
 
@@ -127,16 +127,18 @@ public class ClientController {
 
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
+        List<FileUpload> allFileNameInBucket = fileUploadService.getAllByClientId(id);
+        model.addAttribute("s3FileNames", allFileNameInBucket);
         return "sow_client";
     }
 
     @PostMapping("show_client_save")
     public String showClientSave(@ModelAttribute("show_client") Client client, BindingResult result, Model model, RedirectAttributes attributes) {
-        logger.info("lllllllllllllll=== " + client);
+
         clientService.saveClient(client);
         Boolean deceased = client.getDeceased();
         if (null != deceased && deceased) {
-            logger.info("deceased=== TRue" );
+            //    logger.info("deceased=== TRue" );
             if (null == callListService.getCallListByClientId(client.getId())) {
                 CallList callList = new CallList();
                 callList.setContactName(client.getName());
@@ -148,17 +150,7 @@ public class ClientController {
                 callListService.saveCallList(callList);
             }
         }
-
         attributes.addAttribute("id", client.getId());
         return "redirect:/showClient/{id}";
     }
-
-    /*@PostMapping("/posts/{postId}/comments")
-    public Client createComment(@PathVariable (value = "postId") Long postId,
-                                 @Valid @RequestBody Client comment) throws ResourceNotFoundException {
-        return companyRepository.findById(postId).map(post -> {
-            comment.setCompany(post);
-            return clientRepository.save(comment);
-        }).orElseThrow(() -> new ResourceNotFoundException("PostId " + postId + " not found"));
-    }*/
 }

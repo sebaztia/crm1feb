@@ -25,6 +25,16 @@
                             <form id="login-form" method="post" th:action="@{/login}" role="form"
                                   style="display: block;">
                                 <h2>LOGIN</h2>
+                                <div th:if="${param.success}">
+                                    <div class="alert alert-info">
+                                        A verification link has been sent to your email, please click  the link to activate.
+                                    </div>
+                                </div>
+                                <div th:if="${param.registered}">
+                                    <div class="alert alert-info">
+                                        Congratulations! Your account has been activated and email is verified!
+                                    </div>
+                                </div>
                                 <div th:if="${param.error}">
                                     <div class="alert alert-danger">
                                         Invalid username or password.
@@ -60,7 +70,8 @@
 
                                 <div th:if="${param.success}">
                                     <div class="alert alert-info">
-                                        You've successfully registered to our awesome app!
+                                        A verification link has been sent to your email, please click  the link to activate.
+                                        <!--You've successfully registered to our awesome app!-->
                                     </div>
                                 </div>
 

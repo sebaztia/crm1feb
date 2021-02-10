@@ -1,5 +1,6 @@
 package com.crm.service;
 
+import com.crm.model.Register;
 import com.crm.model.Role;
 import com.crm.model.User;
 import com.crm.dto.UserRegistrationDto;
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User save(UserRegistrationDto registration){
+    public User save(Register registration){
         User user = new User();
         user.setUsername(registration.getUsername());
         user.setEmail(registration.getEmail());

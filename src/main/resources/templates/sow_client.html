@@ -24,6 +24,16 @@
             margin: 0 0 2px;
             grid-template-columns: 30% 1fr 100px;
         }
+        .comment-wrap-tr {
+            position: relative;
+            background: #e1e5ec;
+            color: #434343;
+            padding: 1rem;
+            border-radius: 15px;
+            display: grid;
+            margin: 0 0 2px;
+            grid-template-columns: 30% 1fr 100px;
+        }
 
         .comment-author {
             font-family: Gotham Narrow SSm A, Gotham Narrow SSm B, Rubik, Lato, Lucida Grande, Lucida Sans Unicode, Tahoma, Sans-Serif;
@@ -35,6 +45,58 @@
 
         .comment-content {
             overflow: hidden;
+        }
+
+        .custom-file {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            margin-bottom: 0;
+        }
+
+        .custom-file-input {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            margin: 0;
+            opacity: 0;
+        }
+        .custom-file-label {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1;
+            height: calc(1.5em + .75rem + 2px);
+            padding: .375rem .75rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+        }
+
+        .custom-file-input:lang(en)~.custom-file-label::after {
+            content: "Browse";
+        }
+        .custom-file-label::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3;
+            display: block;
+            height: calc(1.5em + .75rem);
+            padding: .375rem .75rem;
+            line-height: 1.5;
+            color: #495057;
+            content: "Browse";
+            background-color: #e9ecef;
+            border-left: inherit;
+            border-radius: 0 .25rem .25rem 0;
         }
     </style>
 </head>
@@ -112,7 +174,7 @@
         </li>
         <li class="active"><a href="#2" data-toggle="tab">COMMENTS</a>
         </li>
-        <li><a href="#3" data-toggle="tab">Solution</a>
+        <li><a href="#3" data-toggle="tab"> File Upload </a>
         </li>
     </ul>
 
@@ -172,7 +234,44 @@
         </div>
 
         <div class="tab-pane" id="3">
-            <h3>clearfix to the overview soon.</h3>
+
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                   <h2>Please upload document here.</h2>
+                    <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>
+
+                    <form method="post" enctype="multipart/form-data" th:action="@{/upload/{clientId}(clientId=${show_client.id})}" action="#">
+                        <div class="form-group">
+                            <div class="custom-file">
+
+                                <input type="file" class="custom-file-input" id="customFile" name="file" required autofocus>
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit"> Upload File </button>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <table>
+                    <thead>
+                    <tr>
+                       <!-- <th></th>
+                        <th>Aws S3 File</th>-->
+                        &nbsp;
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="comment-wrap-tr" th:each="s3file : ${s3FileNames}">
+                        <td th:text="${s3file.fileName}"/> <td> &nbsp; </td>
+                        <td><a th:href="@{/downloadFile/{fileName}(fileName=${s3file.fileName})}"> Download </a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </div>

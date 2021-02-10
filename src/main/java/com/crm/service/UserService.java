@@ -1,5 +1,6 @@
 package com.crm.service;
 
+import com.crm.model.Register;
 import com.crm.model.User;
 import com.crm.dto.UserRegistrationDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
 
     User findByEmail(String email);
-    User save(UserRegistrationDto userRegistrationDto);
+    User save(Register userRegistrationDto);
 
     List<User> findUsers();
 
