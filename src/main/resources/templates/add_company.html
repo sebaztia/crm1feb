@@ -40,28 +40,10 @@
                     <textarea  rows = "10" cols = "80" th:field = "*{address}" placeholder="Address" class="form-control"></textarea>
                     <br>
                 </div>
-                <!--<div class="form-group">
-                    <label>Staff Member</label>
-                    <select class="form-control" th:field="*{staff.staffName}" style="width: 145px">
-                        &lt;!&ndash;<option value="">Select Staff</option>&ndash;&gt;
-                        <option th:each="staff : ${staffList}"
-                                th:value="${staff.staffName}"
-                                th:text="${staff.staffName}">
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <table width="40%">
-                        <tr>
-                            <td><label>Action Required</label></td> <td><input id="email_action" type="checkbox" th:field="*{emailCheck}" th:checked="*{emailCheck}" onclick="checkEmailBoxes(this);"> &nbsp; Email</td> <td><input type="checkbox" th:value="Call" id="call_action" th:field="*{callCheck}" th:checked="*{callCheck}" onclick="checkCallBoxes(this);"> &nbsp; Call</td>
-                        </tr>
-                        <tr>
-                            <td><label>Status</label></td> <td><input type="checkbox" th:value="Done" id="email_status" th:field="*{emailDone}" th:checked="*{emailDone}" onclick="checkEmailBoxes(this);"> &nbsp; Done</td> <td><input type="checkbox" th:value="Done" id="call_status" th:field="*{callDone}" th:checked="*{callDone}" onclick="checkCallBoxes(this);"> &nbsp; Done</td>
-                        </tr>
-                    </table>
-                </div>-->
-                <button type="submit" class="btn btn-primary" value="Save">Save</button>
-                <a class="btn btn-danger" th:href="@{/showWillsPage}">Cancel</a>
+
+                <div class="col-xs-4"><button type="submit" class="btn btn-primary" value="Save">Save</button></div>
+                <div class="col-xs-4"><a class="btn btn-danger" th:href="@{/showWillsPage}">Cancel</a></div>
+                <div class="col-xs-4"><a th:href="@{/company}" class="btn btn-success center-block">Company Search</a></div>
             </form>
         </div>
     </div>

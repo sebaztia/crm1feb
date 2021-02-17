@@ -26,12 +26,14 @@ public class ClientController {
     private CallListService callListService;
     private StaffService staffService;
     private FileUploadService fileUploadService;
+    private PersonalAssetService personalAssetService;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService,
-                            ClientStatusService clientStatusService, CallListService callListService, StaffService staffService, FileUploadService fileUploadService) {
+                            ClientStatusService clientStatusService, CallListService callListService, StaffService staffService,
+                            FileUploadService fileUploadService, PersonalAssetService personalAssetService) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
@@ -40,6 +42,7 @@ public class ClientController {
         this.callListService = callListService;
         this.staffService = staffService;
         this.fileUploadService = fileUploadService;
+        this.personalAssetService = personalAssetService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -101,9 +104,15 @@ public class ClientController {
 
         Client client = clientService.getClientById(id);
         List<Comments> commentsList = commentsService.findByClient(client);
+        PersonalAsset personalAsset = personalAssetService.findByClientId(id);
+        if (personalAsset == null) {
+            personalAsset = new PersonalAsset();
+            personalAsset.setClientId(id);
+        }
 
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
+        model.addAttribute("personalAsset", personalAsset);
 
         List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
@@ -129,6 +138,13 @@ public class ClientController {
         model.addAttribute("linkedComments", commentsList);
         List<FileUpload> allFileNameInBucket = fileUploadService.getAllByClientId(id);
         model.addAttribute("s3FileNames", allFileNameInBucket);
+
+        PersonalAsset personalAsset = personalAssetService.findByClientId(id);
+        if (personalAsset == null) {
+            personalAsset = new PersonalAsset();
+            personalAsset.setClientId(id);
+        }
+        model.addAttribute("personalAsset", personalAsset);
         return "sow_client";
     }
 
@@ -151,6 +167,15 @@ public class ClientController {
             }
         }
         attributes.addAttribute("id", client.getId());
+        return "redirect:/showClient/{id}";
+    }
+
+    @PostMapping("personal_asset_save")
+    public String personalAssetSave(@ModelAttribute("personalAsset") PersonalAsset personalAsset, BindingResult result, Model model, RedirectAttributes attributes) {
+
+        personalAssetService.savePersonalAsset(personalAsset);
+
+        attributes.addAttribute("id", personalAsset.getClientId());
         return "redirect:/showClient/{id}";
     }
 }

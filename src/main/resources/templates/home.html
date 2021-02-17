@@ -27,13 +27,15 @@
                 </div>
                 <div class="row" style="margin-bottom:10px">
                     <div class="col-md-6" style="margin-top:5px">
-
-                        <table>
-                            <tr style="padding-bottom: 10px;"><td> <a style="width: 170px; height: 40px;" th:href="@{/callList}" class="btn btn-primary"> CALLS </a> </td></tr>
-                            <tr style="padding-bottom: 10px;"><td sec:authorize="hasAuthority('ROLE_WILLS')"> <a style="width: 170px; height: 40px;" th:href="@{/showWillsPage}" class="btn btn-info"> WILLS </a> </td></tr>
-
-                            <tr><td> <a th:cellpadding="2" style="width: 170px; height: 40px;" th:href="@{/home}" class="btn widget-bg-color-purple"> PROBATE </a> </td></tr>
-                        </table>
+                        <div style="margin-bottom: 15px;">
+                            <a style="width: 170px; height: 40px;" th:href="@{/callList}" class="btn btn-primary"> CALLS </a>
+                        </div>
+                        <div sec:authorize="hasAuthority('ROLE_WILLS')">
+                            <a style="width: 170px; height: 40px;" th:href="@{/showWillsPage}" class="btn btn-info"> WILLS </a>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a th:cellpadding="2" style="width: 170px; height: 40px;" th:href="@{/home}" class="btn btn-warning"> PROBATE </a>
+                        </div>
                     </div>
                     <div class="col-md-6" style="margin-top:20px">
                         <div id="salesByType" style="width:100%; height:400px;"></div>

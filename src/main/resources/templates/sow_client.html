@@ -8,19 +8,6 @@
 
     <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/sowpage.css}">
-    <style type="text/css">
-        #mytable1 input, textarea
-        {
-            width: 100%;
-            padding: 10px;
-            margin: 0px;
-            border: 1px solid #CCC;
-        }
-
-        input[type="range"] {
-            width: 30px;
-        }
-    </style>
 </head>
 
 <body>
@@ -102,87 +89,104 @@
 
     <div class="tab-content ">
         <div class="tab-pane" id="1">
-            <div class="row" style="padding-top: 60px;">
-                <div class="col-md-10">
+            <div sec:authorize="hasAuthority('ROLE_WILLS')" class="row" style="padding-top: 60px;">
+                <div class="col-md-12">
                     <div style="background: #e1e5ec;">
                         <h3>PERSONAL ASSETS</h3>
                     </div>
-                    <div>
+                    <div class="col-md-9">
                         <p>You will probably want your Estate to pass to your immediate family. Whatever your decision, before distributing your Estate you
                             should establish its nature and value by completing this section</p>
                     </div>
-                    <h4>HOME DETAILS</h4>
-                    <form>
+                    <div class="col-md-9"> <h4>HOME DETAILS</h4></div>
+
+                    <form th:object="${personalAsset}" th:action="@{/personal_asset_save}" action="#" method="post">
+                        <input type="hidden" class="form-control" th:field="*{id}"/>
+                        <input type="hidden" class="form-control" th:field="*{clientId}"/>
                         <div class="col-md-5">
-                            Do you own your property? <label>
-                            <input type="radio" name="choice-radio">
-                            Yes
-                        </label>
-                            <label>
-                                <input type="radio" name="choice-radio">
-                                No
-                            </label>
+                            Do you own your property?&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{propertyOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{propertyOne}">No</label>
                         </div>
                         <div class="col-md-5">
-                            Do you have a mortgage? <input type="checkbox"> YES &nbsp; <input type="checkbox"> NO
+                            Do you have a mortgage?&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{mortgageOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{mortgageOne}">No</label>
                         </div><br>
 
                         <div class="col-md-10">
-                            In whose name is the property registered? &nbsp;&nbsp; Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">
+                            In whose name is the property registered? &nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{propertyRegisteredOne}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{propertyRegisteredOne}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="3" th:field="*{propertyRegisteredOne}">Joint</label>
+                            <!--Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">-->
                         </div><br>
                         <div class="col-md-10">
-                            If joint (co-owners) do you own your property as: <input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common
+                            If joint (co-owners) do you own your property as:&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointOne}">Joint Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointOne}">Tenants in Common</label>
+                            <!--<input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common-->
                         </div><br>
                         <div class="col-md-10">
-                            Lender Details: <input type="text">
+                            Lender Details: &nbsp;&nbsp;<input type="text" th:value="*{lenderDetails}"  th:field="*{lenderDetails}">
                         </div><br>
 
-                        <div class="col-md-5">
-                            Amount outstanding? £ <input type="text">
+                        <div class="col-md-5" style="margin-top: 10px;">
+                            Amount outstanding? £ <input type="text" th:value="*{amountOSOne}"  th:field="*{amountOSOne}">
                         </div>
-                        <div class="col-md-5">
-                            Current Value? £ <input type="text">
+                        <div class="col-md-5" style="margin-top: 10px;">
+                            Current Value? £ <input type="text" th:value="*{currentValueOne}"  th:field="*{currentValueOne}">
                         </div><br>
 
-                        <div class="col-md-10">
-                            Where are the deeds to the property held? <input type="text">
+                        <div class="col-md-10" style="margin-top: 10px;">
+                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldOne}"  th:field="*{propertyHeldOne}">
                         </div><br>
-                        <div class="col-md-10">
-                            Financial arrangements for the purchase (how did each spouse/partner contribute? <textarea ></textarea>
+                        <div class="col-md-10" style="margin-top: 10px;">
+                            Financial arrangements for the purchase (how did each spouse/partner contribute? <textarea th:value="*{contributeOne}" th:field="*{contributeOne}"></textarea>
                         </div><br>
 
-                        <div class="col-md-10">
+                        <div class="col-md-10" style="margin-top: 10px;">
                             <strong>OTHER PROPERTY</strong>
-                         <b>  (including property abroad) Address</b> <input type="text"> </div><br>
+                         <b>  (including property abroad) Address</b>&nbsp;&nbsp; <input type="text" th:value="*{otherProperty}"  th:field="*{otherProperty}"> </div><br>
 
                         <div class="col-md-5">
-                            Do you have a mortgage? <input type="checkbox"> YES &nbsp; <input type="checkbox"> NO
+                            Do you have a mortgage?&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{mortgageTwo}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{mortgageTwo}">No</label>
+                           <!-- <input type="checkbox"> YES &nbsp; <input type="checkbox"> NO-->
                         </div><br>
 
                         <div class="col-md-10">
-                            In whose name is the property registered? &nbsp;&nbsp; Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">
+                            In whose name is the property registered? &nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{propertyRegisteredTwo}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{propertyRegisteredTwo}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="3" th:field="*{propertyRegisteredTwo}">Joint</label>
+                            <!--Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">-->
                         </div><br>
                         <div class="col-md-10">
-                            If joint (co-owners) do you own your property as: <input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common
+                            If joint (co-owners) do you own your property as:&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointTwo}">Joint Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointTwo}">Tenants in Common</label>
+                            <!--<input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common-->
                         </div><br>
-                        <div class="col-md-5">
-                            Amount outstanding? £ <input type="text">
+                        <div class="col-md-5" style="margin-top: 10px;">
+                            Amount outstanding? £ <input type="text" th:value="*{amountOSTwo}"  th:field="*{amountOSTwo}">
                         </div>
-                        <div class="col-md-5">
-                            Current Value? £ <input type="text">
+                        <div class="col-md-5" style="margin-top: 10px;">
+                            Current Value? £ <input type="text" th:value="*{currentValueTwo}"  th:field="*{currentValueTwo}">
                         </div><br>
 
-                        <div class="col-md-10">
-                            Where are the deeds to the property held? <input type="text">
+                        <div class="col-md-10" style="margin-top: 10px;">
+                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldTwo}"  th:field="*{propertyHeldTwo}">
                         </div><br>
-                        <div class="col-md-10">
-                            Financial arrangements for the purchase (how did each spouse/partner contribute? <input type="text">
-                        </div><br>
-                        <div class="portlet-body">
+                        <div class="col-md-10" style="margin-top: 10px;">
+                            Financial arrangements for the purchase (how did each spouse/partner contribute? <input type="text" th:value="*{contributeTwo}"  th:field="*{contributeTwo}">
+                        </div>
+                        <div class="portlet-body" style="margin-top: 20px;">
                             <table id="mytable1" class="table">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th></th>
                                     <th>Details</th>
                                     <th>Client 1</th>
                                     <th>Client 2</th>
@@ -192,103 +196,107 @@
 
                                 <tr class="active">
                                     <th scope="row">Bank Accounts</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{baDetails}"  th:field="*{baDetails}"></th>
+                                    <th><input type="text" th:value="*{baClient1}"  th:field="*{baClient1}"></th>
+                                    <th><input type="text" th:value="*{baClient2}"  th:field="*{baClient2}"></th>
+                                    <th><input type="text" th:value="*{baJoint}"  th:field="*{baJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row">Stocks & Shares</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{ssDetails}"  th:field="*{ssDetails}"></th>
+                                    <th><input type="text" th:value="*{ssClient1}"  th:field="*{ssClient1}"></th>
+                                    <th><input type="text" th:value="*{ssClient2}"  th:field="*{ssClient2}"></th>
+                                    <th><input type="text" th:value="*{ssJoint}"  th:field="*{ssJoint}"></th>
                                 </tr>
                                 <tr class="success">
                                     <th scope="row">Interest in a Trust</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{itDetails}"  th:field="*{itDetails}"></th>
+                                    <th><input type="text" th:value="*{itClient1}"  th:field="*{itClient1}"></th>
+                                    <th><input type="text" th:value="*{itClient2}"  th:field="*{itClient2}"></th>
+                                    <th><input type="text" th:value="*{itJoint}"  th:field="*{itJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row">Building Society Acc.</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{bsaDetails}"  th:field="*{bsaDetails}"></th>
+                                    <th><input type="text" th:value="*{bsaClient1}"  th:field="*{bsaClient1}"></th>
+                                    <th><input type="text" th:value="*{bsaClient2}"  th:field="*{bsaClient2}"></th>
+                                    <th><input type="text" th:value="*{bsaJoint}"  th:field="*{bsaJoint}"></th>
                                 </tr>
                                 <tr class="info">
                                     <th scope="row">Nat. Savings/ P Bonds</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{nspbDetails}"  th:field="*{nspbDetails}"></th>
+                                    <th><input type="text" th:value="*{nspbClient1}"  th:field="*{nspbClient1}"></th>
+                                    <th><input type="text" th:value="*{nspbClient2}"  th:field="*{nspbClient2}"></th>
+                                    <th><input type="text" th:value="*{nspbJoint}"  th:field="*{nspbJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row">Cash</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{cashDetails}"  th:field="*{cashDetails}"></th>
+                                    <th><input type="text" th:value="*{cashClient1}"  th:field="*{cashClient1}"></th>
+                                    <th><input type="text" th:value="*{cashClient2}"  th:field="*{cashClient2}"></th>
+                                    <th><input type="text" th:value="*{cashJoint}"  th:field="*{cashJoint}"></th>
                                 </tr>
                                 <tr class="warning">
                                     <th scope="row">Car/ Vehicles</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{cvDetails}"  th:field="*{cvDetails}"></th>
+                                    <th><input type="text" th:value="*{cvClient1}"  th:field="*{cvClient1}"></th>
+                                    <th><input type="text" th:value="*{cvClient2}"  th:field="*{cvClient2}"></th>
+                                    <th><input type="text" th:value="*{cvJoint}"  th:field="*{cvJoint}"></th>
                                 </tr>
 
                                 <tr>
                                     <th scope="row">Furniture/ Personal</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{fpDetails}"  th:field="*{fpDetails}"></th>
+                                    <th><input type="text" th:value="*{fpClient1}"  th:field="*{fpClient1}"></th>
+                                    <th><input type="text" th:value="*{fpClient2}"  th:field="*{fpClient2}"></th>
+                                    <th><input type="text" th:value="*{fpJoint}"  th:field="*{fpJoint}"></th>
                                 </tr>
                                 <tr class="danger">
                                     <th scope="row">Other</th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{otherDetails}"  th:field="*{otherDetails}"></th>
+                                    <th><input type="text" th:value="*{otherClient1}"  th:field="*{otherClient1}"></th>
+                                    <th><input type="text" th:value="*{otherClient2}"  th:field="*{otherClient2}"></th>
+                                    <th><input type="text" th:value="*{otherJoint}"  th:field="*{otherJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row"><b>TOTAL:</b></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{totalDetails}"  th:field="*{totalDetails}"></th>
+                                    <th><input type="text" th:value="*{totalClient1}"  th:field="*{totalClient1}"></th>
+                                    <th><input type="text" th:value="*{totalClient2}"  th:field="*{totalClient2}"></th>
+                                    <th><input type="text" th:value="*{totalJoint}"  th:field="*{totalJoint}"></th>
                                 </tr>
                                 <tr class="success">
                                     <td scope="row" colspan="2">LIFE ASSURANCE (in trust/ nominated/ Pilot Trust?)</td>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
-                                    <th><input type="text"></th>
+                                    <th><input type="text" th:value="*{lifeAssClient1}"  th:field="*{lifeAssClient1}"></th>
+                                    <th><input type="text" th:value="*{lifeAssClient2}"  th:field="*{lifeAssClient2}"></th>
+                                    <th><input type="text" th:value="*{lifeAssJoint}"  th:field="*{lifeAssJoint}"></th>
                                 </tr>
                                 <tr>
                                     <td colspan="4">When did you last review your pension or other financial arrangements? Would you like Steele Rose & Co Ltd to arrange for
                                         a Financial Adviser to call you? No cost is involved and a financial review could well save you money, improve your investment
                                         income or increase your pension income.
                                         (If YES Consultant please submit referral form) </td>
-                                    <th><input type="checkbox"> YES &nbsp;&nbsp; <input type="checkbox"> NO</th>
+                                    <td><label><input type="radio" name="choice-radio" value="1" th:field="*{referralYes}">Yes</label>&nbsp;
+                                        <label><input type="radio" name="choice-radio" value="2" th:field="*{referralYes}">No</label></td>
                                 </tr>
                                 <tr>
                                     <th colspan="5">DEATH IN SERVICE BENEFIT (SEE PILOT TRUSTS PAGE 6) AND ANY OTHER FINANCIAL DETAILS?</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="5"><textarea></textarea></td>
+                                    <td colspan="5"><textarea th:value="*{financialDetails}"  th:field="*{financialDetails}"></textarea></td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div class="col-md-9">
+                        <div class="col-md-12">
                             TOTAL ESTATE VALUE (LESS LIABILITIES, MORTGAGES, OVERDRAFTS, CREDIT CARDS ETC) £
-                        </div><div class="3"><input type="text"></div> <br>
+                        <input type="text" th:value="*{estateValue}"  th:field="*{estateValue}"></div> <br>
                         <div class="col-md-10">
-                            APPROXIMATE INHERITANCE TAX TO PAY £ <input type="text">
+                            APPROXIMATE INHERITANCE TAX TO PAY £ <input type="text" th:value="*{taxToPay}"  th:field="*{taxToPay}">
                         </div><br>
+                        <div class="col-md-5">
+                            <input type="submit" class="btn btn-success" value="SAVE">
+                        </div>
 
                     </form>
 

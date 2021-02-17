@@ -117,12 +117,11 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <!--<a href="/client/add" class="btn btn-success">Add Client</a>-->
                                         <a th:href="@{/clientAdd/{id}(id=*{id})}" class="btn btn-success">Add Client</a>
-                                        <a th:class="pull-right" href="/showWillsPage" class="btn btn-default">Dashboard</a>
+                                        <a sec:authorize="hasAuthority('ROLE_WILLS')" href="/showWillsPage" class="btn btn-warning">Dashboard</a>
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger navbar-right" th:href="@{/company}">Cancel</a>
+                                        <a class="btn btn-success center-block navbar-right" th:href="@{/company}">Company Search</a>
                                     </td>
                                 </tr>
 
