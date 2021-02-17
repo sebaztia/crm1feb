@@ -1,6 +1,7 @@
 package com.crm.controller;
 
 import com.crm.service.ClientService;
+import com.crm.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,12 @@ import java.util.List;
 public class MainController {
 
     private ClientService clientService;
+    private CompanyService companyService;
 
     @Autowired
-    public MainController(ClientService clientService) {
+    public MainController(ClientService clientService, CompanyService companyService) {
         this.clientService = clientService;
+        this.companyService = companyService;
     }
 
     @GetMapping("/showWillsPage")
@@ -30,10 +33,10 @@ public class MainController {
 
 
 
-        model.addAttribute("yesClient", yesClient);
-        model.addAttribute("southSales", southSales);
-        model.addAttribute("midwestSales", midwestSales);
-        model.addAttribute("noClient", noClient);
+        model.addAttribute("totalCompanies", companyService.countAll());
+        model.addAttribute("totalClients", clientService.countAll());
+        model.addAttribute("executed", clientService.countByClearedTrue());
+        model.addAttribute("deceased", clientService.countByDeceasedTrue());
 
         //now add sales by lure type
         /*List<Integer> inshoreSales = Arrays.asList(4074, 3455, 4112);

@@ -18,7 +18,7 @@
                             <a th:href="@{/home}"> Home
                             </a>
                         </li>
-                        <li th:classappend="${module == 'dashboard' ? 'active' : ''}">
+                        <li sec:authorize="hasAuthority('ROLE_WILLS')" th:classappend="${module == 'dashboard' ? 'active' : ''}">
                             <a th:href = "@{/showWillsPage}"> Dashboard </a>
                         </li>
                         <li th:classappend="${module == 'enquiry' ? 'active' : ''}">

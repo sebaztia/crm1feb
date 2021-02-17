@@ -4,106 +4,90 @@
 
 <head>
     <title>Steele Rose CRM Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta content="This shows CRM Steele Rose" name="description" />
     <object th:include="fragments/head :: head" th:remove="tag"></object>
-
-    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashbord.css}">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body class="page-container-bg-solid">
 <div th:include="fragments/topmenuheader :: header"></div>
-<div class="page-container">
-    <div class="page-content-wrapper">
-        <div class="page-head" style="background-color:#eff3f8;padding-top:40px">
-            <div class="container">
-                <p class="pull-right">
-                    Hi <span sec:authentication="principal.username">User</span>
-                </p>
-                <div class="row" style="margin-bottom:30px">
-                    <div class="col-md-6">
-                        <h2>Wills Dashboard</h2>
-                    </div>
+
+<div class="container">
+    <div class="row" style="margin-top:20px">
+        <p class="pull-right">
+            Hi <span sec:authentication="principal.username">User</span>
+        </p>
+        <div class="row" style="margin-bottom:30px">
+            <div class="col-md-6">
+                <h2>Wills Dashboard</h2>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h3 th:text="${totalCompanies}"> </h3>
+                    <p> Total Companies </p>
                 </div>
-                <div class="row" style="margin-bottom:150px">
-
-                    <div class="col-md-6" style="margin-top:20px">
-                        <div id="salesByRegion" style="width:100%; height:400px;"></div>
-                    </div>
-
-                    <div class="col-md-6" style="margin-top:20px">
-                        <table>
-                            <tr><td> <a style="width: 190px; height: 40px;" th:href="@{/companyAdd}" class="btn btn-success"> Create a Company </a> </td></tr>
-                            <tr><td> <a style="width: 190px; height: 40px;" th:href="@{/company}" class="btn btn-primary"> Company Search </a> </td></tr>
-                            <tr><td> <a style="width: 190px; height: 40px;" th:href="@{/listClient}" class="btn btn-primary"> Client Search </a> </td></tr>
-                        </table>
-                    </div>
-
+                <div class="icon">
+                    <i class="fa fa-google-wallet" aria-hidden="true"></i>
                 </div>
+                <a href="#" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-green">
+                <div class="inner">
+                    <h3 th:text="${totalClients}"> </h3>
+                    <p> Total Clients </p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                </div>
+                <a href="#" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-orange">
+                <div class="inner">
+                    <h3 th:text="${deceased}"> </h3>
+                    <p> Deceased </p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-comments" aria-hidden="true"></i>
+                </div>
+                <a href="#" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h3 th:text="${executed}"> </h3>
+                    <p> EXEC </p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-building"></i>
+                </div>
+                <a href="#" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
-</div>
-<div th:include="fragments/homefooter :: footer"></div>
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    $(function () {
-        Highcharts.setOptions({
-            lang: {
-                decimalPoint: '.',
-                thousandsSep: ','
-            }
-        });
 
-        drawSalesByRegionChart();
-    });
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-xs-4"><a th:href="@{/companyAdd}" class="btn btn-info center-block"> Create a Company </a></div>
+        <div class="col-xs-4"><a th:href="@{/company}" class="btn btn-success center-block"> Company Search </a></div>
+        <div class="col-xs-4"><a th:href="@{/listClient}" class="btn btn-primary center-block"> Client Search </a></div>
+    </div>
 
 
-    function drawSalesByRegionChart() {
-        var salesByRegionChart = Highcharts.chart('salesByRegion', {
-            chart: {
-                type: 'pie',
-                margin: 40,
-                options3d: {
-                    enabled: true,
-                    alpha: 45,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'Clients Cleared Count'
-            },
-            tooltip: {
-                pointFormat: "count: {point.y:,.0f}"
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    depth: 35
-                }
-            },
-            series: [{
-                name: 'Regions',
-                colorByPoint:true,
-                data: [{
-                    name: 'Clients YES Checked',
-                    y: /*[[${yesClient}]]*/ 0
-                },{
-                    name: 'South',
-                    y: /*[[${southSales}]]*/ 0
-                },{
-                    name: 'Midwest',
-                    y: /*[[${midwestSales}]]*/ 0
-                },{
-                    name: 'Clients NO Checked',
-                    y: /*[[${noClient}]]*/ 0
-                }]
-            }]
-        });
-    }
+</div><!--
+<div th:include="fragments/homefooter :: footer"></div>-->
 
-
-    /*]]>*/
-</script>
 </body>
 </html>

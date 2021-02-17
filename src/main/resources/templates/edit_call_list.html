@@ -51,6 +51,7 @@
                 <div class="form-group" th:classappend="${#fields.hasErrors('contactName')}? 'has-error':''">
                     <label for="name">Name</label>
                     <input type="hidden" class="form-control" id="id" th:field="*{id}"/>
+                    <input type="hidden" class="form-control" id="clientId" th:field="*{clientId}"/>
                     <span th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}" class="text-danger"></span>
                     <input type="text" class="form-control" id="name" th:field="*{contactName}" placeholder="Name"/>
                 </div>

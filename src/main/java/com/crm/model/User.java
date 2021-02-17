@@ -15,6 +15,7 @@ public class User {
     private String email;
     private String password;
     private Boolean admin;
+    private Boolean willRole;
     private String resetPasswordToken;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -97,6 +98,10 @@ public class User {
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
     }
+
+    public Boolean getWillRole() { return willRole; }
+
+    public void setWillRole(Boolean willRole) { this.willRole = willRole; }
 
     @Override
     public String toString() {

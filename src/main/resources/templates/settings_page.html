@@ -4,11 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Steele Rose CRM Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
     <object th:include="fragments/head :: head" th:remove="tag"></object>
 
     <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
@@ -27,25 +23,29 @@
     </div>
     <br/>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-10">
             <div th:switch="${users}">
                 <h2 th:case="null">No users yet!</h2>
                 <div th:case="*">
                     <h2>Users</h2>
-                    <table width="50%;">
+                    <table width="50%;" class="table colored-header datatable project-list">
                         <thead>
                         <tr>
                             <th>Name</th>
                             <th>Email</th>
                             <th colspan="2">Rights</th>
+                            <th colspan="2">Wills </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="user : ${users}">
                             <td th:text="${user.username}"></td>
                             <td th:text="${user.email}"></td>
-                            <td><span th:if="${!user.admin}"><a th:href="@{/makeAdmin/{id}(id=${user.id})}">Make Admin</a></span></td><td>
+                            <td><span th:unless="${user.admin}"><a th:href="@{/makeAdmin/{id}(id=${user.id})}">Make Admin</a></span></td><td>
                             <span th:if="${user.admin}"><a th:href="@{/removeAdmin/{id}(id=${user.id})}">Remove Admin</a></span></td>
+
+                            <td><span th:unless="${user.willRole}"><a th:href="@{/makeWillRole/{id}(id=${user.id})}"> Yes </a></span></td>
+                            <td><span th:if="${user.willRole}"><a th:href="@{/removeWillRole/{id}(id=${user.id})}"> No </a></span></td>
                         </tr>
                         </tbody>
                     </table>

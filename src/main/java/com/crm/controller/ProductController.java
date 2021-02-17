@@ -65,7 +65,7 @@ public class ProductController {
     public String chart(Model model) {
 
         //first, add the regional sales
-        Integer northeastSales = 17089;
+     /*   Integer northeastSales = 17089;
         Integer westSales = 10603;
         Integer midwestSales = 5223;
         Integer southSales = 10111;
@@ -73,7 +73,7 @@ public class ProductController {
         model.addAttribute("northeastSales", northeastSales);
         model.addAttribute("southSales", southSales);
         model.addAttribute("midwestSales", midwestSales);
-        model.addAttribute("westSales", westSales);
+        model.addAttribute("westSales", westSales);*/
 
         //now add sales by lure type
         List<Integer> inshoreSales = Arrays.asList(4074, 3455, 4112);

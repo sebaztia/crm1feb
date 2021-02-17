@@ -29,4 +29,6 @@ public class CompanyService {
     }
 
     public Company getCompanyById(Long id) { return companyRepository.findOne(id); }
+
+    public Long countAll() { return  companyRepository.count(); }
 }

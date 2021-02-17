@@ -13,7 +13,7 @@
 
 <body class="page-container-bg-solid">
 <div th:include="fragments/topmenuheader :: header"></div>
-<div class="page-container">
+<div class="page-container" style="margin-bottom: 20px;">
     <div class="page-content-wrapper">
         <div class="page-head" style="background-color:#eff3f8;padding-top:2px">
             <div class="container">
@@ -30,7 +30,7 @@
 
                         <table>
                             <tr style="padding-bottom: 10px;"><td> <a style="width: 170px; height: 40px;" th:href="@{/callList}" class="btn btn-primary"> CALLS </a> </td></tr>
-                            <tr style="padding-bottom: 10px;"><td> <a style="width: 170px; height: 40px;" th:href="@{/showWillsPage}" class="btn btn-info"> WILLS </a> </td></tr>
+                            <tr style="padding-bottom: 10px;"><td sec:authorize="hasAuthority('ROLE_WILLS')"> <a style="width: 170px; height: 40px;" th:href="@{/showWillsPage}" class="btn btn-info"> WILLS </a> </td></tr>
 
                             <tr><td> <a th:cellpadding="2" style="width: 170px; height: 40px;" th:href="@{/home}" class="btn widget-bg-color-purple"> PROBATE </a> </td></tr>
                         </table>
@@ -98,13 +98,13 @@
                 }
             },
             series: [{
-                name: 'Inshore',
+                name: 'Deceased',
                 data: /*[[${inshoreSales}]]*/ []
             }, {
-                name: 'Nearshore',
+                name: 'EXEC YES',
                 data: /*[[${nearshoreSales}]]*/ []
             }, {
-                name: 'Offshore',
+                name: 'EXEC NO',
                 data: /*[[${offshoreSales}]]*/ []
             }]
         });

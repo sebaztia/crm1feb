@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/css/**",
                         "/img/**",
                         "/webjars/**").permitAll()
-                    .antMatchers("/products/delete/**").hasAuthority("ROLE_ADMIN")
+                    .antMatchers("/showWillsPage").hasAuthority("ROLE_WILLS")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

@@ -85,6 +85,23 @@ public class UserServiceImpl implements UserService {
             roles.remove(role1);
             user.setAdmin(false);
             user= userRepository.save(user);
+        } else  if (type.equals("makeWillRole")) {
+            Collection<Role> roles = user.getRoles();
+            roles.add(new Role("ROLE_WILLS"));
+            user.setWillRole(true);
+            user=  userRepository.save(user);
+        }
+        else if (type.equals("removeWillRole")) {
+            Collection<Role> roles = user.getRoles();
+            Role role1 = null;
+            for (Role role: roles) {
+                if (role.getName().equals("ROLE_WILLS")) {
+                    role1 = role;
+                }
+            }
+            roles.remove(role1);
+            user.setWillRole(false);
+            user= userRepository.save(user);
         }
         return user;
     }
