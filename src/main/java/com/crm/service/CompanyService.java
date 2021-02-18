@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CompanyService {
@@ -31,4 +33,6 @@ public class CompanyService {
     public Company getCompanyById(Long id) { return companyRepository.findOne(id); }
 
     public Long countAll() { return  companyRepository.count(); }
+
+    public List<Company> findAll() { return  companyRepository.findAll(); }
 }

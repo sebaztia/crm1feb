@@ -305,12 +305,12 @@
         </div>
 
         <div class="tab-pane active" id="2">
-            <div class="row" style="padding-top: 60px;">
-                <form th:action="@{/submit_message}" method="post" style="max-width: 420px; margin: 0 auto;">
+            <div class="row" style="padding-top: 30px;">
+                <form th:action="@{/submit_message}" method="post" style="margin: 0 auto;">
                     <div class="col-md-8">
                         <input type="hidden" class="form-control" name="id" th:field="*{show_client.id}"/>
                         <textarea class="form-control" name="message" id="message-text"
-                                  placeholder="Write your comments..."
+                                  placeholder="Write your comments..." maxlength="1900"
                                   required autofocus></textarea>
                     </div>
                     <div class="col-md-2">
@@ -319,7 +319,7 @@
                 </form>
             </div>
 
-            <div class="row" style="padding-top: 30px;">
+            <div class="row" style="padding-top: 50px;">
                 <div class="col-md-10">
 
                     <table class="table table-bordered table-striped">

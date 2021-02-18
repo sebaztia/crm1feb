@@ -63,12 +63,12 @@ public class CompanyController {
     }
 
     @GetMapping("company")
-    public String index(Model model, @RequestParam("page") Optional<Integer> page,
-                        @RequestParam("size") Optional<Integer> size) {
-        page.ifPresent(p -> currentPage = p);
+    public String index(Model model/*, @RequestParam("page") Optional<Integer> page,
+                        @RequestParam("size") Optional<Integer> size*/) {
+        /*page.ifPresent(p -> currentPage = p);
         size.ifPresent(s -> pageSize = s);
 
-        Pageable pageable = /*PageRequest.of*/ new PageRequest(currentPage - 1, pageSize);
+        Pageable pageable = *//*PageRequest.of*//* new PageRequest(currentPage - 1, pageSize);
         Page<Company> companyPage = companyService.getAllProduct(pageable);
 
         model.addAttribute("companyPage", companyPage);
@@ -79,7 +79,9 @@ public class CompanyController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
-        }
+        }*/
+
+        model.addAttribute("companyList", companyService.findAll());
 
         return "company_list";
     }
