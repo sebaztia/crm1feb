@@ -3,16 +3,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Steele Rose CRM Management</title>
-    <meta content="This shows CRM Steele Rose" name="description" />
-    <object th:include="fragments/head :: head" th:remove="tag"></object>
+    <title>Steele Rose CRM</title>
+    <!--<object th:include="fragments/head :: head" th:remove="tag"></object>-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/dashbord.css}">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <style type="text/css">
+        .card-box {
+            border-radius: 20px;
+        }
+    </style>
 </head>
 
 <body class="page-container-bg-solid">
-<div th:include="fragments/topmenuheader :: header"></div>
-
+<!--<div th:include="fragments/topmenuheader :: header"></div>-->
+<div th:replace="fragm :: menu"></div>
 <div class="container">
     <div class="row" style="margin-top:20px">
         <p class="pull-right">
@@ -80,9 +85,10 @@
     <br>
     <br>
     <div class="row">
-        <div class="col-xs-4"><a th:href="@{/companyAdd}" class="btn btn-info center-block"> Create a Company </a></div>
-        <div class="col-xs-4"><a th:href="@{/company}" class="btn btn-success center-block"> Company Search </a></div>
-        <div class="col-xs-4"><a th:href="@{/listClient}" class="btn btn-primary center-block"> Client Search </a></div>
+        <div class="col-xs-3"><a th:href="@{/companyAdd}" class="btn btn-info center-block"> Create a Company </a></div>
+        <div class="col-xs-3"><a th:href="@{/company}" class="btn btn-success center-block"> Company Search </a></div>
+        <div class="col-xs-3"><a th:href="@{/listClient}" class="btn btn-primary center-block"> Client Search </a></div>
+        <div class="col-xs-3"><a th:href="@{/activeClient}" class="btn btn-warning center-block">Active Client</a></div>
     </div>
 
 

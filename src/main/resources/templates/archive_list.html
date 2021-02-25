@@ -9,19 +9,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
     <script type="text/javascript">
         $(document).ready(function() {
             $('#data-table').DataTable({'order': [0, 'desc']});
         });
     </script>
-    <object th:include="fragments/head :: head" th:remove="tag"></object>
+    <!--<object th:include="fragments/head :: head" th:remove="tag"></object>
 
-    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />-->
 </head>
 
 <body class="page-container-bg-solid">
-<div th:include="fragments/topmenuheader :: header"></div>
+<!--<div th:include="fragments/topmenuheader :: header"></div>-->
+<div th:replace="fragm :: menu">Static Menu</div>
 <div class="container">
     <p class="pull-right">
         Welcome <b><span sec:authentication="principal.username">User</span></b>

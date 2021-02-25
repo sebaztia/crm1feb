@@ -5,7 +5,8 @@
       layout:decorate="~{fragments/layout.html}">
 <head>
     <title>CRM System</title>
-    <style type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <!--<style type="text/css">
         .page-header-menu {
             background: #444d58;
             margin-top: 10px;
@@ -14,12 +15,13 @@
         .page-header {
             margin-top: 2px;
         }
-    </style>
+    </style>-->
 </head>
 <body>
 
 <div layout:fragment="content" th:remove="tag">
-    <div th:include="fragments/topmenuheader :: header"></div>
+    <!--<div th:include="fragments/topmenuheader :: header"></div>-->
+    <div th:replace="fragm :: menu">Static Menu</div>
 
     <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,7 +45,7 @@
             <div class="navbar-form">
                 <div class="col-sm-3 col-md-3">
                     <div class="input-group">
-                        <input type="search" class="form-control" placeholder="Search Product" id="inputFilter">
+                        <input type="search" placeholder="Search here..." id="inputFilter">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default" id="searchButton"><i
                                     class="glyphicon glyphicon-search"></i>

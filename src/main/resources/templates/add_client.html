@@ -70,6 +70,12 @@
                                 </option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Priority: &nbsp;&nbsp;</label>
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{priority}">Low</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{priority}">Medium</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="3" th:field="*{priority}">High</label>
+                        </div>
                        <!-- <div class="form-group">
                             <label> EXEC: &nbsp; </label> <input type="checkbox" id="cleared" th:field="*{cleared}" th:checked="*{cleared}">&nbsp;&nbsp;
                         </div>

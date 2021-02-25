@@ -57,9 +57,13 @@
 
         <div class="row" style="padding-top: 25px;">
             <div class="col-md-4">
-
+                    Priority: &nbsp;&nbsp;
+                    <label><input type="radio" name="choice-radio" value="1" th:field="*{priority}">Low</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label><input type="radio" name="choice-radio" value="2" th:field="*{priority}">Medium</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label><input type="radio" name="choice-radio" value="3" th:field="*{priority}">High</label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
+                <a sec:authorize="hasAuthority('ROLE_WILLS')" th:href="@{/activeClient}" class="btn btn-warning">Active Client</a>
                 <a sec:authorize="hasAuthority('ROLE_WILLS')" href="/showWillsPage" class="btn btn-info">Dashboard</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a th:href="@{/editClient/{id}(id=${show_client.id})}" class="btn btn-primary">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" id="cleared" th:field="*{cleared}"

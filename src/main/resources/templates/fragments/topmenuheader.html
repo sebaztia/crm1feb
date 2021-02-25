@@ -1,4 +1,4 @@
-<header>
+<header xmlns:th="http://www.thymeleaf.org">
     <div class="page-header">
         <div class="page-header-top">
             <div class="container">
@@ -18,17 +18,17 @@
                             <a th:href="@{/home}"> Home
                             </a>
                         </li>
-                        <li sec:authorize="hasAuthority('ROLE_WILLS')" th:classappend="${module == 'dashboard' ? 'active' : ''}">
+                        <li sec:authorize="hasAuthority('ROLE_WILLS')">
                             <a th:href = "@{/showWillsPage}"> Dashboard </a>
                         </li>
-                        <li th:classappend="${module == 'enquiry' ? 'active' : ''}">
+                        <li>
                             <a th:href = "@{/callList}"> Enquiry </a>
                         </li>
-                        <li th:classappend="${module == 'messages' ? 'active' : ''}">
+                        <li>
                             <a th:href = "@{/legacyClient}"> Legacy Client </a>
                         </li>
-                        <li th:classappend="${module == 'tasks' ? 'active' : ''}">
-                            <a href="#" th:href="@{/showArchive}"> Archive </a>
+                        <li>
+                            <a th:href="@{/showArchive}"> Archive </a>
                         </li>
                      </ul>
                     <ul class="nav navbar-nav pull-right">

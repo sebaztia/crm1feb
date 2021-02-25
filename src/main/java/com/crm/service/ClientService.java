@@ -35,4 +35,6 @@ public class ClientService {
     public Long countAll() { return  clientRepository.count(); }
 
     public Integer countByDeceasedTrue() { return clientRepository.countByDeceasedTrue(); }
+
+    public List<Client> findByStatus(String status) { return  clientRepository.findByStatus(status); }
 }

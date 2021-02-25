@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/active_client.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+</head>
+<body>
+<div th:replace="fragm :: menu"></div>
+<section class="section">
+    <h1>Active Client Dashboard</h1>
+</section>
+
+<div class="drag-container">
+    <ul class="drag-list">
+        <li class="drag-column drag-column-on-hold">
+      <span class="drag-column-header">
+        <h2>First Contact</h2>
+        <svg class="drag-header-more" data-target="options1" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+
+            <div class="drag-options" id="options1"></div>
+
+            <ul class="drag-inner-list" id="first">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${firstLists}">
+                    <div class="panel panel-info" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <object th:text="*{first.email}"></object>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="drag-column drag-column-in-progress">
+      <span class="drag-column-header">
+        <h2>Instructions</h2>
+        <svg class="drag-header-more" data-target="options2" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options2"></div>
+            <ul class="drag-inner-list" id="instructions">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${instructionsList}">
+                    <div class="panel panel-default" align="center">
+                    <div class="panel-heading fa-sticky-note-o">
+                        <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                    </div>
+                    <div class="panel-body">
+                        <object th:text="*{first.email}"></object>
+                        <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                        <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                        <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                    </div>
+                </div></li>
+            </ul>
+        </li>
+        <li class="drag-column drag-column-needs-review">
+      <span class="drag-column-header">
+        <h2>Drafting</h2>
+        <svg data-target="options3" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options3"></div>
+            <ul class="drag-inner-list" id="drafting">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${draftingList}">
+                    <div class="panel panel-warning" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <object th:text="*{first.email}"></object>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="drag-column drag-column-approved">
+      <span class="drag-column-header">
+        <h2>Signing</h2>
+        <svg data-target="options4" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options4"></div>
+            <ul class="drag-inner-list" id="signing">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${signingList}">
+                    <div class="panel panel-default" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <object th:text="*{first.email}"></object>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+
+        <!--=============================-->
+
+        <li class="drag-column drag-column-checking">
+      <span class="drag-column-header">
+        <h2>Checking</h2>
+        <svg data-target="options5" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options5"></div>
+            <ul class="drag-inner-list" id="checking">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${checkingList}">
+                    <div class="panel panel-success" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <object th:text="*{first.email}"></object>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+        <li class="drag-column drag-column-stored">
+      <span class="drag-column-header">
+        <h2>Stored</h2>
+        <svg data-target="options6" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options6"></div>
+            <ul class="drag-inner-list" id="stored">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${storedList}">
+                    <div class="panel panel-default" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <object th:text="*{first.email}"></object>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+        <li class="drag-column drag-column-archived">
+      <span class="drag-column-header">
+        <h2>Archived</h2>
+        <svg data-target="options7" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options7"></div>
+            <ul class="drag-inner-list" id="archived">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${archivedList}">
+                    <div class="panel panel-danger" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <object th:text="*{first.email}"></object>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js"></script>
+<script src="scripts/active_client.js"></script>
+</body>
+</html>

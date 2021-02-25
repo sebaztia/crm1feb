@@ -2,17 +2,15 @@
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>Steele Rose CRM Management</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <meta content="This shows CRM Steele Rose" name="description" />
-    <object th:include="fragments/head :: head" th:remove="tag"></object>
-
-    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+<head th:replace="fragm :: html_head">
+    <!--<object th:include="fragments/head :: head" th:remove="tag"></object>-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+   <!-- <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />-->
 </head>
 
 <body class="page-container-bg-solid">
-<div th:include="fragments/topmenuheader :: header"></div>
+<!--<div th:include="fragments/topmenuheader :: header"></div>-->
+<div th:replace="fragm :: menu"></div>
 <div class="page-container" style="margin-bottom: 20px;">
     <div class="page-content-wrapper">
         <div class="page-head" style="background-color:#eff3f8;padding-top:2px">
