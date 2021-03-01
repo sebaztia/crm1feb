@@ -36,7 +36,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <object th:text="*{first.email}"></object>
+                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            </div>
+                            <p th:text="*{first.email}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -58,7 +65,14 @@
                         <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                     </div>
                     <div class="panel-body">
-                        <object th:text="*{first.email}"></object>
+                        <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                            <span class="label label-default">Elapsed:</span>&nbsp;
+                            <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                            <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                            <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                            <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                        </div>
+                        <p th:text="*{first.email}"></p>
                         <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                         <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                         <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -79,7 +93,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <object th:text="*{first.email}"></object>
+                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            </div>
+                            <p th:text="*{first.email}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -101,7 +122,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <object th:text="*{first.email}"></object>
+                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            </div>
+                            <p th:text="*{first.email}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -127,7 +155,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <object th:text="*{first.email}"></object>
+                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            </div>
+                            <p th:text="*{first.email}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -150,7 +185,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <object th:text="*{first.email}"></object>
+                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            </div>
+                            <p th:text="*{first.email}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -173,7 +215,15 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <object th:text="*{first.email}"></object>
+                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
+                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
+                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
+                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                                <br/>
+                            </div>
+                            <p th:text="*{first.email}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>

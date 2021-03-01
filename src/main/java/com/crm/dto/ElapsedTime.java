@@ -1,6 +1,16 @@
 package com.crm.dto;
 
-public class ElapsedTime {
+import lombok.Data;
 
-    private int day;
+public @Data
+class ElapsedTime {
+    private long day;
+    private long hours;
+
+    public ElapsedTime(long day, long hours) {
+        this.day = day;
+        this.hours = hours;
+    }
+
+    public ElapsedTime() { }
 }

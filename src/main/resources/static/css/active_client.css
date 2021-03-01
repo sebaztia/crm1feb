@@ -98,10 +98,16 @@ ul {
 .drag-inner-list {
     min-height: 50px;
 }
+.panel-default, .panel-success, .panel-danger, .panel-warning, .panel-info {
+    height: 133px;
+}
+i {
+    color: #ED1C24;
+}
 
 .drag-item {
     margin: 10px;
-    height: 100px;
+    height: 134px;
     border-radius: 10px;
     background: #BCEDF5;/*rgba(0, 0, 0, 0.4);*/
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);

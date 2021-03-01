@@ -1,6 +1,7 @@
 package com.crm.controller;
 
 import com.crm.config.MyAccessDeniedHandler;
+import com.crm.dto.ClientDto;
 import com.crm.model.Client;
 import com.crm.service.ClientService;
 import org.slf4j.Logger;
@@ -27,13 +28,13 @@ public class ActiveClientController {
 
     @RequestMapping("/activeClient")
     public String activeClient(Model model) {
-        List<Client> firstLists = clientService.findByStatus("First Contact");
-        List<Client> instructionsList = clientService.findByStatus("Instructions");
-        List<Client> draftingList = clientService.findByStatus("Drafting");
-        List<Client> signingList = clientService.findByStatus("Signing");
-        List<Client> checkingList = clientService.findByStatus("Checking");
-        List<Client> storedList = clientService.findByStatus("Stored");
-        List<Client> archivedList = clientService.findByStatus("Archived");
+        List<ClientDto> firstLists = clientService.findByStatus("First Contact");
+        List<ClientDto> instructionsList = clientService.findByStatus("Instructions");
+        List<ClientDto> draftingList = clientService.findByStatus("Drafting");
+        List<ClientDto> signingList = clientService.findByStatus("Signing");
+        List<ClientDto> checkingList = clientService.findByStatus("Checking");
+        List<ClientDto> storedList = clientService.findByStatus("Stored");
+        List<ClientDto> archivedList = clientService.findByStatus("Archived");
 
         model.addAttribute("firstLists", firstLists);
         model.addAttribute("instructionsList", instructionsList);

@@ -1,12 +1,16 @@
 package com.crm.service;
 
+import com.crm.dto.ClientDto;
+import com.crm.dto.ElapsedTime;
 import com.crm.model.Client;
 import com.crm.model.Company;
 import com.crm.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
@@ -36,5 +40,52 @@ public class ClientService {
 
     public Integer countByDeceasedTrue() { return clientRepository.countByDeceasedTrue(); }
 
-    public List<Client> findByStatus(String status) { return  clientRepository.findByStatus(status); }
+    public List<ClientDto> findByStatus(String status) {
+        return  toDto(clientRepository.findByStatus(status));
+    }
+
+    private ClientDto toDto(Client client) {
+        ClientDto dto = new ClientDto();
+
+        dto.setId(client.getId());
+        dto.setName(client.getName());
+        dto.setEmail(client.getEmail());
+        dto.setPriority(client.getPriority());
+        dto.setElapsedTime(setElapsed(client.getUpdatedAt()));
+        return dto;
+    }
+
+    private ElapsedTime setElapsed(Date updatedAt) {
+        long different = new Date().getTime() - updatedAt.getTime();
+
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
+
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+/*        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+        different = different % minutesInMilli;
+
+        long elapsedSeconds = different / secondsInMilli;
+
+        System.out.printf(
+                "%d days, %d hours, %d minutes, %d seconds%n",
+                elapsedDays,
+                elapsedHours, elapsedMinutes, elapsedSeconds);*/
+
+        return new ElapsedTime(elapsedDays, elapsedHours);
+    }
+
+    private List<ClientDto> toDto(List< Client > clientList) {
+        if (clientList == null) {
+            return null;
+        }
+        return clientList.stream().map(this::toDto).collect(Collectors.toList());
+    }
 }
