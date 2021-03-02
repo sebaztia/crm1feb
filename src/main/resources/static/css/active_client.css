@@ -101,6 +101,12 @@ ul {
 .panel-default, .panel-success, .panel-danger, .panel-warning, .panel-info {
     height: 133px;
 }
+.panel-body {
+    padding: 5px;
+}
+#timeEl .drag-item .row .pull-right {
+    padding-right: 12px;
+}
 i {
     color: #ED1C24;
 }

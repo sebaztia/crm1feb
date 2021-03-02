@@ -20,7 +20,7 @@
 </section>
 
 <div class="drag-container">
-    <ul class="drag-list">
+    <ul class="drag-list" id="timeEl">
         <li class="drag-column drag-column-on-hold">
       <span class="drag-column-header">
         <h2>First Contact</h2>
@@ -36,14 +36,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                                <span class="label label-default">Elapsed:</span>&nbsp;
-                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
                             </div>
-                            <p th:text="*{first.email}"></p>
+                            <p th:text="*{first.companyName}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -65,14 +65,14 @@
                         <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                     </div>
                     <div class="panel-body">
-                        <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                            <span class="label label-default">Elapsed:</span>&nbsp;
-                            <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                            <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                            <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                            <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                        <div class="row">
+                            <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                <span class="label label-default">Elapsed:</span>&nbsp;
+                                <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                            </div>
                         </div>
-                        <p th:text="*{first.email}"></p>
+                        <p th:text="*{first.companyName}"></p>
                         <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                         <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                         <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -93,14 +93,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                                <span class="label label-default">Elapsed:</span>&nbsp;
-                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
                             </div>
-                            <p th:text="*{first.email}"></p>
+                            <p th:text="*{first.companyName}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -122,14 +122,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                                <span class="label label-default">Elapsed:</span>&nbsp;
-                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
                             </div>
-                            <p th:text="*{first.email}"></p>
+                            <p th:text="*{first.companyName}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -155,14 +155,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                                <span class="label label-default">Elapsed:</span>&nbsp;
-                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
                             </div>
-                            <p th:text="*{first.email}"></p>
+                            <p th:text="*{first.companyName}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -185,14 +185,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                                <span class="label label-default">Elapsed:</span>&nbsp;
-                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
                             </div>
-                            <p th:text="*{first.email}"></p>
+                            <p th:text="*{first.companyName}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
@@ -215,15 +215,14 @@
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
                         </div>
                         <div class="panel-body">
-                            <div class="pull-right" th:if="*{first.elapsedTime.day > 0 || first.elapsedTime.hours > 0}">
-                                <span class="label label-default">Elapsed:</span>&nbsp;
-                                <i th:if="*{first.elapsedTime.day > 0 && first.elapsedTime.day < 2}">1Day</i>
-                                <i th:if="*{first.elapsedTime.day > 1 }" th:text="*{first.elapsedTime.day + 'Days'}"></i>
-                                <i th:if="*{first.elapsedTime.hours > 0 && first.elapsedTime.hours < 2 }">1Hour</i>
-                                <i th:if="*{first.elapsedTime.hours > 1 }" th:text="*{first.elapsedTime.hours + 'Hours'}"></i>
-                                <br/>
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
                             </div>
-                            <p th:text="*{first.email}"></p>
+                            <p th:text="*{first.companyName}"></p>
                             <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
                             <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
                             <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>

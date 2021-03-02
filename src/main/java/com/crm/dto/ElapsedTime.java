@@ -1,15 +1,11 @@
 package com.crm.dto;
 
-import lombok.Data;
-
-public @Data
-class ElapsedTime {
+@Deprecated
+public class ElapsedTime {
     private long day;
-    private long hours;
 
-    public ElapsedTime(long day, long hours) {
+    public ElapsedTime(long day) {
         this.day = day;
-        this.hours = hours;
     }
 
     public ElapsedTime() { }

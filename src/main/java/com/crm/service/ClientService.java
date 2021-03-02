@@ -51,11 +51,12 @@ public class ClientService {
         dto.setName(client.getName());
         dto.setEmail(client.getEmail());
         dto.setPriority(client.getPriority());
-        dto.setElapsedTime(setElapsed(client.getUpdatedAt()));
+        dto.setElapsedDays(setElapsed(client.getUpdatedAt()));
+        dto.setCompanyName(client.getCompany().getName());
         return dto;
     }
 
-    private ElapsedTime setElapsed(Date updatedAt) {
+    private /*ElapsedTime*/ Long setElapsed(Date updatedAt) {
         long different = new Date().getTime() - updatedAt.getTime();
 
         long secondsInMilli = 1000;
@@ -64,10 +65,10 @@ public class ClientService {
         long daysInMilli = hoursInMilli * 24;
 
         long elapsedDays = different / daysInMilli;
-        different = different % daysInMilli;
+/*        different = different % daysInMilli;
 
         long elapsedHours = different / hoursInMilli;
-/*        different = different % hoursInMilli;
+        different = different % hoursInMilli;
 
         long elapsedMinutes = different / minutesInMilli;
         different = different % minutesInMilli;
@@ -77,9 +78,10 @@ public class ClientService {
         System.out.printf(
                 "%d days, %d hours, %d minutes, %d seconds%n",
                 elapsedDays,
-                elapsedHours, elapsedMinutes, elapsedSeconds);*/
+                elapsedHours, elapsedMinutes, elapsedSeconds);
 
-        return new ElapsedTime(elapsedDays, elapsedHours);
+        return new ElapsedTime(elapsedDays);*/
+        return elapsedDays;
     }
 
     private List<ClientDto> toDto(List< Client > clientList) {

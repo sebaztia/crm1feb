@@ -12,6 +12,8 @@ class ClientDto {
     private String email;
     private int priority;
     private Date updatedAt;
-    private ElapsedTime elapsedTime;
 
+    private long elapsedDays;
+    private String companyName;
+ //   private ElapsedTime elapsedTime;
 }
