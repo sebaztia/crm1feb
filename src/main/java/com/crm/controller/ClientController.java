@@ -122,7 +122,7 @@ public class ClientController {
     }
 
     @PostMapping("/submit_message")
-    public String submit_message(HttpServletRequest request, Model model) {
+    public String submit_message(HttpServletRequest request, RedirectAttributes attributes) {
         String message = request.getParameter("message");
         String author = userService.findByEmail(request.getUserPrincipal().getName()).getUsername();
         Long id = Long.valueOf(request.getParameter("id"));
@@ -130,7 +130,7 @@ public class ClientController {
         Client client = clientService.getClientById(id);
         Comments comments = new Comments(message, author, client);
         commentsService.save(comments);
-        List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
+       /* List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
         List<Comments> commentsList = commentsService.findByClient(client);
 
@@ -145,7 +145,36 @@ public class ClientController {
             personalAsset.setClientId(id);
         }
         model.addAttribute("personalAsset", personalAsset);
-        return "sow_client";
+        return "sow_client";*/
+
+        attributes.addAttribute("id", id);
+        return "redirect:/showClient/{id}";
+    }
+
+    @PostMapping("/editComment")
+    public String editComment(HttpServletRequest request, RedirectAttributes attributes) {
+
+        String message = request.getParameter("comMessage");
+        Long id = Long.valueOf(request.getParameter("cId"));
+        Long comId = Long.valueOf(request.getParameter("comId"));
+
+     //   logger.info("clientId:" + id + ", commentId:" + comId + ", message:" + message);
+        Comments comments = commentsService.findOne(comId);
+        comments.setMessage(message);
+        commentsService.save(comments);
+
+        attributes.addAttribute("id", id);
+        return "redirect:/showClient/{id}";
+    }
+
+    @PostMapping("/deleteModalComments")
+    public String deleteModalComments(HttpServletRequest request, RedirectAttributes attributes) {
+        Long id = Long.valueOf(request.getParameter("clttId"));
+        Long comId = Long.valueOf(request.getParameter("delId"));
+      //  logger.info("clientId:" + id + ", commentId:" + comId);
+        commentsService.deleteComment(comId);
+        attributes.addAttribute("id", id);
+        return "redirect:/showClient/{id}";
     }
 
     @PostMapping("show_client_save")

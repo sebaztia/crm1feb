@@ -314,7 +314,7 @@
                     <div class="col-md-8">
                         <input type="hidden" class="form-control" name="id" th:field="*{show_client.id}"/>
                         <textarea class="form-control" name="message" id="message-text"
-                                  placeholder="Write your comments..." maxlength="1900"
+                                  placeholder="Write your comments..." maxlength="1900" rows="4"
                                   required autofocus></textarea>
                     </div>
                     <div class="col-md-2">
@@ -345,6 +345,12 @@
                                     </div>
                                     <div class="comment-actions">
                                         <div class="reply">
+                                            <div class="btn-group align-top">
+                                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#editUserModal" th:comment-message="${task.message}" th:client-id="${show_client.id}"
+                                                        th:comment-id="${task.id}" onclick="editModalContent(this, this.getAttribute('client-id'), this.getAttribute('comment-id'), this.getAttribute('comment-message'));"><i class="fa fa-edit"></i></button>
+
+                                                <button sec:authorize="hasAuthority('ADMIN')" class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#deleteModal" th:comment-id="${task.id}" th:client-id="${show_client.id}" onclick="deleteModalContent(this, this.getAttribute('client-id'), this.getAttribute('comment-id'));"> &nbsp;&nbsp; <i class="fa fa-remove"></i></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -396,12 +402,79 @@
 
 <hr/>
 
+<!-- Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/editComment}" method="post">
+                <div class="modal-body">
+                    <div>
+                        <input type="hidden" class="form-control" id="commentId" name="comId"/>
+                        <input type="hidden" class="form-control" id="clientId" name="cId"/>
+                        <textarea id="commentMessage" class="form-control" rows="5" name="comMessage" placeholder="Write your comments..." required autofocus></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save changes">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalTitle">Delete Comments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/deleteModalComments}" method="post">
+                <div class="modal-body">
+                    Are you sure you want to delete this message?
+                    <input type="hidden" class="form-control" id="cltId" name="clttId"/>
+                    <input type="hidden" class="form-control" id="deleteId" name="delId"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit"  class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+   function editModalContent(t, clientId, commentId, message) {
+       var modal = $('#editUserModal');
+       // change modal content
+     //  console.log('clientId:' + clientId + ', commentId:' + commentId + ', message:' + message);
+       modal.find('#commentId').val(commentId);
+       modal.find('#clientId').val(clientId);
+       modal.find('#commentMessage').val(message);
+   }
 
+   function deleteModalContent(t, clientId, commentId) {
+       var modal = $('#deleteModal');
+       // change modal content
+    //   console.log('clientId:' + clientId + ', commentId:' + commentId);
+       modal.find('#deleteId').val(commentId);
+       modal.find('#cltId').val(clientId);
+   }
+</script>
 </body>
 </html>

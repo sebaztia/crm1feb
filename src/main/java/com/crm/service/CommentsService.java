@@ -26,4 +26,7 @@ public class CommentsService {
     public void save(Comments comments) {
         commentsRepository.save(comments);
     }
+
+    public Comments findOne(Long id) { return commentsRepository.findOne(id); }
+    public void deleteComment(Long id) { commentsRepository.delete(id);}
 }
