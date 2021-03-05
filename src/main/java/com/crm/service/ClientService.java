@@ -22,7 +22,7 @@ public class ClientService {
         this.clientRepository = clientRepository;
     }
 
-    public void saveClient(Client client) { clientRepository.save(client); }
+    public Client saveClient(Client client) { return clientRepository.save(client); }
 
     public List<Client> findByCompany(Company company) { return clientRepository.findByCompany(company); }
 

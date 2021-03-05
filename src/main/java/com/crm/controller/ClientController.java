@@ -1,9 +1,12 @@
 package com.crm.controller;
 
 import com.crm.model.*;
+import com.crm.repository.SrcRepository;
 import com.crm.service.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,13 +30,15 @@ public class ClientController {
     private StaffService staffService;
     private FileUploadService fileUploadService;
     private PersonalAssetService personalAssetService;
+    private RecentActivityService recentActivityService;
+    private SrcRepository srcRepository;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
     public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService,
                             ClientStatusService clientStatusService, CallListService callListService, StaffService staffService,
-                            FileUploadService fileUploadService, PersonalAssetService personalAssetService) {
+                            FileUploadService fileUploadService, PersonalAssetService personalAssetService, RecentActivityService recentActivityService, SrcRepository srcRepository) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
@@ -43,6 +48,8 @@ public class ClientController {
         this.staffService = staffService;
         this.fileUploadService = fileUploadService;
         this.personalAssetService = personalAssetService;
+        this.recentActivityService = recentActivityService;
+        this.srcRepository = srcRepository;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -80,7 +87,14 @@ public class ClientController {
             model.addAttribute("statusList", statusList);
             return "add_client";
         }
-        clientService.saveClient(client);
+        client = clientService.saveClient(client);
+        String author = getUsername();
+        SrcPng srcPng = srcRepository.findByAuthor(author);
+        if (null == srcPng) {
+            srcPng = srcRepository.findByAuthor("Sebastian");
+        }
+        recentActivityService.save(new RecentActivity(client.getName(), "addedClient", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
+                srcPng.getSrc(), client.getId()));
         attributes.addAttribute("id", client.getId());
         return "redirect:/showClient/{id}";
     }
@@ -126,10 +140,18 @@ public class ClientController {
         String message = request.getParameter("message");
         String author = userService.findByEmail(request.getUserPrincipal().getName()).getUsername();
         Long id = Long.valueOf(request.getParameter("id"));
-
+      //  author ="Dora";
         Client client = clientService.getClientById(id);
         Comments comments = new Comments(message, author, client);
-        commentsService.save(comments);
+        comments = commentsService.save(comments);
+
+        SrcPng srcPng = srcRepository.findByAuthor(author);
+        if (null == srcPng) {
+            srcPng = srcRepository.findByAuthor("Sebastian");
+        }
+
+        recentActivityService.save(new RecentActivity(client.getName(), message, comments.getId(), "addComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
+                srcPng.getSrc()));
        /* List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
         List<Comments> commentsList = commentsService.findByClient(client);
@@ -162,7 +184,22 @@ public class ClientController {
         Comments comments = commentsService.findOne(comId);
         comments.setMessage(message);
         commentsService.save(comments);
-
+        RecentActivity recentActivity = recentActivityService.findByCommentId(comId);
+        logger.info("recentActivity:" + recentActivity);
+                String author = getUsername();
+        if (null == recentActivity) {
+            SrcPng srcPng = srcRepository.findByAuthor(author);
+            if (null == srcPng) {
+                srcPng = srcRepository.findByAuthor("Sebastian");
+            }
+            recentActivityService.save(new RecentActivity(comments.getClient().getName(), message, comments.getId(), "editedComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
+                    srcPng.getSrc()));
+        } else {
+            recentActivity.setAuthor(author);
+            recentActivity.setType("editedComment");
+            recentActivity.setOnMessage(message);
+            recentActivityService.save(recentActivity);
+        }
         attributes.addAttribute("id", id);
         return "redirect:/showClient/{id}";
     }
@@ -206,5 +243,9 @@ public class ClientController {
 
         attributes.addAttribute("id", personalAsset.getClientId());
         return "redirect:/showClient/{id}";
+    }
+    private String getUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userService.findByEmail(authentication.getName()).getUsername();
     }
 }

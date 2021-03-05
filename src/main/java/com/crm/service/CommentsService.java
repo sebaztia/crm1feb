@@ -23,8 +23,8 @@ public class CommentsService {
         return commentsRepository.findByClient(client, new Sort(Sort.Direction.DESC, "id"));
     }
 
-    public void save(Comments comments) {
-        commentsRepository.save(comments);
+    public Comments save(Comments comments) {
+        return commentsRepository.save(comments);
     }
 
     public Comments findOne(Long id) { return commentsRepository.findOne(id); }

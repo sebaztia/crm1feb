@@ -4,6 +4,7 @@ import com.crm.config.MyAccessDeniedHandler;
 import com.crm.dto.ClientDto;
 import com.crm.model.Client;
 import com.crm.service.ClientService;
+import com.crm.service.RecentActivityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ import java.util.List;
 public class ActiveClientController {
 
     private ClientService clientService;
+    private RecentActivityService recentActivityService;
     private static Logger logger = LoggerFactory.getLogger(ActiveClientController.class);
 
     @Autowired
-    public ActiveClientController(ClientService clientService) {
+    public ActiveClientController(ClientService clientService, RecentActivityService recentActivityService) {
         this.clientService = clientService;
+        this.recentActivityService = recentActivityService;
     }
 
     @RequestMapping("/activeClient")
@@ -43,6 +46,7 @@ public class ActiveClientController {
         model.addAttribute("checkingList", checkingList);
         model.addAttribute("storedList", storedList);
         model.addAttribute("archivedList", archivedList);
+        model.addAttribute("recentActivities", recentActivityService.findAll());
 
         return "active_client_dashboard";
     }

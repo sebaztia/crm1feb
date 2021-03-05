@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/active_client.css">
     <link rel="stylesheet" type="text/css" href="css/navigation.css">
-
+    <link rel="stylesheet" type="text/css" href="css/site_activity.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
@@ -17,6 +17,9 @@
 <div th:replace="fragm :: menu"></div>
 <section class="section">
     <h1>Active Client Dashboard</h1>
+    <div id="main" class="pull-right">
+        <button class="openbtn" onclick="openNav()">&#9776; Show Menu</button>
+    </div>
 </section>
 
 <div class="drag-container">
@@ -232,6 +235,77 @@
             </ul>
         </li>
     </ul>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <div class="phenom-list">
+        <div class="phenom" th:each="recent : ${recentActivities}">
+            <div class="phenom-creator">
+                <div><img height="30" width="30" th:src="*{recent.src}">
+                </div>
+            </div>
+
+            <div class="phenom-desc">
+                <span><b th:text="*{recent.author}"></b></span>
+                <span th:if="*{recent.type == 'addComment' || recent.type == 'editedComment'}">on</span>
+                <span th:if="*{recent.type == 'moved'}">moved</span>
+                <span th:if="*{recent.type == 'addedClient'}">created</span>
+               <b th:text="*{recent.status}">Status</b>
+                <span th:unless="*{recent.moveFrom == null}">
+                    from <b th:text="*{recent.moveFrom}"></b> to <b th:text="*{recent.moveTo}"></b>
+                </span><br>
+                at <span th:text="${#dates.format(recent.updatedAt, 'dd MMM HH:mm')}">Time</span><p th:if="*{recent.type == 'editedComment'}">(edited)</p>
+                <div>
+                    <div class="action-comment" dir="auto">
+                            <p th:unless="*{recent.onMessage == null}" style="white-space: pre-wrap;" th:text="*{recent.onMessage}"> </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phenom-meta quiet"><span class="js-spinner hide"><span
+                    class="spinner spinner--inline mod-left small"></span> Sending…&nbsp;</span>
+            </div>
+        </div>
+
+        <!--<div class="phenom mod-comment-type">
+            <div class="phenom-creator">
+                <div class="member js-show-mem-menu" idmember="5ffd7a105fe8282808ab6101"><img
+                        class="member-avatar" height="30" width="30"
+                        src="https://trello-members.s3.amazonaws.com/5ffd7a105fe8282808ab6101/add310d81c8807d3d2fdd4150efb940a/30.png"
+                        srcset="https://trello-members.s3.amazonaws.com/5ffd7a105fe8282808ab6101/add310d81c8807d3d2fdd4150efb940a/30.png 1x, https://trello-members.s3.amazonaws.com/5ffd7a105fe8282808ab6101/add310d81c8807d3d2fdd4150efb940a/50.png 2x"
+                        alt="Dean Steele (dean_steele)" title="Dean Steele (dean_steele)"><span
+                        class="member-gold-badge" title="This member has Trello Gold."></span></div>
+            </div>
+            <div class="phenom-desc"><span class="inline-member js-show-mem-menu"
+                                           idmember="5ffd7a105fe8282808ab6101"><span
+                    class="u-font-weight-bold">Dean Steele</span></span> on <a class="action-card"
+                                                                               href="https://trello.com/c/ba2LeUWx">Website
+                Content</a> <span class="inline-spacer"> </span><span class="phenom-date quiet"><a
+                    class="date js-hide-on-sending js-highlight-link past"
+                    dt="2021-01-16T21:58:16.850Z"
+                    href="/c/ba2LeUWx/3-website-content#comment-600361788972f8418a1c4c8b"
+                    title="16 January 2021 21:58">16 Jan at 21:58</a></span>
+                <div class="comment-container">
+                    <div class="action-comment markeddown js-comment" dir="auto">
+                        <div class="current-comment js-friendly-links js-open-card"><p>Not totally
+                            sure mine is the 'style' we are going for, if we need more formal - I'll
+                            tart it up.</p>
+                            <p>I'll try and get one out on 'sustainable business' as a lifestyle by
+                                Monday morning too as I think it also helps us with our brand
+                                identity a little internally. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="phenom-meta quiet"><span class="js-spinner hide"><span
+                    class="spinner spinner&#45;&#45;inline mod-left small"></span> Sending…&nbsp;</span>
+            </div>
+
+        </div>-->
+
+    </div>
 </div>
 
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js"></script>
