@@ -22,6 +22,8 @@ public class Comments implements Serializable {
     private String message;
     @NotEmpty
     private String author;
+    @Column(length = 1600)
+    private String editedAuthor;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)

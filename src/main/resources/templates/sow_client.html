@@ -353,7 +353,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    </div>
+                                    <span class="label label-warning" th:unless="*{task.editedAuthor == null}">Edited History:</span>
+                                        <span th:unless="*{task.editedAuthor == null}" th:text="*{task.editedAuthor}"></span>
+
                             </li>
                         </tr>
                         </tbody>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -175,7 +176,7 @@ public class ClientController {
 
     @PostMapping("/editComment")
     public String editComment(HttpServletRequest request, RedirectAttributes attributes) {
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yy hh:mm");
         String message = request.getParameter("comMessage");
         Long id = Long.valueOf(request.getParameter("cId"));
         Long comId = Long.valueOf(request.getParameter("comId"));
@@ -183,10 +184,12 @@ public class ClientController {
      //   logger.info("clientId:" + id + ", commentId:" + comId + ", message:" + message);
         Comments comments = commentsService.findOne(comId);
         comments.setMessage(message);
+        String author = getUsername();
+        comments.setEditedAuthor((comments.getEditedAuthor()==null? "":comments.getEditedAuthor())
+                + author + " on " + sdf.format(new Date()) + ", ");
         commentsService.save(comments);
         RecentActivity recentActivity = recentActivityService.findByCommentId(comId);
-        logger.info("recentActivity:" + recentActivity);
-                String author = getUsername();
+
         if (null == recentActivity) {
             SrcPng srcPng = srcRepository.findByAuthor(author);
             if (null == srcPng) {

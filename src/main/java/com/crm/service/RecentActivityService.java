@@ -18,7 +18,7 @@ public class RecentActivityService {
         this.recentActivityRepository = recentActivityRepository;
     }
 
-    public List<RecentActivity> findAll() { return recentActivityRepository.findAll(new Sort(Sort.Direction.DESC, "id")); }
+    public List<RecentActivity> findAll() { return recentActivityRepository.findAll(new Sort(Sort.Direction.DESC, "updatedAt")); }
     public RecentActivity findByCommentId(Long commentId) { return recentActivityRepository.findByCommentId(commentId); }
     public RecentActivity save(RecentActivity recentActivity) { return recentActivityRepository.save(recentActivity); }
 }

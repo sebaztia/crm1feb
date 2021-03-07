@@ -256,7 +256,7 @@
                 <span th:unless="*{recent.moveFrom == null}">
                     from <b th:text="*{recent.moveFrom}"></b> to <b th:text="*{recent.moveTo}"></b>
                 </span><br>
-                at <span th:text="${#dates.format(recent.updatedAt, 'dd MMM HH:mm')}">Time</span><p th:if="*{recent.type == 'editedComment'}">(edited)</p>
+                <span th:text="${#dates.format(recent.updatedAt, 'dd MMM')}">Time</span> at <span th:text="${#dates.format(recent.updatedAt, 'HH:mm')}">Time</span><p th:if="*{recent.type == 'editedComment'}">(edited)</p>
                 <div>
                     <div class="action-comment" dir="auto">
                             <p th:unless="*{recent.onMessage == null}" style="white-space: pre-wrap;" th:text="*{recent.onMessage}"> </p>
