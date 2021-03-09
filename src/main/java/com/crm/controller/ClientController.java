@@ -1,11 +1,13 @@
 package com.crm.controller;
 
+import com.crm.config.Utility;
 import com.crm.model.*;
 import com.crm.repository.SrcRepository;
 import com.crm.service.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +30,6 @@ public class ClientController {
     private CompanyService companyService;
     private ClientService clientService;
     private CommentsService commentsService;
-    private UserService userService;
     private ClientStatusService clientStatusService;
     private CallListService callListService;
     private StaffService staffService;
@@ -33,17 +37,18 @@ public class ClientController {
     private PersonalAssetService personalAssetService;
     private RecentActivityService recentActivityService;
     private SrcRepository srcRepository;
+    private JavaMailSender mailSender;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
     @Autowired
-    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, UserService userService,
+    public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, JavaMailSender mailSender,
                             ClientStatusService clientStatusService, CallListService callListService, StaffService staffService,
                             FileUploadService fileUploadService, PersonalAssetService personalAssetService, RecentActivityService recentActivityService, SrcRepository srcRepository) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
-        this.userService = userService;
+        this.mailSender = mailSender;
         this.clientStatusService = clientStatusService;
         this.callListService = callListService;
         this.staffService = staffService;
@@ -88,13 +93,14 @@ public class ClientController {
             model.addAttribute("statusList", statusList);
             return "add_client";
         }
+        Long clientId = client.getId();
         client = clientService.saveClient(client);
         String author = getUsername();
         SrcPng srcPng = srcRepository.findByAuthor(author);
         if (null == srcPng) {
             srcPng = srcRepository.findByAuthor("Sebastian");
         }
-        recentActivityService.save(new RecentActivity(client.getName(), "addedClient", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
+        recentActivityService.save(new RecentActivity(client.getName(), clientId == null ? "addedClient" : "editedClient", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
                 srcPng.getSrc(), client.getId()));
         attributes.addAttribute("id", client.getId());
         return "redirect:/showClient/{id}";
@@ -139,7 +145,7 @@ public class ClientController {
     @PostMapping("/submit_message")
     public String submit_message(HttpServletRequest request, RedirectAttributes attributes) {
         String message = request.getParameter("message");
-        String author = userService.findByEmail(request.getUserPrincipal().getName()).getUsername();
+        String author = getUsername();
         Long id = Long.valueOf(request.getParameter("id"));
       //  author ="Dora";
         Client client = clientService.getClientById(id);
@@ -153,24 +159,7 @@ public class ClientController {
 
         recentActivityService.save(new RecentActivity(client.getName(), message, comments.getId(), "addComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
                 srcPng.getSrc()));
-       /* List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
-        model.addAttribute("statusList", statusList);
-        List<Comments> commentsList = commentsService.findByClient(client);
-
-        model.addAttribute("show_client", client);
-        model.addAttribute("linkedComments", commentsList);
-        List<FileUpload> allFileNameInBucket = fileUploadService.getAllByClientId(id);
-        model.addAttribute("s3FileNames", allFileNameInBucket);
-
-        PersonalAsset personalAsset = personalAssetService.findByClientId(id);
-        if (personalAsset == null) {
-            personalAsset = new PersonalAsset();
-            personalAsset.setClientId(id);
-        }
-        model.addAttribute("personalAsset", personalAsset);
-        return "sow_client";*/
-
-        attributes.addAttribute("id", id);
+         attributes.addAttribute("id", id);
         return "redirect:/showClient/{id}";
     }
 
@@ -218,9 +207,16 @@ public class ClientController {
     }
 
     @PostMapping("show_client_save")
-    public String showClientSave(@ModelAttribute("show_client") Client client, BindingResult result, Model model, RedirectAttributes attributes) {
+    public String showClientSave(HttpServletRequest request, @ModelAttribute("show_client") Client client, BindingResult result, Model model, RedirectAttributes attributes) {
 
         clientService.saveClient(client);
+        SrcPng srcPng = srcRepository.findByAuthor(getUsername());
+        if (null == srcPng) {
+            srcPng = srcRepository.findByAuthor("Sebastian");
+        }
+        recentActivityService.save(new RecentActivity(client.getName(),"editedClient",
+                (srcPng.getAuthor().equals("Sebastian")? getUsername() : srcPng.getAuthor()), srcPng.getSrc(), client.getId()));
+
         Boolean deceased = client.getDeceased();
         if (null != deceased && deceased) {
             //    logger.info("deceased=== TRue" );
@@ -233,10 +229,31 @@ public class ClientController {
                 callList.setClientId(client.getId());
                 callList.setStaff(staffService.findByStaffName("Stacie"));
                 callListService.saveCallList(callList);
+                String deceasedLink = Utility.getSiteURL(request) + "/callList";
+                try {
+                    sendEmail("daniel@steelerose.co.uk", deceasedLink, client.getName());
+                } catch (MessagingException | UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }
         attributes.addAttribute("id", client.getId());
         return "redirect:/showClient/{id}";
+    }
+
+    private void sendEmail(String recipientEmail, String deceasedLink, String clientName)
+            throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setFrom("donotreply@steelerose.co.uk", "Steele Rose Support");
+        helper.setTo(recipientEmail);
+        String content = "<p>Hello Daniel,</p>"
+                + "<p>Please check the <a href=\"" + deceasedLink + "\"> CRM </a>.</p>"
+                + "<p> <b>" + clientName + "</b> is <b>deceased</b>, please make a comment on this client to let Stacie know what needs to be done.</p>";
+
+        helper.setSubject("Client " + clientName+ " is Deceased");
+        helper.setText(content, true);
+        mailSender.send(message);
     }
 
     @PostMapping("personal_asset_save")
@@ -248,7 +265,6 @@ public class ClientController {
         return "redirect:/showClient/{id}";
     }
     private String getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return userService.findByEmail(authentication.getName()).getUsername();
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

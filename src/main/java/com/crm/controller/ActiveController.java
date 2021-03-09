@@ -6,12 +6,9 @@ import com.crm.model.SrcPng;
 import com.crm.repository.SrcRepository;
 import com.crm.service.ClientService;
 import com.crm.service.RecentActivityService;
-import com.crm.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +20,12 @@ public class ActiveController {
     private ClientService clientService;
     private RecentActivityService recentActivityService;
     private SrcRepository srcRepository;
-    private UserService userService;
 
     @Autowired
-    public ActiveController(ClientService clientService, RecentActivityService recentActivityService, SrcRepository srcRepository,
-                            UserService userService) {
+    public ActiveController(ClientService clientService, RecentActivityService recentActivityService, SrcRepository srcRepository) {
         this.clientService = clientService;
         this.recentActivityService = recentActivityService;
         this.srcRepository = srcRepository;
-        this.userService = userService;
     }
 
     private static Logger logger = LoggerFactory.getLogger(ActiveController.class);
@@ -77,7 +71,6 @@ public class ActiveController {
             return "Archived";
     }
     private String getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return userService.findByEmail(authentication.getName()).getUsername();
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

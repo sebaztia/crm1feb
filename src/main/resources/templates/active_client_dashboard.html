@@ -252,6 +252,7 @@
                 <span th:if="*{recent.type == 'addComment' || recent.type == 'editedComment'}">on</span>
                 <span th:if="*{recent.type == 'moved'}">moved</span>
                 <span th:if="*{recent.type == 'addedClient'}">created</span>
+                <span th:if="*{recent.type == 'editedClient'}">edited</span>
                <b th:text="*{recent.status}">Status</b>
                 <span th:unless="*{recent.moveFrom == null}">
                     from <b th:text="*{recent.moveFrom}"></b> to <b th:text="*{recent.moveTo}"></b>
