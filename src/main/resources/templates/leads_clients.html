@@ -22,20 +22,20 @@
 
 <div th:replace="fragm :: menu"></div>
 
-<div class="container" style="width: 1450px;">
+<div class="container" style="width: 1200px;">
 
         <h1 class="h3" style="text-align: center">Leads Client List</h1><br>
         <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <table id="myTable" class="table table-striped" style="width:100%">
+                        <table id="myTable" class="table table-striped">
                             <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Record Date</th>
                                 <th>Client Name</th>
                                 <th>Staff Name</th>
-                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -46,12 +46,11 @@
                                 <td th:unless="*{calls.clientId == null}">
                                     <a th:href="@{showClient/{id}(id=*{calls.clientId})}" th:text="${calls.contactName}">  </a>
                                 </td>
-
                                 <td th:text="*{calls.staff.staffName}">Staff Name</td>
-
-                                <td><span class="badge bg-success">Active</span></td>
+                                <td><!--<span class="badge bg-success">Active</span>-->
+                                    <a th:href="@{/callListEdit/{id}(id=${calls.id})}" class="btn btn-primary">Details</a>
+                                </td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
