@@ -1,5 +1,6 @@
 package com.crm.controller;
 
+import com.crm.service.CallListService;
 import com.crm.service.ClientService;
 import com.crm.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.Arrays;
@@ -17,19 +19,21 @@ public class MainController {
 
     private ClientService clientService;
     private CompanyService companyService;
+    private CallListService callListService;
 
     @Autowired
-    public MainController(ClientService clientService, CompanyService companyService) {
+    public MainController(ClientService clientService, CompanyService companyService, CallListService callListService) {
         this.clientService = clientService;
         this.companyService = companyService;
+        this.callListService = callListService;
     }
 
     @GetMapping("/showWillsPage")
     public String showWillsPage(Model model) {
-        Integer yesClient = clientService.countByClearedTrue();
+       /* Integer yesClient = clientService.countByClearedTrue();
         Integer noClient = clientService.countByClearedFalseOrClearedNull();
         Integer midwestSales = 1;
-        Integer southSales = 1;
+        Integer southSales = 1;*/
 
 
 
@@ -47,6 +51,12 @@ public class MainController {
         model.addAttribute("nearshoreSales", nearshoreSales);
         model.addAttribute("offshoreSales", offshoreSales);*/
         return "wills_dashboard";
+    }
+
+    @GetMapping("/probatePage")
+    public String probatePage(Model model) {
+        model.addAttribute("totalLeadsClients", callListService.countByIsLeads());
+        return "probate_dashboard";
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)

@@ -1,5 +1,6 @@
 package com.crm.service;
 
+import com.crm.dto.UserDto;
 import com.crm.model.Register;
 import com.crm.model.Role;
 import com.crm.model.User;
@@ -13,10 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -129,6 +127,77 @@ public class UserServiceImpl implements UserService {
         user.setResetPasswordToken(null);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public List<UserDto> getUserDto() {
+        List<User> userList = userRepository.findAll();
+
+        if (userList == null)
+            return null;
+        return userList.stream().map(this:: toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDto getUserDto(Long userId) {
+        return toDto(userRepository.findOne(userId));
+    }
+
+    @Override
+    public Map updateRoles(Long userId, Boolean admin, Boolean roleUser, Boolean wills, Boolean leads) {
+
+        User user = userRepository.findOne(userId);
+        HashMap<String, String> result = new HashMap<>();
+        if (null != user) {
+            Collection<Role> roles = user.getRoles();
+            if (admin) {
+                roles.add(new Role("ADMIN"));
+                user.setAdmin(true);
+            }
+            else {
+                roles =  roles.stream().filter( r -> !r.getName().equals("ADMIN")).collect(Collectors.toList());
+                user.setAdmin(false);
+            }
+            if (roleUser)
+                roles.add(new Role("ROLE_USER"));
+            else
+                roles =  roles.stream().filter( r -> !r.getName().equals("ROLE_USER")).collect(Collectors.toList());
+            if (wills) {
+                roles.add(new Role("ROLE_WILLS"));
+                user.setWillRole(true);
+            }
+            else {
+                roles =  roles.stream().filter( r -> !r.getName().equals("ROLE_WILLS")).collect(Collectors.toList());
+                user.setWillRole(false);
+            }
+            if (leads)
+                roles.add(new Role("LEADS"));
+            else
+                roles =  roles.stream().filter( r -> !r.getName().equals("LEADS")).collect(Collectors.toList());
+
+            user.setRoles(roles);
+            userRepository.save(user);
+        }
+        result.put("status", "successful");
+        return result;
+    }
+
+    private UserDto toDto(User user) {
+        UserDto dto = new UserDto();
+
+        Collection<Role> roles = user.getRoles();
+        for (Role role: roles) {
+            if (role.getName().equals("ADMIN"))
+                dto.setAdmin(true);
+            else if (role.getName().equals("ROLE_USER"))
+                dto.setRoleUser(true);
+            else if (role.getName().equals("ROLE_WILLS"))
+                dto.setWills(true);
+            else if (role.getName().equals("LEADS"))
+                dto.setLeads(true);
+        }
+
+        return dto;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){

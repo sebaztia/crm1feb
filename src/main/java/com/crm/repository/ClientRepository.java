@@ -16,4 +16,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     Integer countByClearedFalseOrClearedNull();
     Integer countByDeceasedTrue();
     List<Client> findByStatus(String status);
+    Client findByCallListId(Integer callListId);
 }

@@ -2,12 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Steele Rose CRM Management</title>
 
     <object th:include="fragments/head :: head" th:remove="tag"></object>
 
-    <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="scripts/settings.js"></script>
+
 </head>
 <body>
 <div th:include="fragments/topmenuheader :: header"></div>
@@ -23,7 +25,7 @@
     </div>
     <br/>
     <div class="row">
-        <div class="col-md-10">
+        <!--<div class="col-md-10">
             <div th:switch="${users}">
                 <h2 th:case="null">No users yet!</h2>
                 <div th:case="*">
@@ -51,7 +53,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="col-md-4">
             <h2>Staff List</h2>
@@ -82,11 +84,28 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="col-md-4 panel panel-primary" style="padding-bottom: 10px">
+            <h2>User List</h2>
+            <select id="users" style="width: 195px; height: 24px;">
+                <option value="-1" th:text="---Select---"></option>
+                <option th:each="status : ${users}"
+                        th:value="${status.id}"
+                        th:text="${status.username}">
+                </option>
+            </select>
+            &nbsp;<button id="assignRole" value="Save" class="btn btn-success">Assign Role</button>
+            <br>
+            <span id="resultLbl" style="background: #9fe4ea"></span><br>
+            <div>
+                <input type="checkbox" id="admin" th:text="ADMIN">&nbsp;&nbsp;
+                <input type="checkbox" id="user" th:text="ROLE_USER">&nbsp;&nbsp;
+                <input type="checkbox" id="wills" th:text="WILLS">&nbsp;&nbsp;
+                <input type="checkbox" id="leads" th:text="LEADS">
+            </div>
+        </div>
     </div>
 </div>
-
-
-
 
 </body>
 </html>

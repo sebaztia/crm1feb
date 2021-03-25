@@ -1,6 +1,7 @@
 package com.crm.controller;
 
 import com.crm.config.MyAccessDeniedHandler;
+import com.crm.dto.UserDto;
 import com.crm.model.CallList;
 import com.crm.model.Role;
 import com.crm.model.Staff;
@@ -9,6 +10,8 @@ import com.crm.service.CallListService;
 import com.crm.service.ClientService;
 import com.crm.service.StaffService;
 import com.crm.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -73,8 +77,28 @@ public class HomeController {
         model.addAttribute("users", getUserList());
         model.addAttribute("staffList", staffService.getAllStaff());
         model.addAttribute("staff", new Staff());
+        model.addAttribute("userDto", userService.getUserDto());
 
         return "settings_page";
+    }
+    @GetMapping("/getUserDto")
+    public @ResponseBody UserDto getUserDto(@RequestParam Long userId)
+    {
+       // String json = null;
+        return userService.getUserDto(userId);
+       /* // List<Object[]> list = countryService.getStatesByCountry(countryId);
+        try {
+            json = new ObjectMapper().writeValueAsString(dto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        logger.info("=== json: " + json);*/
+    }
+    @GetMapping("/updateUserDto")
+    public @ResponseBody Object updateUserDto(@RequestParam Long userId, @RequestParam Boolean admin, @RequestParam Boolean roleUser,
+                      @RequestParam Boolean wills, @RequestParam Boolean leads)
+    {
+        return userService.updateRoles(userId, admin, roleUser, wills, leads);
     }
 
     @GetMapping("/makeWillRole/{id}")

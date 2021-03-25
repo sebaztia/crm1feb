@@ -90,4 +90,8 @@ public class ClientService {
         }
         return clientList.stream().map(this::toDto).collect(Collectors.toList());
     }
+
+    public Client findByCallListId(Integer callListId) {
+        return clientRepository.findByCallListId(callListId);
+    }
 }

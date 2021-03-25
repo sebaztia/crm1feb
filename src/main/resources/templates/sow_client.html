@@ -70,9 +70,10 @@
                        th:checked="*{cleared}"> &nbsp;&nbsp; EXEC &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="checkbox" id="deceased" th:field="*{deceased}"
-                       th:checked="*{cleared}"> &nbsp;&nbsp; DECEASED &nbsp;&nbsp;&nbsp;&nbsp;
+                       th:checked="*{deceased}"> &nbsp;&nbsp; DECEASED &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="submit" class="btn btn-success" value="UPDATE">
+                <a sec:authorize="hasAuthority('LEADS')" th:unless="*{callListId == null}" th:disabled="*{isLeads}" th:href="@{/makeLeads/{id}(id=${show_client.id})}" class="btn btn-danger">Leads</a>
             </div>
         </div>
     </form>

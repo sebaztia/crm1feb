@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Steele Rose CRM</title>
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
+</head>
+<body>
+
+<div th:replace="fragm :: menu"></div>
+
+<div class="container" style="width: 1450px;">
+
+        <h1 class="h3" style="text-align: center">Leads Client List</h1><br>
+        <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="myTable" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Record Date</th>
+                                <th>Client Name</th>
+                                <th>Staff Name</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="calls:${listCalls}">
+                                <td><img th:src="*{'https://bootdey.com/img/Content/avatar/avatar' + ((calls.id % 8) == 0 ? 2 : (calls.id % 8)) + '.png'}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>
+                                <td th:text="*{#dates.format(calls.recordDate, 'dd-MM-yyyy HH:mm')}">Record Date</td>
+                                <td th:if="*{calls.clientId == null}" th:text="${calls.contactName}">Client Name</td>
+                                <td th:unless="*{calls.clientId == null}">
+                                    <a th:href="@{showClient/{id}(id=*{calls.clientId})}" th:text="${calls.contactName}">  </a>
+                                </td>
+
+                                <td th:text="*{calls.staff.staffName}">Staff Name</td>
+
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+        </div>
+</div>
+
+
+</body>
+</html>

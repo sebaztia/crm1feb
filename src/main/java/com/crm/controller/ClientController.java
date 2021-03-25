@@ -208,8 +208,6 @@ public class ClientController {
 
     @PostMapping("show_client_save")
     public String showClientSave(HttpServletRequest request, @ModelAttribute("show_client") Client client, BindingResult result, Model model, RedirectAttributes attributes) {
-
-        clientService.saveClient(client);
         SrcPng srcPng = srcRepository.findByAuthor(getUsername());
         if (null == srcPng) {
             srcPng = srcRepository.findByAuthor("Sebastian");
@@ -228,14 +226,18 @@ public class ClientController {
                 callList.setQuery("This client is DECEASED, the status is " + client.getStatus() + ".");
                 callList.setClientId(client.getId());
                 callList.setStaff(staffService.findByStaffName("Stacie"));
-                callListService.saveCallList(callList);
+                callList = callListService.saveCallList(callList);
                 String deceasedLink = Utility.getSiteURL(request) + "/callList";
                 try {
                     sendEmail("daniel@steelerose.co.uk", deceasedLink, client.getName());
                 } catch (MessagingException | UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+                client.setCallListId(callList.getId());
+                clientService.saveClient(client);
             }
+        } else {
+            clientService.saveClient(client);
         }
         attributes.addAttribute("id", client.getId());
         return "redirect:/showClient/{id}";

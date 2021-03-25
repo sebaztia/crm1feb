@@ -33,6 +33,8 @@ public class Client implements Serializable {
     private Boolean cleared;
     private Boolean deceased;
     private int priority;
+    private Boolean isLeads;
+    private Integer callListId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)

@@ -50,6 +50,7 @@ class CallList {
     private Boolean emailDone;
     @Column(name = "call_done")
     private Boolean callDone;
+    private Boolean isLeads;
 
     @Column(name = "archive")
     private Boolean archive;
