@@ -6,6 +6,7 @@ import com.crm.repository.SrcRepository;
 import com.crm.service.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +39,9 @@ public class ClientController {
     private RecentActivityService recentActivityService;
     private SrcRepository srcRepository;
     private JavaMailSender mailSender;
+
+    @Value("${daniel.email}")
+    private String emailTo;
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
 
@@ -229,7 +233,7 @@ public class ClientController {
                 callList = callListService.saveCallList(callList);
                 String deceasedLink = Utility.getSiteURL(request) + "/callList";
                 try {
-                    sendEmail("daniel@steelerose.co.uk", deceasedLink, client.getName());
+                    sendEmail(emailTo, deceasedLink, client.getName());
                 } catch (MessagingException | UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

@@ -86,7 +86,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary" value="Save">Update</button>
                 <a class="btn btn-danger" th:href="@{/callList}">Back to call list</a>
-                <a sec:authorize="hasAuthority('LEADS')" th:disabled="*{isLeads}" th:href="@{/makeLeadsCallList/{id}(id=${id})}" class="btn btn-danger pull-right">Leads</a>
+                <a sec:authorize="hasAuthority('LEADS')" th:if="*{clientId == null}" th:disabled="*{isLeads}" th:href="@{/makeLeadsCallList/{id}(id=${id})}" class="btn btn-danger pull-right">Leads</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a sec:authorize="hasAuthority('LEADS')" class="btn btn-primary" th:href="@{/leadsClient}">Back to leads</a>
             </form>
         </div>
