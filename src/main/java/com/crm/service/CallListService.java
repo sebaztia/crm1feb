@@ -23,7 +23,7 @@ public class CallListService {
     }
 
     public List<CallList> getAllCallLists() {
-        return callListRepository.findAllByArchiveFalseOrArchiveNullAndIsLeadsFalseOrIsLeadsNull();
+        return callListRepository.findByArchiveNullAndIsLeadsNull();
     }
 
     public List<CallList> getAllLeadsClient() {
@@ -58,7 +58,7 @@ public class CallListService {
 
     public void rollbackCallListById(Integer id) {
         CallList callList = callListRepository.findOne(id);
-        callList.setArchive(false);
+        callList.setArchive(null);
         this.callListRepository.save(callList);
     }
 

@@ -36,7 +36,7 @@ public class ClientService {
 
     public Integer countByClearedFalseOrClearedNull() { return clientRepository.countByClearedFalseOrClearedNull(); }
 
-    public Long countAll() { return  clientRepository.count(); }
+    public Long countAll() { return  clientRepository.countByIsLeadsNull(); }
 
     public Integer countByDeceasedTrue() { return clientRepository.countByDeceasedTrue(); }
 
@@ -94,4 +94,6 @@ public class ClientService {
     public Client findByCallListId(Integer callListId) {
         return clientRepository.findByCallListId(callListId);
     }
+
+    public List<Client> findClients() { return clientRepository.findByIsLeadsNull(); }
 }

@@ -113,7 +113,7 @@ public class ClientController {
     @RequestMapping("/listClient")
     public String listClient(Model model) {
 
-        model.addAttribute("clientList", clientService.findAll());
+        model.addAttribute("clientList", clientService.findClients());
         return "clients_list";
     }
 
