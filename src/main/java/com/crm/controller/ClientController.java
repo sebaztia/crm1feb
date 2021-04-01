@@ -225,11 +225,12 @@ public class ClientController {
             if (null == callListService.getCallListByClientId(client.getId())) {
                 CallList callList = new CallList();
                 callList.setContactName(client.getName());
-                callList.setRecordDate(new Date());
+        //        callList.setRecordDate(new Date());
                 callList.setContactNumber(client.getPhone());
                 callList.setQuery("This client is DECEASED, the status is " + client.getStatus() + ".");
                 callList.setClientId(client.getId());
-                callList.setStaff(staffService.findByStaffName("Stacie"));
+           //     callList.setStaff(staffService.findByStaffName("Stacie"));
+                callList.setStaffName("Stacie");
                 callList = callListService.saveCallList(callList);
                 String deceasedLink = Utility.getSiteURL(request) + "/callList";
                 try {

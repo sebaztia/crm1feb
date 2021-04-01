@@ -1,9 +1,6 @@
 package com.crm.controller;
 
-import com.crm.config.MyAccessDeniedHandler;
 import com.crm.dto.UserDto;
-import com.crm.model.CallList;
-import com.crm.model.Role;
 import com.crm.model.Staff;
 import com.crm.model.User;
 import com.crm.service.CallListService;
@@ -23,7 +20,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -146,6 +143,34 @@ public class HomeController {
     }
     private List<User> getUserList() {
         return userService.findUsers();
+    }
+    @GetMapping("/getAllStaffNames")
+    @ResponseBody
+    public Object getAllStaffNames(@RequestParam Long userId)
+    {
+        String json = null;
+        logger.info("getAllStaffNames=====" + userId);
+       Staff staffList = staffService.findByStaffName("UNKNOWN");
+        try {
+            json = new ObjectMapper().writeValueAsString(staffList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        logger.info("=== json: " + json);
+        return json;
+    }
+
+    @GetMapping(value = "/api/customer/all")
+    public Object getResource() {
+        Map<String, String> result = new HashMap<>();
+        logger.info("getResource=====" );
+        result.put("status", "done");
+        return result;
+    }
+    @GetMapping("/getStaffLists")
+    public @ResponseBody Object getStaffLists(@RequestParam Long userId)
+    {
+        return staffService.getQuery();
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)

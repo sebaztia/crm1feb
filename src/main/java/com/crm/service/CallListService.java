@@ -31,12 +31,12 @@ public class CallListService {
     }
 
     public CallList saveCallList(CallList callList) {
-        Staff staff = null;
+      /*  Staff staff = null;
         if (callList.getStaff() == null || callList.getStaff().getStaffName() == null)
             staff = staffRepository.findByStaffName("UNKNOWN");
         else
             staff = staffRepository.findByStaffName(callList.getStaff().getStaffName());
-        callList.setStaff(staff);
+        callList.setStaff(staff);*/
        return callListRepository.save(callList);
     }
 
@@ -77,4 +77,9 @@ public class CallListService {
 
     public void deleteCallListById(Integer id) { this.callListRepository.delete(id); }
     public Integer countByIsLeads() { return this.callListRepository.countByIsLeadsTrue(); }
+
+    public CallList saveCallListModal(CallList callList) {
+      //  callList.setStaff(staffRepository.findByStaffName(callList.getStaffName()));
+        return callListRepository.save(callList);
+    }
 }

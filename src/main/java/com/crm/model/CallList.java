@@ -17,10 +17,10 @@ class CallList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "record_date")
+   /* @Column(name = "record_date")
    // @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private Date recordDate;
+  //  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date recordDate;*/
 
     @NotEmpty
     @Column(name = "contact_name")
@@ -36,8 +36,8 @@ class CallList {
     @Column(name = "contact_number")
     private String contactNumber;
 
-    /*@Column(name = "staff_name")
-    private String staffName;*/
+    @Column(name = "staff_name")
+    private String staffName;
     @NotEmpty
     @Column(name = "query")
     private String query;
@@ -63,9 +63,9 @@ class CallList {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @ManyToOne
+   /* @ManyToOne
     @JoinColumn(name = "staff_id", nullable = false)
-    private Staff staff;
+    private Staff staff;*/
 
     @PrePersist
     public void onPrePersist() {

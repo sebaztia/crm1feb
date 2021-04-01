@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Steele Rose CRM</title>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainnn.css">
+    <link rel="stylesheet" type="text/css" href="css/enquiry_modal.css">
+</head>
+<body>
+<nav class="navbar bg-custom navbar-expand-sm bg-dark navbar-dark py-1">
+    <div style="padding-left: 155px">
+        <a th:href="@{/}">
+            <img th:src="@{/images/steeleroselogo.png}" alt="logo"/>
+        </a>
+    </div>
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="nav">
+
+        <ul class="navbar-nav" style="padding-left: 200px">
+            <li>
+                <a class="nav-link" th:href="@{/home}">Home</a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_WILLS')">
+                <a class="nav-link" th:href="@{/showWillsPage}">Dashboard</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/callList}">Enquiry</a>
+            </li>
+            <li><a class="nav-link" href="/list">Link 2</a></li>
+            <li>
+                <a class="nav-link" th:href="@{/legacyClient}">Legacy Client</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/showArchive}">Archive</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div style="text-align: center">
+            <strong>
+                <h3 style="text-align: center; color: #18770C; font-weight: bold;">ENQUIRY CALL LISTS</h3>
+            </strong>
+    </div>
+
+    <div class="col text-center">
+        <button class="btn btn-sm btn-success newAddBookBtn btn-space">Add
+            New Call List</button>
+    </div>
+    <br>
+    <div class="myForm">
+        <form th:action="@{/savedd2}" method="post" id="addressBookForm"
+              name="addressBookForm">
+            <div class="modal fade" id="exampleModal" tabindex="-1"
+                 role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group" hidden="true">
+                                <label for="id" class="col-form-label">ID:</label> <input
+                                    type="text" class="form-control form-control-sm btn-space"
+                                    id="id" name="id" />
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="contactName">Contact Name:</label>
+                                <div class="col-md-7 pull-left">
+                                    <input type="text"
+                                           class="form-control form-control-sm btn-space" id="contactName"
+                                           name="contactName" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="contactNumber">Contact Number:</label>
+                                <div class="col-md-7 pull-left">
+                                    <input type="text"
+                                           class="form-control form-control-sm btn-space" id="contactNumber"
+                                           name="contactNumber" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="refNumber">refNumber:</label>
+                                <div class="col-md-7 pull-left">
+                                    <input type="text"
+                                           class="form-control form-control-sm btn-space"
+                                           id="refNumber" name="refNumber"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="staffName">Staff Name:</label>
+                                <div class="col-md-7 pull-left">
+                                    <select class="form-control form-control-sm btn-space" id="staffName"
+                                            name="staffName"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="query">Query:</label>
+                                <div class="col-md-7 pull-left">
+                                <textarea rows="7" class="form-control form-control-sm btn-space" id="query"
+                                          name="query"></textarea>
+                                </div>
+                            </div><br/>
+
+                            <div class="row" >
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="emailCheck">Action Required:</label>
+                                <div class="col-md-3 pull-right">
+                                    <input type="checkbox"
+                                           class="col-sm-3 form-control form-control-sm btn-space"
+                                           id="emailCheck" name="emailCheck" onclick="checkEmailBoxes(this);"/><label for="emailCheck">Email</label>
+                                </div>
+                                <div class="col-md-3 pull-right">
+                                    <input type="checkbox"
+                                           class="col-sm-3 form-control form-control-sm btn-space"
+                                           id="callCheck" name="callCheck" onclick="checkCallBoxes(this);"/><label for="callCheck">Call</label>
+                                </div>
+                            </div><br/>
+
+                            <div class="row">
+                                <label class="col-md-4 control-label boldlabel text-right"
+                                       for="emailDone">Status:</label>
+                                <div class="col-md-3 pull-right">
+                                    <input type="checkbox"
+                                           class="col-sm-3 form-control form-control-sm btn-space"
+                                           id="emailDone" name="emailDone" onclick="checkEmailBoxes(this);"/><label for="emailDone">Done</label>
+                                </div>
+                                <div class="col-md-3 pull-right">
+                                    <input type="checkbox"
+                                           class="col-sm-3 form-control form-control-sm btn-space"
+                                           id="callDone" name="callDone" onclick="checkCallBoxes(this);"/><label for="callDone">Done</label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-secondary btn-space"
+                                    data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-sm btn-primary btn-space"
+                                   value="Save" id="saveeditbutton"/>
+                        </div>
+                        <div id='simple-msg' style="color: green; text-align: center"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+    <div class="card-block">
+        <table class="table styled-table" id="myTable">
+            <thead>
+            <tr>
+                <th>Call ID</th>
+                <th>Date</th>
+                <th>Contact Name</th>
+                <th>Staff Member</th>
+
+                <th>Options</th>
+               <!-- <th>Action Required</th>-->
+                <th>Email</th>
+                <th>Call</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="calls:${data}">
+                <td th:text="${calls.id}">Client ID</td>
+                <td th:text="${#dates.format(calls.createdAt, 'dd-MM-yyyy HH:mm')}">Record Date</td>
+                <td th:if="${calls.clientId == null}" th:text="${calls.contactName}">Client Name</td>
+                <td th:unless="${calls.clientId == null}">
+                    <a th:href="@{showClient/{id}(id=${calls.clientId})}" th:text="${calls.contactName}"> </a>
+                </td>
+                <td th:text="${calls.staffName}">Staff Name</td>
+                <td>
+                    <a th:href="@{findOneCallList/(id=${calls.id})}" class="btn-sm btn-warning btn-space editBtn">Edit</a>
+                    <!--<a th:href="@{/deleteCallList/{id}(id=${calls.id})}" class="btn btn-danger">Delete</a>-->
+                    <a th:href="@{findOneEmail/(id=${calls.id})}" class="btn-sm btn-primary btn-space emailBtn">Email</a>
+                    <a th:href="@{/archive/(id=${calls.id})}"
+                       class="btn-sm btn-danger btn-space delBtn">Archive</a>
+                    <!--<a th:href="@{/archiveCallList/{id}(id=${calls.id})}" class="btn-sm btn-danger">Archive</a>-->
+                </td>
+                <!--<td><span th:if="*{calls.emailCheck}" th:text="EMAIL"></span> &nbsp; &nbsp;
+                    <span th:if="*{calls.callCheck}" th:text="CALL"></span></td>-->
+                <td><span th:if="${calls.emailCheck}" th:text="${calls.emailDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;
+                    <span th:if="${calls.emailCheck}"><span th:unless="*{calls.emailDone}">
+                                        <a th:href="@{/emailDone/{id}(id=${calls.id})}"> PENDING </a></span></span>
+                </td>
+                <td><span th:if="${calls.callCheck}" th:text="${calls.callDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;
+                    <span th:if="${calls.callCheck}"><span th:unless="*{calls.callDone}">
+                                        <a th:href="@{/callDone/{id}(id=${calls.id})}"> PENDING </a></span></span>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Archive Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to archive it?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-sm btn-danger" id="delRef">Archive</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="myEmailForm">
+    <form th:action="@{/sendEmail}" method="post" id="emailForm"
+          name="emailForm">
+        <div class="modal fade" id="emailModal" tabindex="-1"
+             role="dialog" aria-labelledby="emailModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="emailModalLabel">Send email
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="to">Email To:</label>
+                            <div class="col-md-7 pull-left">
+                                <input type="text"
+                                       class="form-control form-control-sm btn-space" id="to"
+                                       name="to" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="subject">Subject:</label>
+                            <div class="col-md-7 pull-left">
+                                <input type="text"
+                                       class="form-control form-control-sm btn-space" id="subject"
+                                       name="subject" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="text">Message:</label>
+                            <div class="col-md-7 pull-left">
+                                <textarea rows="7" class="form-control form-control-sm btn-space" id="text"
+                                          name="text"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary btn-space"
+                                data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-sm btn-primary btn-space"
+                               value="Send"/>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+<script type="text/javascript" src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/jquery-validation/1.19.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/enquiry_modal.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable({'order': [0, 'desc']});
+    });
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $("form[name='addressBookForm']").validate({
+            rules : {
+                // The key name on the left side is the name attribute
+                // of an input field. Validation rules are defined
+                // on the right side
+                contactName : "required",
+                contactNumber : "required",
+                /* refNumber : {
+                     required : true,
+                     // Specify that email should be validated
+                     // by the built-in "email" rule
+                     email : true
+                 },*/
+                query : {
+                    required : true,
+                    minlength : 1,
+                    maxlength : 2550,
+                }/*,
+                staffName : {
+                    required : true,
+                    minlength : 10,
+                    maxlength : 10,
+                    digits : true
+                }*/
+            },
+            // Specify validation error messages
+            messages : {
+                contactName : "Please enter the contact name",
+                contactNumber : "Please enter the contact number",
+                //  refNumber : "Please enter a valid email refNumber",
+                query : "Please write your query"
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler : function(form) {
+                $("#simple-msg").html("Sending...");
+                //form.submit();
+
+                // serialize/combine all submitted fields into an array
+                var postData = $(form).serializeArray();
+                // set url based of action
+                var formURL = $(form).attr("action");
+                $.ajax({
+                    type: "POST",
+                    url: formURL,
+                    data: postData,
+                    success:function(data, textStatus, jqXHR) {
+                        $("#simple-msg").html('<p>Saved successfully...</p>');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $("#simple-msg").html('<p>Error on saving details. Please try again!</p>');
+                    }
+                });
+            }
+        });
+    });
+
+    $(function() {
+        $("form[name='emailForm']").validate({
+            rules : {
+                subject : "required",
+                text : "required",
+                to : {
+                     required : true,
+                     email : true
+                 }
+            },
+            // Specify validation error messages
+            messages : {
+                subject : "Please enter the subject",
+                text : "Please write your message",
+                to : "Please enter a valid email address"
+            },
+            submitHandler : function(form) {
+                form.submit();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    function checkEmailBoxes() {
+        var emailCheck = document.getElementById('emailCheck');
+        var emailDone = document.getElementById('emailDone');
+
+        if (emailCheck.checked === false && emailDone.checked === true) {
+            alert ('Email Action Required at First');
+            emailDone.checked = false;
+            return false;
+        }
+    }
+
+    function checkCallBoxes() {
+        var callCheck = document.getElementById('callCheck');
+        var callDone = document.getElementById('callDone');
+
+        if (callCheck.checked === false && callDone.checked === true) {
+            alert ('Call Action Required at First');
+            callDone.checked = false;
+            return false;
+        }
+    }
+</script>
+
+</body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Steele Rose CRM</title>
+    <link rel="stylesheet" type="text/css" href="css/enquiry_modal.css">
+    <link rel="stylesheet"
+          href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainnn.css">
+</head>
+<body>
+<nav class="navbar bg-custom navbar-expand-sm bg-dark navbar-dark py-1">
+    &lt;!&ndash;<a class="navbar-brand" href="/">My Address Book</a>&ndash;&gt;
+    <div style="padding-left: 155px">
+        <a th:href="@{/}">
+            <img th:src="@{/images/steeleroselogo.png}" alt="logo"/>
+        </a>
+    </div>
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="nav">
+
+        <ul class="navbar-nav" style="padding-left: 200px">
+            <li>
+                <a class="nav-link" th:href="@{/home}">Home</a>
+            </li>
+            <li sec:authorize="hasAuthority('ROLE_WILLS')">
+                <a class="nav-link" th:href="@{/showWillsPage}">Dashboard</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/enquiryModal}">Enquiry</a>
+            </li>
+            <li><a class="nav-link" href="/list">Link 2</a></li>
+            <li>
+                <a class="nav-link" th:href="@{/legacyClient}">Legacy Client</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/showArchive}">Archive</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li sec:authorize="isAuthenticated()"><a class="nav-link" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div>
+        <strong>
+            <h3 style="text-align: center; color: #18770C; font-weight: bold;">ENQUIRY CALL LISTS</h3>
+        </strong>
+    </div>
+    <div class="col text-center">
+        <button class="btn btn-sm btn-success newAddBookBtn btn-space" id="addNewCL">Add
+            New Call List
+        </button>
+    </div>
+
+    <table id="data-table" class="styled-table">
+        <thead>
+        <tr>
+            <th>Call ID</th>
+           <th>Date</th>
+            <th>Contact Name</th>
+            <th>Staff Member</th>
+
+            <th>Options</th>
+            <th>Action Required</th>
+            <th>Email</th>
+            <th>Call</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="calls:${listCalls}">
+            <td th:text="${calls.id}">Client ID</td>
+            &lt;!&ndash;<td th:text="${calls.recordDate}">Client Name</td>&ndash;&gt;
+        <td th:text="${#dates.format(calls.createdAt, 'dd-MM-yyyy HH:mm')}">Record Date</td>
+
+            <td th:if="${calls.clientId == null}" th:text="${calls.contactName}">Client Name</td>
+            <td th:unless="${calls.clientId == null}">
+                <a th:href="@{showClient/{id}(id=${calls.clientId})}" th:text="${calls.contactName}"> </a>
+            </td>
+
+            <td th:text="${calls.staffName}">Staff Name</td>
+            <td>
+                <a th:href="@{findOne/(id=${calls.id})}" class="btn-sm btn-warning btn-space editBtn">Edit</a>
+                &lt;!&ndash;<a th:href="@{/deleteCallList/{id}(id=${calls.id})}" class="btn btn-danger">Delete</a>&ndash;&gt;
+                <a th:href="@{/callListEmail/{id}(id=${calls.id})}" class="btn-sm btn-primary btn-space">Email</a>
+                <a th:href="@{/archiveCallList/{id}(id=${calls.id})}" class="btn-sm btn-danger">Archive</a>
+            </td>
+            <td><span th:if="*{calls.emailCheck}" th:text="EMAIL"></span> &nbsp; &nbsp;
+                <span th:if="*{calls.callCheck}" th:text="CALL"></span></td>
+            <td><span th:if="${calls.emailCheck}" th:text="${calls.emailDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;
+                <span th:if="${calls.emailCheck}"><span th:unless="*{calls.emailDone}">
+                                        <a th:href="@{/emailActionDone/{id}(id=${calls.id})}"> PENDING </a></span></span>
+            </td>
+            <td><span th:if="${calls.callCheck}" th:text="${calls.callDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;
+                <span th:if="${calls.callCheck}"><span th:unless="*{calls.callDone}">
+                                        <a th:href="@{/callActionDone/{id}(id=${calls.id})}"> PENDING </a></span></span>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="myForm">
+    <form th:action="@{/savedd2}" method="post" id="addressBookForm"
+          name="addressBookForm">
+        <div class="modal fade" id="exampleModal" tabindex="-1"
+             role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Call List
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" hidden="true">
+                            <label for="id" class="col-form-label">ID:</label> <input
+                                type="text" class="form-control form-control-sm btn-space"
+                                id="id" name="id" />
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="contactName">Contact Name:</label>
+                            <div class="col-md-7 pull-left">
+                                <input type="text"
+                                       class="form-control form-control-sm btn-space" id="contactName"
+                                       name="contactName" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="contactNumber">Contact Number:</label>
+                            <div class="col-md-7 pull-left">
+                                <input type="text"
+                                       class="form-control form-control-sm btn-space" id="contactNumber"
+                                       name="contactNumber" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="refNumber">refNumber:</label>
+                            <div class="col-md-7 pull-left">
+                                <input type="text"
+                                       class="form-control form-control-sm btn-space"
+                                       id="refNumber" name="refNumber" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="staffName">Staff Name:</label>
+                            <div class="col-md-7 pull-left">
+                                <select class="form-control form-control-sm btn-space" id="staffName"
+                                        name="staffName"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="query">Query:</label>
+                            <div class="col-md-7 pull-left">
+                                <textarea rows="7" class="form-control form-control-sm btn-space" id="query"
+                                       name="query"></textarea>
+                            </div>
+                        </div><br/>
+
+                        <div class="row" >
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="emailCheck">Action Required:</label>
+                            <div class="col-md-3 pull-right">
+                                <input type="checkbox"
+                                       class="col-sm-3 form-control form-control-sm btn-space"
+                                       id="emailCheck" name="emailCheck" onclick="checkEmailBoxes(this);"/><label for="emailCheck">Email</label>
+                            </div>
+                            <div class="col-md-3 pull-right">
+                                <input type="checkbox"
+                                       class="col-sm-3 form-control form-control-sm btn-space"
+                                       id="callCheck" name="callCheck" onclick="checkCallBoxes(this);"/><label for="callCheck">Call</label>
+                            </div>
+                        </div><br/>
+
+                        <div class="row">
+                            <label class="col-md-4 control-label boldlabel text-right"
+                                   for="emailDone">Status:</label>
+                            <div class="col-md-3 pull-right">
+                                <input type="checkbox"
+                                       class="col-sm-3 form-control form-control-sm btn-space"
+                                       id="emailDone" name="emailDone" onclick="checkEmailBoxes(this);"/><label for="emailDone">Done</label>
+                            </div>
+                            <div class="col-md-3 pull-right">
+                                <input type="checkbox"
+                                       class="col-sm-3 form-control form-control-sm btn-space"
+                                       id="callDone" name="callDone" onclick="checkCallBoxes(this);"/><label for="callDone">Done</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-secondary btn-space"
+                                data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-sm btn-primary btn-space"
+                               value="Save" id="saveeditbutton"/>
+                    </div>
+                    <div id='simple-msg' style="color: green"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<script type="text/javascript" src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/jquery-validation/1.19.0/jquery.validate.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#data-table').DataTable({'order': [0, 'desc']});
+    });
+</script>
+
+<script type="text/javascript" src="js/enquiry_modal.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("form[name='addressBookForm']").validate({
+            rules : {
+                // The key name on the left side is the name attribute
+                // of an input field. Validation rules are defined
+                // on the right side
+                contactName : "required",
+                contactNumber : "required",
+               /* refNumber : {
+                    required : true,
+                    // Specify that email should be validated
+                    // by the built-in "email" rule
+                    email : true
+                },*/
+                query : {
+                    required : true,
+                    minlength : 1,
+                    maxlength : 2550,
+                }/*,
+                staffName : {
+                    required : true,
+                    minlength : 10,
+                    maxlength : 10,
+                    digits : true
+                }*/
+            },
+            // Specify validation error messages
+            messages : {
+                contactName : "Please enter the contact name",
+                contactNumber : "Please enter the contact number",
+              //  refNumber : "Please enter a valid email refNumber",
+                query : "Please write your query"
+            },
+            // Make sure the form is submitted to the destination defined
+            // in the "action" attribute of the form when valid
+            submitHandler : function(form) {
+                $("#simple-msg").html("Sending...");
+                //form.submit();
+
+                // serialize/combine all submitted fields into an array
+                var postData = $(form).serializeArray();
+                console.log('postData='+postData);
+                // set url based of action
+                var formURL = $(form).attr("action");
+                console.log('formURL='+formURL);
+                $.ajax({
+                    type: "POST",
+                    url: formURL,
+                    data: postData,
+                    success:function(data, textStatus, jqXHR) {
+                        $("#simple-msg").html('<p>Thanks for your request - we will be in touch soon!</p>');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $("#simple-msg").html('<p>Message failed to send. Please try again!</p>');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    &lt;!&ndash;
+    function checkEmailBoxes() {
+        var emailCheck = document.getElementById('emailCheck');
+        var emailDone = document.getElementById('emailDone');
+
+        if (emailCheck.checked === false && emailDone.checked === true) {
+            alert ('Email Action Required at First');
+            emailDone.checked = false;
+            return false;
+        }
+    }
+
+    function checkCallBoxes() {
+        var callCheck = document.getElementById('callCheck');
+        var callDone = document.getElementById('callDone');
+
+        if (callCheck.checked === false && callDone.checked === true) {
+            alert ('Call Action Required at First');
+            callDone.checked = false;
+            return false;
+        }
+    }
+    //&ndash;&gt;
+</script>
+
+</body>
+</html>-->

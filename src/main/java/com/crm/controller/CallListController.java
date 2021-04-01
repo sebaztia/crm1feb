@@ -2,10 +2,7 @@ package com.crm.controller;
 
 import com.crm.dto.EmailDto;
 import com.crm.model.*;
-import com.crm.service.CallListService;
-import com.crm.service.EmailService;
-import com.crm.service.LegacyClientService;
-import com.crm.service.StaffService;
+import com.crm.service.*;
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +22,8 @@ import java.util.logging.Level;
 public class CallListController {
 
     private CallListService callListService;
+    @Autowired
+    private EnquiryCallListService enquiryCallListService;
     private StaffService staffService;
     private LegacyClientService legacyClientService;
     private EmailService emailService;
@@ -37,7 +36,7 @@ public class CallListController {
         this.emailService = emailService;
     }
 
-    @GetMapping("callList")
+    @GetMapping("callListOld")
     public String viewEnquiryCallList(Model model) {
         model.addAttribute("listCalls", callListService.getAllCallLists());
         return "show_enquiry_call_list";
@@ -46,7 +45,7 @@ public class CallListController {
     @GetMapping("callListAdd")
     public String addCallList(@Valid Model model) {
         CallList callList = new CallList();
-        callList.setRecordDate(new Date());
+      //  callList.setRecordDate(new Date());
         List<Staff> staffList = staffService.getAllStaff();
         model.addAttribute("call_list", callList);
         model.addAttribute("staffList", staffList);
@@ -75,7 +74,7 @@ public class CallListController {
                 "\n\nContact Name: " + callList.getContactName() +
                 "\nContact Number: " + callList.getContactNumber() +
                 "\nQuery: " + callList.getQuery()+
-                "\nStaff Name: " +callList.getStaff().getStaffName());
+                "\nStaff Name: " +callList/*.getStaff()*/.getStaffName());
 
         model.addAttribute("email_list", emailDto);
         return "email_call_list";
@@ -117,9 +116,9 @@ public class CallListController {
             }
             legacyClient.setFullName(callList.getContactName());
             legacyClient.setCallSheet(callList.getQuery());
-            legacyClient.setRecordDate(callList.getRecordDate());
+         //   legacyClient.setRecordDate(callList.getRecordDate());
             legacyClient.setRefNumber(callList.getRefNumber());
-            legacyClient.setStaffName(callList.getStaff().getStaffName());
+            legacyClient.setStaffName(callList./*getStaff().*/getStaffName());
 
             legacyClientService.save(legacyClient);
         }

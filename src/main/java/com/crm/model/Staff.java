@@ -18,9 +18,9 @@ public class Staff {
     @Column(nullable = false, name = "staff_name")
     private String staffName;
 
-    @Column(nullable = false)
+  /*  @Column(nullable = false)
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<CallList> callListSet;
+    private Set<CallList> callListSet;*/
 
     public Integer getId() {
         return id;
@@ -38,7 +38,7 @@ public class Staff {
         this.staffName = staffName;
     }
 
-    public Set<CallList> getCallList() {
+   /* public Set<CallList> getCallList() {
         return callListSet;
     }
 
@@ -47,5 +47,5 @@ public class Staff {
             callListSet = new HashSet<>();
         }
         callListSet.add(callList);
-    }
+    }*/
 }

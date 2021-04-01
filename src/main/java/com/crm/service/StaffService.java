@@ -24,4 +24,6 @@ public class StaffService {
     public Staff saveStaff(Staff staff) { return staffRepository.save(staff); }
 
     public Staff findByStaffName(String staffName) { return staffRepository.findByStaffName(staffName); }
+
+    public List<String> getQuery() { return staffRepository.getStaffQuery(); }
 }

@@ -63,16 +63,16 @@
 
                             <tr th:each="calls:${archiveList}">
                                 <td th:text="${calls.id}">Client ID</td>
-                                <td th:text="${calls.recordDate}">Client Name</td>
+                                <td th:text="${calls.createdAt}">Client Name</td>
                                 <td th:text="${calls.contactName}">Reference Number</td>
-                                <td th:text="${calls.staff.staffName}">Record Date</td>
+                                <td th:text="${calls.staffName}">Record Date</td>
 
                                 <td> <span th:if="${calls.emailCheck}" th:text="${calls.emailDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;
-                                    <span th:if="${calls.emailCheck}" ><span th:if="${!calls.emailDone}" >
+                                    <span th:if="${calls.emailCheck}" ><span th:unless="${calls.emailDone}" >
                                         <a th:href="@{emailActionDone/{id}(id=${calls.id})}" class="btn btn-success"> PENDING </a></span></span>
                                 </td>
                                 <td> <span th:if="${calls.callCheck}" th:text="${calls.callDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;
-                                    <span th:if="${calls.callCheck}" ><span th:if="${!calls.callDone}" >
+                                    <span th:if="${calls.callCheck}" ><span th:unless="${calls.callDone}" >
                                         <a th:href="@{callActionDone/{id}(id=${calls.id})}" class="btn btn-success"> PENDING </a></span></span> </td>
 
                                 <td>
