@@ -40,7 +40,7 @@
                         <div sec:authorize="hasAuthority('ROLE_WILLS')">
                             <a style="width: 170px; height: 40px;" th:href="@{/showWillsPage}" class="btn btn-info"> WILLS </a>
                         </div>
-                        <div style="margin-top: 15px;">
+                        <div style="margin-top: 15px;" sec:authorize="hasAuthority('LEADS')">
                             <a th:cellpadding="2" style="width: 170px; height: 40px;" th:href="@{/probatePage}" class="btn btn-warning"> PROBATE </a>
                         </div>
                     </div>

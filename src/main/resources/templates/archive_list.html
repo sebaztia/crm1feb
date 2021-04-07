@@ -81,8 +81,8 @@
 
                                 <td>
                                     <span sec:authorize="hasAuthority('ADMIN')">
-                                        <a th:href="@{restoreCallList/{id}(id=${calls.id})}" class="btn btn-primary">Restore</a>
-                                    <a th:href="@{deleteCallList/{id}(id=${calls.id})}" class="btn btn-danger">Delete</a>
+                                        <a th:href="@{restoreCallList/{id}(id=${calls.id})}" class="btn btn-primary rstrBtn">Restore</a>
+                                    <a th:href="@{deleteCallList/{id}(id=${calls.id})}" class="btn btn-danger delBtn">Delete</a>
                                     </span>
                                     <a th:href="@{callListEmail/{id}(id=${calls.id})}" class="btn btn-default">Email</a>
                                 </td>
@@ -95,5 +95,60 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-sm" id="delRef"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.table .delBtn').on('click', function(event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+
+            $('#myModal .modal-title').text('Delete Confirmation');
+            $('#myModal .modal-body').html('<p>Are you sure you want to delete it?</p>');
+            $('#myModal #delRef').text('Delete');
+            $('#myModal #delRef').removeClass('btn-primary');
+            $('#myModal #delRef').addClass('btn-danger');
+
+            $('#myModal #delRef').attr('href', href);
+            $('#myModal').modal();
+        });
+
+        $('.table .rstrBtn').on('click', function(event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+
+            $('#myModal .modal-title').text('Restore Confirmation');
+            $('#myModal .modal-body').html('<p>Are you sure you want to restore it?</p>');
+            $('#myModal #delRef').text('Restore');
+            $('#myModal #delRef').removeClass('btn-danger');
+            $('#myModal #delRef').addClass('btn-primary');
+
+            $('#myModal #delRef').attr('href', href);
+            $('#myModal').modal();
+        });
+    });
+</script>
+
 </body>
 </html>
