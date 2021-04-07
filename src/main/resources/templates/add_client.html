@@ -37,6 +37,10 @@
                     <div class="col-md-6">
                         <input type="hidden" class="form-control" id="company" th:field="*{company}"/>
                         <input type="hidden" class="form-control" id="id" th:field="*{id}"/>
+
+                        <input type="hidden" class="form-control" id="callListId" th:field="*{callListId}"/>
+                        <input type="hidden" class="form-control" id="isLeads" th:field="*{isLeads}"/>
+
                         <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'has-error':''">
                             <label for="name">Name: &nbsp;</label><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
                             <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Name"/>

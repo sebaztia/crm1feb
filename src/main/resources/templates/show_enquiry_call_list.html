@@ -75,7 +75,7 @@
                                     <a th:href="@{showClient/{id}(id=${calls.clientId})}" th:text="${calls.contactName}">  </a>
                                 </td>
 
-                                <td th:text="${calls.staff.staffName}">Staff Name</td>
+                                <td th:text="${calls.staffName}">Staff Name</td>
                                 <td>
                                     <a th:href="@{/callListEdit/{id}(id=${calls.id})}" class="btn btn-primary">Details</a>
                                     <!--<a th:href="@{/deleteCallList/{id}(id=${calls.id})}" class="btn btn-danger">Delete</a>-->

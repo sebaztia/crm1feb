@@ -103,6 +103,13 @@ $(document).ready(function() {
         $('#myModal').modal();
     });
 
+    $('.table .leadsBtn').on('click', function(event) {
+        event.preventDefault();
+        var href = $(this).attr('href');
+        $('#myLeadsModal #leadsRef').attr('href', href);
+        $('#myLeadsModal').modal();
+    });
+
     // $('#myTable').DataTable();
 
 });

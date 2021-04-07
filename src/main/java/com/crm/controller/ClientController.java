@@ -98,6 +98,12 @@ public class ClientController {
             return "add_client";
         }
         Long clientId = client.getId();
+        if (client.getCallListId() != null && client.getIsLeads() != null && client.getIsLeads()) {
+            CallList callList = callListService.getCallListById(client.getCallListId());
+            callList.setContactName(client.getName());
+            callList.setContactNumber(client.getPhone());
+            callListService.saveCallList(callList);
+        }
         client = clientService.saveClient(client);
         String author = getUsername();
         SrcPng srcPng = srcRepository.findByAuthor(author);

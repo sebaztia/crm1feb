@@ -31,7 +31,7 @@
             <li>
                 <a class="nav-link" th:href="@{/callList}">Enquiry</a>
             </li>
-            <li><a class="nav-link" href="/list">Link 2</a></li>
+            <!--<li><a class="nav-link" href="/list">Link 2</a></li>-->
             <li>
                 <a class="nav-link" th:href="@{/legacyClient}">Legacy Client</a>
             </li>
@@ -197,6 +197,7 @@
                     <a th:href="@{findOneCallList/(id=${calls.id})}" class="btn-sm btn-warning btn-space editBtn">Edit</a>
                     <!--<a th:href="@{/deleteCallList/{id}(id=${calls.id})}" class="btn btn-danger">Delete</a>-->
                     <a th:href="@{findOneEmail/(id=${calls.id})}" class="btn-sm btn-primary btn-space emailBtn">Email</a>
+                    <a sec:authorize="hasAuthority('LEADS')" th:if="*{calls.clientId == null}" th:disabled="*{calls.isLeads}" th:href="@{/makeLeadsCallList/{id}(id=${calls.id})}" class="btn-sm btn-success btn-space leadsBtn">Leads</a>
                     <a th:href="@{/archive/(id=${calls.id})}"
                        class="btn-sm btn-danger btn-space delBtn">Archive</a>
                     <!--<a th:href="@{/archiveCallList/{id}(id=${calls.id})}" class="btn-sm btn-danger">Archive</a>-->
@@ -235,6 +236,28 @@
                 <button type="button" class="btn btn-sm btn-secondary"
                         data-dismiss="modal">Close</button>
                 <a href="" class="btn btn-sm btn-danger" id="delRef">Archive</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myLeadsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Leads Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to make it leads?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-sm btn-success" id="leadsRef">Make Leads</a>
             </div>
         </div>
     </div>

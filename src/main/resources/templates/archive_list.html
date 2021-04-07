@@ -35,6 +35,10 @@
     <!--<div sec:authorize="hasAnyAuthority('ADMIN', 'ROLE_USER')">
         <a >Edit</a>
     </div>-->
+    <div class="pull-right" sec:authorize="hasAuthority('ADMIN')">
+        <i><span sec:authentication="principal.authorities">Roles</span></i>&nbsp;
+        <a th:href="@{/settingForm}">Settings</a>
+    </div>
 </div>
 <div class="content">
     <div class="animated fadeIn">

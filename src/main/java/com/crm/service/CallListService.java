@@ -27,7 +27,7 @@ public class CallListService {
     }
 
     public List<CallList> getAllLeadsClient() {
-        return callListRepository.findAllByIsLeadsTrue(new Sort(Sort.Direction.DESC, "updatedAt"));
+        return callListRepository.findAllByIsLeadsTrue(new Sort(Sort.Direction.DESC, "id"));
     }
 
     public CallList saveCallList(CallList callList) {

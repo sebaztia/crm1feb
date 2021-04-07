@@ -41,15 +41,16 @@
                             <tbody>
                             <tr th:each="calls:${listCalls}">
                                 <td><img th:src="*{'https://bootdey.com/img/Content/avatar/avatar' + ((calls.id % 8) == 0 ? 2 : (calls.id % 8)) + '.png'}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>
-                                <td th:text="*{#dates.format(calls.recordDate, 'dd-MM-yyyy HH:mm')}">Record Date</td>
-                                <td th:if="*{calls.clientId == null}" th:text="${calls.contactName}">Client Name</td>
+                                <td th:text="*{#dates.format(calls.createdAt, 'dd-MM-yyyy HH:mm')}">Record Date</td>
+                                <td th:if="*{calls.clientId == null}" th:text="*{calls.contactName}">Client Name</td>
                                 <td th:unless="*{calls.clientId == null}">
-                                    <a th:href="@{showClient/{id}(id=*{calls.clientId})}" th:text="${calls.contactName}">  </a>
+                                    <a th:href="@{showClient/{id}(id=*{calls.clientId})}" th:text="*{calls.contactName}">  </a>
                                 </td>
-                                <td th:text="*{calls.staff.staffName}">Staff Name</td>
-                                <td><!--<span class="badge bg-success">Active</span>-->
+                                <td th:text="*{calls.staffName}">Staff Name</td>
+                                <td><a th:href="@{/editClient/{id}(id=${calls.clientId})}" class="btn btn-primary">Edit</a></td>
+                                <!--<td>&lt;!&ndash;<span class="badge bg-success">Active</span>&ndash;&gt;
                                     <a th:href="@{/callListEdit/{id}(id=${calls.id})}" class="btn btn-primary">Details</a>
-                                </td>
+                                </td>-->
                             </tr>
                             </tbody>
                         </table>
