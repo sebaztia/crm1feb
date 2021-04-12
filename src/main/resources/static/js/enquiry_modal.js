@@ -83,7 +83,6 @@ $(document).ready(function() {
                 data : { "userId" : 12},
                 success : function(result) {
                     for (var i=0; i< result.length; i++) {
-                        console.log(result[i]);
                         sss += '<option value=' + result[i] + '>' + result[i] + '</option>';
                     }
                     $(".myForm #staffName").find('option')
