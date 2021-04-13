@@ -51,6 +51,7 @@ class CallList {
     @Column(name = "call_done")
     private Boolean callDone;
     private Boolean isLeads;
+    private String createdBy;
 
     @Column(name = "archive")
     private Boolean archive;

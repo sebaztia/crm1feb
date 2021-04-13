@@ -12,6 +12,7 @@ import com.crm.service.LegacyClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +45,12 @@ public class EnquiryCallListController {
 
     @PostMapping("/savedd2")
     public String saveAddBook2 (CallList callList) {
+        Integer callId = callList.getId();
+        if (null == callId) {
+            callList.setCreatedBy(getUsername());
+        }
         callList = callListService.saveCallListModal(callList);
 
-        Integer callId = Integer.parseInt(callList.getId()+"");// need to change
         String reference = callList.getRefNumber();
 
         if ((null != reference && !reference.equals("")) && (null != callId && !callId.equals(""))) {
@@ -122,5 +126,7 @@ public class EnquiryCallListController {
         this.callListService.callActionDone(id);
         return "redirect:/callList";
     }
-
+    private String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
 }

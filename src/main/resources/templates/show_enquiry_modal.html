@@ -44,7 +44,7 @@
         </ul>
     </div>
 </nav>
-<div class="container" style="min-width: 1300px">
+<div class="container" style="min-width: 1400px">
     <div style="text-align: center">
             <strong>
                 <h3 style="text-align: center; color: #18770C; font-weight: bold;">ENQUIRY CALL LISTS</h3>
@@ -71,6 +71,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        <input type="hidden" class="form-control" id="createdBy" name="createdBy"/>
                         <div class="modal-body">
                             <div class="form-group" hidden="true">
                                 <label for="id" class="col-form-label">ID:</label> <input
@@ -179,7 +180,7 @@
                 <th>Staff Member</th>
 
                 <th>Options</th>
-               <!-- <th>Action Required</th>-->
+                <th>Created By</th>
                 <th>Email</th>
                 <th>Call</th>
             </tr>
@@ -202,6 +203,7 @@
                        class="btn-sm btn-danger btn-space delBtn">Archive</a>
                     <!--<a th:href="@{/archiveCallList/{id}(id=${calls.id})}" class="btn-sm btn-danger">Archive</a>-->
                 </td>
+                <td th:text="${calls.createdBy}">Created By</td>
                 <!--<td><span th:if="*{calls.emailCheck}" th:text="EMAIL"></span> &nbsp; &nbsp;
                     <span th:if="*{calls.callCheck}" th:text="CALL"></span></td>-->
                 <td><span th:if="${calls.emailCheck}" th:text="${calls.emailDone} ? 'COMPLETED' : ''"></span> &nbsp;&nbsp;

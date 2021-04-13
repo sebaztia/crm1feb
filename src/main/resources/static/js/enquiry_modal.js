@@ -21,6 +21,7 @@ $(document).ready(function() {
                 $('.myForm #contactName').val(enquiryCallList.contactName);
                 $('.myForm #contactNumber').val(enquiryCallList.contactNumber);
                 $('.myForm #refNumber').val(enquiryCallList.refNumber);
+                $('.myForm #createdBy').val(enquiryCallList.createdBy);
                 $('.myForm #query').val(enquiryCallList.query);
 
                 let sss = '';
@@ -70,6 +71,7 @@ $(document).ready(function() {
             $('.myForm #contactNumber').val('');
             $('.myForm #refNumber').val('');
             $('.myForm #refNumber').prop("disabled", true);
+            $('.myForm #createdBy').val('');
             $('.myForm #query').val('');
             $('.myForm #emailCheck').prop("checked", false);
             $('.myForm #callCheck').prop("checked", false);
