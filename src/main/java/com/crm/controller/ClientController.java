@@ -22,8 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ClientController {
@@ -39,6 +38,7 @@ public class ClientController {
     private RecentActivityService recentActivityService;
     private SrcRepository srcRepository;
     private JavaMailSender mailSender;
+    private NotificationService notificationService;
 
     @Value("${daniel.email}")
     private String emailTo;
@@ -48,7 +48,8 @@ public class ClientController {
     @Autowired
     public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, JavaMailSender mailSender,
                             ClientStatusService clientStatusService, CallListService callListService, StaffService staffService,
-                            FileUploadService fileUploadService, PersonalAssetService personalAssetService, RecentActivityService recentActivityService, SrcRepository srcRepository) {
+                            FileUploadService fileUploadService, PersonalAssetService personalAssetService, RecentActivityService recentActivityService, SrcRepository srcRepository,
+                            NotificationService notificationService) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
@@ -60,6 +61,7 @@ public class ClientController {
         this.personalAssetService = personalAssetService;
         this.recentActivityService = recentActivityService;
         this.srcRepository = srcRepository;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -167,10 +169,35 @@ public class ClientController {
             srcPng = srcRepository.findByAuthor("Sebastian");
         }
 
+        String[] myArray = {"@AmyWinder", "@Dean", "@Daniel", "@Dora", "@Angela", "@Hollie", "@SimonCooper", "@Stacie", "@Claire", "@Sebastian"};
+        for (String username : message.trim().split("\\s+")) {
+            if (stringContainsItemFromList(username, myArray)) {
+               // userList.add(myUsers);
+                notificationService.save(new Notification(author, username, client.getId(), client.getName(), false, userMap.get(username)));
+            }
+        }
+
         recentActivityService.save(new RecentActivity(client.getName(), message, comments.getId(), "addComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
                 srcPng.getSrc()));
          attributes.addAttribute("id", id);
         return "redirect:/showClient/{id}";
+    }
+
+    public static boolean stringContainsItemFromList(String inputStr, String[] items) {
+        return Arrays.stream(items).anyMatch(inputStr::contains);
+    }
+    private static final Map<String, String> userMap = new HashMap<>();
+    static {
+        userMap.put("@AmyWinder", "Amy");
+        userMap.put("@Dean", "deansteele");
+        userMap.put("@Daniel", "Daniel");
+        userMap.put("@Dora", "Dora");
+        userMap.put("@Angela", "Angela");
+        userMap.put("@Hollie", "Hollie");
+        userMap.put("@SimonCooper", "Simon");
+        userMap.put("@Stacie", "Stacie Griffin");
+        userMap.put("@Claire", "Claire Northcote");
+        userMap.put("@Sebastian", "Sebastian");
     }
 
     @PostMapping("/editComment")

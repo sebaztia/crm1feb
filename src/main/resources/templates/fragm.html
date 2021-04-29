@@ -43,12 +43,27 @@
             <li>
                 <a class="nav-links" th:href="@{/showArchive}">Archive</a>
             </li>
+            <li>
+                <a href="javascript:;" data-toggle="dropdown" dropdown-animate="" aria-haspopup="true" class="nav-links">
+                    <i class="glyphicon glyphicon-bell"></i>
+                    <span class="label label-danger" id="spanNotifyCount"></span>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="card">
+                        <div class="card-body">
+                            <ul id="ulId">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
             <li sec:authorize="isAuthenticated()"><a class="nav-links" th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
         </ul>
         </div>
     </nav>
+    <script src="scripts/frag.js"></script>
 </div>
 <div th:fragment="footer" class="text-center">
     <hr/>

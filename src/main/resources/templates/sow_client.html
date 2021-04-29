@@ -480,5 +480,59 @@
        modal.find('#cltId').val(clientId);
    }
 </script>
+
+<script type='text/javascript' src='http://code.jquery.com/jquery-1.8.2.js'></script>
+<script type='text/javascript' src="/scripts/bootstrap-typeahead.js"></script>
+<script type='text/javascript' src="/scripts/mention.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#message-text").mention({
+            users: [{
+                name: 'AmyWinder',
+                username: 'AmyWinder ',
+                image: 'http://placekitten.com/25/25'
+            }, {
+                name: 'Dean',
+                username: 'Dean ',
+                image: 'http://placekitten.com/25/24'
+            }, {
+                name: 'Daniel',
+                username: 'Daniel ',
+                image: 'http://placekitten.com/25/23'
+            }, {
+                name: 'Dora',
+                username: 'Dora ',
+                image: 'http://placekitten.com/25/22'
+            }, {
+                name: 'Angela',
+                username: 'Angela ',
+                image: 'http://placekitten.com/25/21'
+            }, {
+                name: 'Hollie',
+                username: 'Hollie ',
+                image: 'http://placekitten.com/25/20'
+            }, {
+                name: 'SimonCooper',
+                username: 'SimonCooper ',
+                image: 'http://placekitten.com/24/20'
+            }, {
+                name: 'Stacie',
+                username: 'Stacie ',
+                image: 'http://placekitten.com/23/20'
+            }, {
+                name: 'Claire',
+                username: 'Claire ',
+                image: 'http://placekitten.com/22/20'
+            }, {
+                name: 'Sebastian',
+                username: 'Sebastian ',
+                image: 'http://placekitten.com/21/20'
+            }]
+        });
+
+    });
+</script>
 </body>
 </html>

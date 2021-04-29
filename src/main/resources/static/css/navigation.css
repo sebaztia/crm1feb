@@ -88,3 +88,22 @@ body {
         color: rgba(255, 255, 255, 1);
     }
 }
+
+.dropdown-menu {
+    width: 250px;
+    border-radius: 10px 0px 10px 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+
+.dropdown-menu .media {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin: 1px 1px;
+    padding: 10px 10px;
+    cursor: pointer
+}
+
+.dropdown-menu .media:hover {
+    background-color: #eee
+}
