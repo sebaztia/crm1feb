@@ -169,18 +169,22 @@ public class ClientController {
             srcPng = srcRepository.findByAuthor("Sebastian");
         }
 
+        saveNotification(message, author, client);
+
+        recentActivityService.save(new RecentActivity(client.getName(), message, comments.getId(), "addComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
+                srcPng.getSrc(), client.getId()));
+         attributes.addAttribute("id", id);
+        return "redirect:/showClient/{id}";
+    }
+
+    private void saveNotification(String message, String author, Client client) {
         String[] myArray = {"@AmyWinder", "@Dean", "@Daniel", "@Dora", "@Angela", "@Hollie", "@SimonCooper", "@Stacie", "@Claire", "@Sebastian"};
         for (String username : message.trim().split("\\s+")) {
             if (stringContainsItemFromList(username, myArray)) {
-               // userList.add(myUsers);
+                // userList.add(myUsers);
                 notificationService.save(new Notification(author, username, client.getId(), client.getName(), false, userMap.get(username)));
             }
         }
-
-        recentActivityService.save(new RecentActivity(client.getName(), message, comments.getId(), "addComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
-                srcPng.getSrc()));
-         attributes.addAttribute("id", id);
-        return "redirect:/showClient/{id}";
     }
 
     public static boolean stringContainsItemFromList(String inputStr, String[] items) {
@@ -214,6 +218,8 @@ public class ClientController {
         comments.setEditedAuthor((comments.getEditedAuthor()==null? "":comments.getEditedAuthor())
                 + author + " on " + sdf.format(new Date()) + ", ");
         commentsService.save(comments);
+        Client client = clientService.getClientById(id);
+        saveNotification(message, author, client);
         RecentActivity recentActivity = recentActivityService.findByCommentId(comId);
 
         if (null == recentActivity) {
@@ -222,7 +228,7 @@ public class ClientController {
                 srcPng = srcRepository.findByAuthor("Sebastian");
             }
             recentActivityService.save(new RecentActivity(comments.getClient().getName(), message, comments.getId(), "editedComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
-                    srcPng.getSrc()));
+                    srcPng.getSrc(), client.getId()));
         } else {
             recentActivity.setAuthor(author);
             recentActivity.setType("editedComment");

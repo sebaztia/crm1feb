@@ -54,22 +54,24 @@ public class RecentActivity {
 
     public RecentActivity() { }
 
-    public RecentActivity(String status, String onMessage, long commentId, String type, String author, String src) {
+    public RecentActivity(String status, String onMessage, long commentId, String type, String author, String src, Long clientId) {
         this.status = status;
         this.onMessage = onMessage;
         this.commentId = commentId;
         this.type = type;
         this.author = author;
         this.src = src;
+        this.clientId = clientId;
     }
 
-    public RecentActivity(String status, String type, String author, String src, String moveFrom, String moveTo) {
+    public RecentActivity(String status, String type, String author, String src, String moveFrom, String moveTo, Long clientId) {
         this.status = status;
         this.type = type;
         this.author = author;
         this.src = src;
         this.moveFrom = moveFrom;
         this.moveTo = moveTo;
+        this.clientId = clientId;
     }
 
     public RecentActivity(String status, String type, String author, String src, Long clientId) {

@@ -47,7 +47,7 @@ public class ActiveController {
                 srcPng = srcRepository.findByAuthor("Sebastian");
             }
             recentActivityService.save(new RecentActivity(client.getName(), "moved", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
-                    srcPng.getSrc(), oldStatus, getStatus(colName)));
+                    srcPng.getSrc(), oldStatus, getStatus(colName), clientId));
         } else {
             result.put("status", "Unable to find the (clientId:"+clientId+")");
         }
