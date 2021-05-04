@@ -27,7 +27,10 @@ public class CallListService {
     }
 
     public List<CallList> getAllLeadsClient() {
-        return callListRepository.findAllByIsLeadsTrue(new Sort(Sort.Direction.DESC, "id"));
+        return callListRepository.findAllByIsLeadsTrueAndLeadsArchiveNull(/*new Sort(Sort.Direction.DESC, "id")*/);
+    }
+    public List<CallList> getAllLeadsArchive() {
+        return callListRepository.findByLeadsArchiveTrue(/*new Sort(Sort.Direction.DESC, "id")*/);
     }
 
     public CallList saveCallList(CallList callList) {
@@ -76,10 +79,23 @@ public class CallListService {
     }
 
     public void deleteCallListById(Integer id) { this.callListRepository.delete(id); }
-    public Integer countByIsLeads() { return this.callListRepository.countByIsLeadsTrue(); }
+    public Integer countByIsLeads() { return this.callListRepository.countByIsLeadsTrueAndLeadsArchiveNull(); }
+    public Integer countByLeadsArchive() { return this.callListRepository.countByLeadsArchiveTrue(); }
 
     public CallList saveCallListModal(CallList callList) {
       //  callList.setStaff(staffRepository.findByStaffName(callList.getStaffName()));
         return callListRepository.save(callList);
+    }
+
+    public void leadsArchive(Integer id) {
+        CallList callList = callListRepository.findOne(id);
+        callList.setLeadsArchive(true);
+        callListRepository.save(callList);
+    }
+
+    public void leadsRollback(Integer id) {
+        CallList callList = callListRepository.findOne(id);
+        callList.setLeadsArchive(null);
+        callListRepository.save(callList);
     }
 }

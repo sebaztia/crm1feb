@@ -63,6 +63,7 @@ public class MainController {
     @GetMapping("/probatePage")
     public String probatePage(Model model) {
         model.addAttribute("totalLeadsClients", callListService.countByIsLeads());
+        model.addAttribute("totalLeadsArchive", callListService.countByLeadsArchive());
         return "probate_dashboard";
     }
 

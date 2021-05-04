@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Steele Rose CRM</title>
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#myTable').DataTable({'order': [0, 'desc']});
+        } );
+    </script>
+</head>
+<body>
+
+<div th:replace="fragm :: menu"></div>
+
+<div class="container" style="width: 1200px;">
+
+    <h1 class="h3" style="text-align: center">Leads Archived</h1><br>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <table id="myTable" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Record Date</th>
+                        <th>Client Name</th>
+                        <th>Staff Name</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="calls:${leads_archive}">
+                        <td th:text="*{calls.id}"><!--<img th:src="*{'https://bootdey.com/img/Content/avatar/avatar' + ((calls.id % 8) == 0 ? 2 : (calls.id % 8)) + '.png'}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar">--></td>
+                        <td th:text="*{#dates.format(calls.createdAt, 'dd-MM-yyyy HH:mm')}">Record Date</td>
+                        <td th:if="*{calls.clientId == null}" th:text="*{calls.contactName}">Client Name</td>
+                        <td th:unless="*{calls.clientId == null}">
+                            <a th:href="@{showClient/{id}(id=*{calls.clientId})}" th:text="*{calls.contactName}">  </a>
+                        </td>
+                        <td th:text="*{calls.staffName}">Staff Name</td>
+                        <td>
+                            <a th:href="@{/leadsRollback/(id=${calls.id})}" class="btn-sm btn-primary btn-space rstrBtn">Restore</a>
+                        </td>
+                        <!--<td>&lt;!&ndash;<span class="badge bg-success">Active</span>&ndash;&gt;
+                            <a th:href="@{/callListEdit/{id}(id=${calls.id})}" class="btn btn-primary">Details</a>
+                        </td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Restore Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to restore it?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-sm btn-primary" id="restRef">Restore</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.table .rstrBtn').on('click', function(event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#myModal #restRef').attr('href', href);
+            $('#myModal').modal();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -55,6 +55,7 @@ class CallList {
 
     @Column(name = "archive")
     private Boolean archive;
+    private Boolean leadsArchive;
 
     @Column(name = "created_at", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

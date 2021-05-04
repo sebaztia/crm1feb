@@ -41,6 +41,13 @@ public class LeadsController {
         return "leads_clients";
     }
 
+    @RequestMapping("/showLeadsArchive")
+    public String showLeadsArchive(Model model) {
+
+        model.addAttribute("leads_archive", callListService.getAllLeadsArchive());
+        return "leads_archive_clients";
+    }
+
     @GetMapping(value = "makeLeads/{id}")
     public String makeLeads(@PathVariable("id") Long clientId, Model model, RedirectAttributes attributes) {
 
@@ -52,6 +59,17 @@ public class LeadsController {
         callListService.saveCallList(callList);
         attributes.addAttribute("id", clientId);
         return "redirect:/showClient/{id}";
+    }
+
+    @GetMapping("/leadsArchive")
+    public String leadsArchive (Integer id) {
+        callListService.leadsArchive(id);
+        return "redirect:/leadsClient";
+    }
+    @GetMapping("/leadsRollback")
+    public String leadsRollback (Integer id) {
+        callListService.leadsRollback(id);
+        return "redirect:/showLeadsArchive";
     }
 
     @GetMapping(value = "makeLeadsCallList/{id}")

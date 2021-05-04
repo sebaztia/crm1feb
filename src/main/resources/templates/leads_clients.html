@@ -14,7 +14,7 @@
 
     <script type="text/javascript">
         $(document).ready( function () {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({'order': [0, 'desc']});
         } );
     </script>
 </head>
@@ -40,14 +40,16 @@
                             </thead>
                             <tbody>
                             <tr th:each="calls:${listCalls}">
-                                <td><img th:src="*{'https://bootdey.com/img/Content/avatar/avatar' + ((calls.id % 8) == 0 ? 2 : (calls.id % 8)) + '.png'}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>
+                                <td th:text="*{calls.id}"><!--<img th:src="*{'https://bootdey.com/img/Content/avatar/avatar' + ((calls.id % 8) == 0 ? 2 : (calls.id % 8)) + '.png'}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar">--></td>
                                 <td th:text="*{#dates.format(calls.createdAt, 'dd-MM-yyyy HH:mm')}">Record Date</td>
                                 <td th:if="*{calls.clientId == null}" th:text="*{calls.contactName}">Client Name</td>
                                 <td th:unless="*{calls.clientId == null}">
                                     <a th:href="@{showClient/{id}(id=*{calls.clientId})}" th:text="*{calls.contactName}">  </a>
                                 </td>
                                 <td th:text="*{calls.staffName}">Staff Name</td>
-                                <td><a th:href="@{/editClient/{id}(id=${calls.clientId})}" class="btn btn-primary">Edit</a></td>
+                                <td><a th:href="@{/editClient/{id}(id=${calls.clientId})}" class="btn-sm btn-primary">Edit</a>
+                                    <a th:href="@{/leadsArchive/(id=${calls.id})}" class="btn-sm btn-danger btn-space delBtn">Archive</a>
+                                </td>
                                 <!--<td>&lt;!&ndash;<span class="badge bg-success">Active</span>&ndash;&gt;
                                     <a th:href="@{/callListEdit/{id}(id=${calls.id})}" class="btn btn-primary">Details</a>
                                 </td>-->
@@ -59,7 +61,38 @@
 
         </div>
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Archive Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to archive it?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary"
+                        data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-sm btn-danger" id="delRef">Archive</a>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.table .delBtn').on('click', function(event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#myModal #delRef').attr('href', href);
+            $('#myModal').modal();
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -46,6 +46,20 @@
                 <a th:href="@{/leadsClient}" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h3 th:text="${totalLeadsArchive}"> </h3>
+                    <p>Leads Archive</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-building"></i>
+                </div>
+                <a th:href="@{/showLeadsArchive}" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
     </div>
 
 </div>

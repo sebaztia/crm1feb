@@ -13,8 +13,11 @@ public interface CallListRepository extends JpaRepository<CallList, Integer> {
     List<CallList> findAllByArchiveFalseOrArchiveNullAndIsLeadsFalseOrIsLeadsNull();
     List<CallList> findAllByArchiveTrue();
     CallList findByClientId(Long clientId);
-    List<CallList> findAllByIsLeadsTrue(Sort sort);
-    Integer countByIsLeadsTrue();
+    List<CallList> findAllByIsLeadsTrueAndLeadsArchiveNull(/*Sort sort*/);
+    Integer countByIsLeadsTrueAndLeadsArchiveNull();
 
     List<CallList> findByArchiveNullAndIsLeadsNull();
+
+    Integer countByLeadsArchiveTrue();
+    List<CallList> findByLeadsArchiveTrue(/*Sort sort*/);
 }
