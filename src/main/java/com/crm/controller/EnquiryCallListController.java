@@ -96,6 +96,7 @@ public class EnquiryCallListController {
                 "\n\nContact Name: " + callList.getContactName() +
                 "\nContact Number: " + callList.getContactNumber() +
                 "\nQuery: " + callList.getQuery()+
+                "\nAuthor: " + getUsername() +
                 "\nStaff Name: " +callList.getStaffName());
         return emailDto;
     }

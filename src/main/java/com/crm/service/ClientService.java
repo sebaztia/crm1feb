@@ -43,6 +43,9 @@ public class ClientService {
     public List<ClientDto> findByStatus(String status) {
         return  toDto(clientRepository.findByStatus(status));
     }
+    public List<ClientDto> findByStatusAndContactNotIn(String status, String contact) {
+        return  toDto(clientRepository.findByStatusAndContactNotIn());
+    }
 
     private ClientDto toDto(Client client) {
         ClientDto dto = new ClientDto();

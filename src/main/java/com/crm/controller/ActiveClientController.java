@@ -31,7 +31,7 @@ public class ActiveClientController {
 
     @RequestMapping("/activeClient")
     public String activeClient(Model model) {
-        List<ClientDto> firstLists = clientService.findByStatus("First Contact");
+        List<ClientDto> firstLists = clientService.findByStatusAndContactNotIn("First Contact", "Call List");
         List<ClientDto> instructionsList = clientService.findByStatus("Instructions");
         List<ClientDto> draftingList = clientService.findByStatus("Drafting");
         List<ClientDto> signingList = clientService.findByStatus("Signing");
