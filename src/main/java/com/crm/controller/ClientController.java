@@ -1,6 +1,7 @@
 package com.crm.controller;
 
 import com.crm.config.Utility;
+import com.crm.dto.LetterDto;
 import com.crm.model.*;
 import com.crm.repository.SrcRepository;
 import com.crm.service.*;
@@ -146,6 +147,7 @@ public class ClientController {
         model.addAttribute("show_client", client);
         model.addAttribute("linkedComments", commentsList);
         model.addAttribute("personalAsset", personalAsset);
+        model.addAttribute("draftLetter", new LetterDto(id));
 
         List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
