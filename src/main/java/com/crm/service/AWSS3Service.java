@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -68,6 +69,13 @@ public class AWSS3Service {
             LOGGER.info("IO Error Message= " + ex.getMessage());
         }
         return content;
+    }
+
+
+    @Async
+    public InputStream getTemplate(final String keyName) {
+        LOGGER.info("getTemplate= " + keyName);
+        return amazonS3.getObject(bucketName, keyName).getObjectContent();
     }
 
     public List<String> getAllFileNameInBucket(String bucketNames) {

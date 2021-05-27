@@ -2,6 +2,7 @@ package com.crm.controller;
 
 import com.crm.dto.LetterDto;
 import com.crm.model.PersonalAsset;
+import com.crm.service.AWSS3Service;
 import org.apache.poi.xwpf.usermodel.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,12 @@ public class DraftLetterController {
 
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(ClientController.class);
     private JavaMailSender mailSender;
+    private AWSS3Service awss3Service;
 
     @Autowired
-    public DraftLetterController(JavaMailSender mailSender) {
+    public DraftLetterController(JavaMailSender mailSender, AWSS3Service awss3Service) {
         this.mailSender = mailSender;
+        this.awss3Service = awss3Service;
     }
 
     @PostMapping("/draftWordFile")
@@ -55,7 +58,8 @@ public class DraftLetterController {
     private void updateDocument(LetterDto letterDto) throws IOException, MessagingException {
 
         try (XWPFDocument document = new XWPFDocument(
-                Files.newInputStream(Paths.get("src/template.docx"))
+                awss3Service.getTemplate("template.docx")
+               // Files.newInputStream(Paths.get("src/template.docx"))
         )){
             List<XWPFParagraph> xwpfParagraphList = document.getParagraphs();
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
@@ -108,21 +112,23 @@ public class DraftLetterController {
                 }
             }
 
-            try (FileOutputStream out = new FileOutputStream(new File("src/output.docx"))){
+            File file = File.createTempFile("output", ".docx");
+            System.out.println("file getAbsolutePath===" + file.getAbsolutePath());
+            try (FileOutputStream out = new FileOutputStream(/*new File("src/output.docx")*/ file)){
                 document.write(out);
-                sendEmail(letterDto.getEmailTo());
+                sendEmail(letterDto.getEmailTo(), file);
             }
 
         }
     }
 
-    private void sendEmail(String emailTo) throws MessagingException, UnsupportedEncodingException {
+    private void sendEmail(String emailTo, File file) throws MessagingException, UnsupportedEncodingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setFrom("donotreply@steelerose.co.uk", "Steele Rose Support");
         helper.setTo(emailTo);
-
+        System.out.println("emailTo===" + emailTo);
         String subject = "Deceased details and bank initial letter";
 
         String content = "<p>Hello,</p>"
@@ -132,10 +138,18 @@ public class DraftLetterController {
         helper.setSubject(subject);
 
         helper.setText(content, true);
-        FileSystemResource res = new FileSystemResource(new File("src/output.docx"));
+        FileSystemResource res = new FileSystemResource(/*new File("src/output.docx")*/ file);
+        System.out.println("res.getFilename()===" + res.getFilename());
         helper.addAttachment("deceased details.docx", res);
 
         mailSender.send(message);
+
+        boolean result = file.delete();
+        if (result) {
+            System.out.println("File is success delete.");
+        } else {
+            System.out.println("File doesn't exist.");
+        }
     }
 
     public void writeDoc(LetterDto letterDto) throws Exception {
