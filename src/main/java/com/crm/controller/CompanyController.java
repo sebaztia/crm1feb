@@ -1,5 +1,7 @@
 package com.crm.controller;
 
+import com.crm.dto.CompanyDto;
+import com.crm.dto.Movie;
 import com.crm.model.Client;
 import com.crm.model.Company;
 import com.crm.service.ClientService;
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,28 +39,42 @@ public class CompanyController {
 
     @GetMapping("companyAdd")
     public String addCompany(@Valid Model model) {
-        model.addAttribute("company", new Company());
+        List moList = new ArrayList();
+        moList.add(new Movie("Contact:", ""));
+        model.addAttribute("company", new CompanyDto(null, moList));
 
         return "add_company";
     }
+    @GetMapping("companyAddInactive")
+    public String companyAddInactive(@Valid Model model) {
+        List moList = new ArrayList();
+        moList.add(new Movie("Contact:", ""));
+        model.addAttribute("company", new CompanyDto(true, moList));
+        return "add_company";
+    }
+    @GetMapping("/makeCompanyActive")
+    public String makeCompanyActive (Long id) {
+        companyService.switchCompany(id);
+        return "redirect:/company";
+    }
 
     @PostMapping("companySave")
-    public String save(@ModelAttribute("company") @Valid Company company, BindingResult result) {
+    public String save(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
 
         if (result.hasErrors()) {
             return "add_company";
         }
-        companyService.saveProduct(company);
+        companyService.saveProduct(companyDto);
 
         return "redirect:/company";
     }
     @PostMapping("companyEdit/companySave")
-    public String editSave(@ModelAttribute("company") @Valid Company company, BindingResult result) {
+    public String editSave(@ModelAttribute("company") @Valid CompanyDto companyDto, BindingResult result) {
 
         if (result.hasErrors()) {
             return "add_company";
         }
-        companyService.saveProduct(company);
+        companyService.saveProduct(companyDto);
 
         return "redirect:/company";
     }
@@ -81,7 +98,8 @@ public class CompanyController {
             model.addAttribute("pageNumbers", pageNumbers);
         }*/
 
-        model.addAttribute("companyList", companyService.findAll());
+        model.addAttribute("companyListActive", companyService.findAllActive());
+        model.addAttribute("companyListInactive", companyService.findAllInactive());
 
         return "company_list";
     }
@@ -95,7 +113,7 @@ public class CompanyController {
 
     @GetMapping(value = "companyEdit/{id}")
     public String editProduct(@PathVariable("id") Long id, Model model) {
-        Company product = companyService.getCompanyById(id);
+        CompanyDto product = companyService.getCompanyDtoById(id);
         model.addAttribute("company", product);
 
         return "add_company";
