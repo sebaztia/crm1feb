@@ -503,14 +503,12 @@
                                         <div class="form-group">
                                             <label>Our Reference</label>
                                             <input type="text" class="form-control" th:field="*{ourReference}" placeholder="Enter our reference" required autofocus>
-                                            <label>Your Reference</label>
-                                            <input type="text" class="form-control" th:field="*{yourReference}" placeholder="Enter your reference" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Bank Address</label>
-                                            <textarea class="form-control" rows="4" th:field="*{bankAddress}" placeholder="Enter bank address" required autofocus/>
+                                            <label>Your Reference</label>
+                                            <input type="text" class="form-control" th:field="*{yourReference}" placeholder="Enter your reference" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -527,10 +525,16 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>Bank Address</label>
+                                            <textarea class="form-control" rows="4" th:field="*{bankAddress}" placeholder="Enter bank address" required autofocus/>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-lg-6">
+                                        <div class="form-group">
                                             <label>Email To</label>
                                             <input type="email" class="form-control" th:field="*{emailTo}" placeholder="Enter email address" required autofocus>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
 
 
@@ -548,8 +552,6 @@
             </div>
             </form>
         </div>
-
-
     </div>
 </div>
 

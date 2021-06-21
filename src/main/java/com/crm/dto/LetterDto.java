@@ -22,7 +22,7 @@ public @Data class LetterDto {
     private String yourReference;
     private String estateOf;
     private String accountNumber;
-    private String emailTo;
+ //   private String emailTo;
 
 
     public LetterDto(Long clientId) {

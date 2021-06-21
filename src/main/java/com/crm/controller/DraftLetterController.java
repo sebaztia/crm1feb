@@ -7,6 +7,9 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,10 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -44,18 +44,31 @@ public class DraftLetterController {
     }
 
     @PostMapping("/draftWordFile")
-    public String draftWordFile(@ModelAttribute("draftLetter") LetterDto letterDto, BindingResult result, Model model, RedirectAttributes attributes){
+    public ResponseEntity<InputStreamResource> draftWordFile(@ModelAttribute("draftLetter") LetterDto letterDto, BindingResult result, Model model, RedirectAttributes attributes) throws FileNotFoundException {
+        File file = null;
         try {
-            updateDocument(letterDto);
+          file = updateDocument(letterDto);
            // writeDoc(letterDto);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        attributes.addAttribute("id", letterDto.getClientI());
-        return "redirect:/showClient/{id}";
+
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                // Content-Type
+                .header("Content-type", "application/octet-stream")
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+
+        /*attributes.addAttribute("id", letterDto.getClientI());
+        return "redirect:/showClient/{id}";*/
     }
 
-    private void updateDocument(LetterDto letterDto) throws IOException, MessagingException {
+    private File updateDocument(LetterDto letterDto) throws IOException, MessagingException {
 
         try (XWPFDocument document = new XWPFDocument(
                 awss3Service.getTemplate("template.docx")
@@ -112,13 +125,13 @@ public class DraftLetterController {
                 }
             }
 
-            File file = File.createTempFile("output", ".docx");
+            File file = File.createTempFile("deceased details", ".docx");
             System.out.println("file getAbsolutePath===" + file.getAbsolutePath());
             try (FileOutputStream out = new FileOutputStream(/*new File("src/output.docx")*/ file)){
                 document.write(out);
-                sendEmail(letterDto.getEmailTo(), file);
+                //  sendEmail(letterDto.getEmailTo(), file);
             }
-
+            return file;
         }
     }
 
