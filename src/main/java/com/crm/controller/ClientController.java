@@ -40,6 +40,7 @@ public class ClientController {
     private SrcRepository srcRepository;
     private JavaMailSender mailSender;
     private NotificationService notificationService;
+    private CommonService commonService;
 
     @Value("${daniel.email}")
     private String emailTo;
@@ -50,7 +51,7 @@ public class ClientController {
     public ClientController(CompanyService companyService, ClientService clientService, CommentsService commentsService, JavaMailSender mailSender,
                             ClientStatusService clientStatusService, CallListService callListService, StaffService staffService,
                             FileUploadService fileUploadService, PersonalAssetService personalAssetService, RecentActivityService recentActivityService, SrcRepository srcRepository,
-                            NotificationService notificationService) {
+                            NotificationService notificationService, CommonService commonService) {
         this.companyService = companyService;
         this.clientService = clientService;
         this.commentsService = commentsService;
@@ -63,6 +64,7 @@ public class ClientController {
         this.recentActivityService = recentActivityService;
         this.srcRepository = srcRepository;
         this.notificationService = notificationService;
+        this.commonService = commonService;
     }
 
     @GetMapping("clientAdd/{id}")
@@ -148,6 +150,9 @@ public class ClientController {
         model.addAttribute("linkedComments", commentsList);
         model.addAttribute("personalAsset", personalAsset);
         model.addAttribute("draftLetter", new LetterDto(id));
+        model.addAttribute("estateProperty", commonService.getEstateProperty(id));
+        model.addAttribute("kinInfo", commonService.getKinInfo(id));
+        model.addAttribute("familyContacts", commonService.getFamilyContacts(id));
 
         List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
@@ -310,6 +315,22 @@ public class ClientController {
         personalAssetService.savePersonalAsset(personalAsset);
 
         attributes.addAttribute("id", personalAsset.getClientId());
+        return "redirect:/showClient/{id}";
+    }
+
+    @PostMapping("saveEstateAsset")
+    public String saveEstateAsset(@ModelAttribute("estateProperty") EstateProperty estateProperty,
+                                  @ModelAttribute("kinInfo") KinInfo kinInfo,
+                                  @ModelAttribute("familyContacts") FamilyContact familyContact,
+                                  RedirectAttributes attributes) {
+
+        logger.info("estateProperty====" + estateProperty);
+        logger.info("kinInfo====" + kinInfo);
+        logger.info("familyContact====" + familyContact);
+
+        commonService.saveEstateAsset(estateProperty, kinInfo, familyContact);
+
+        attributes.addAttribute("id", estateProperty.getClientId());
         return "redirect:/showClient/{id}";
     }
     private String getUsername() {

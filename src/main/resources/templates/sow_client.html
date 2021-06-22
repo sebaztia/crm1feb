@@ -57,14 +57,16 @@
 
         <div class="row" style="padding-top: 25px;">
             <div class="col-md-4">
-                    Priority: &nbsp;&nbsp;
-                    <label><input type="radio" name="choice-radio" value="1" th:field="*{priority}">Low</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label><input type="radio" name="choice-radio" value="2" th:field="*{priority}">Medium</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label><input type="radio" name="choice-radio" value="3" th:field="*{priority}">High</label>
+                Priority: &nbsp;&nbsp;
+                <label><input type="radio" name="choice-radio" value="1" th:field="*{priority}">Low</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" name="choice-radio" value="2" th:field="*{priority}">Medium</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label><input type="radio" name="choice-radio" value="3" th:field="*{priority}">High</label>
             </div>
             <div class="col-md-8">
-                <a sec:authorize="hasAuthority('ROLE_WILLS')" th:href="@{/activeClient}" class="btn btn-warning">Active Client</a>
-                <a sec:authorize="hasAuthority('ROLE_WILLS')" href="/showWillsPage" class="btn btn-info">Dashboard</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a sec:authorize="hasAuthority('ROLE_WILLS')" th:href="@{/activeClient}" class="btn btn-warning">Active
+                    Client</a>
+                <a sec:authorize="hasAuthority('ROLE_WILLS')" href="/showWillsPage" class="btn btn-info">Dashboard</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <a th:href="@{/editClient/{id}(id=${show_client.id})}" class="btn btn-primary">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="checkbox" id="cleared" th:field="*{cleared}"
                        th:checked="*{cleared}"> &nbsp;&nbsp; EXEC &nbsp;&nbsp;&nbsp;&nbsp;
@@ -73,7 +75,8 @@
                        th:checked="*{deceased}"> &nbsp;&nbsp; DECEASED &nbsp;&nbsp;&nbsp;&nbsp;
 
                 <input type="submit" class="btn btn-success" value="UPDATE">
-                <a sec:authorize="hasAuthority('LEADS')" th:unless="*{callListId == null}" th:disabled="*{isLeads}" th:href="@{/makeLeads/{id}(id=${show_client.id})}" class="btn btn-danger">Leads</a>
+                <a sec:authorize="hasAuthority('LEADS')" th:unless="*{callListId == null}" th:disabled="*{isLeads}"
+                   th:href="@{/makeLeads/{id}(id=${show_client.id})}" class="btn btn-danger">Leads</a>
             </div>
         </div>
     </form>
@@ -83,6 +86,9 @@
 
 <div id="exTab2" class="container">
     <ul class="nav nav-tabs">
+        <li>
+            <a href="#5" data-toggle="tab">FINANCIAL SUMMARY</a>
+        </li>
         <li>
             <a href="#1" data-toggle="tab">FINANCIAL</a>
         </li>
@@ -102,92 +108,134 @@
                         <h3>PERSONAL ASSETS</h3>
                     </div>
                     <div class="col-md-9">
-                        <p>You will probably want your Estate to pass to your immediate family. Whatever your decision, before distributing your Estate you
+                        <p>You will probably want your Estate to pass to your immediate family. Whatever your decision,
+                            before distributing your Estate you
                             should establish its nature and value by completing this section</p>
                     </div>
-                    <div class="col-md-9"> <h4>HOME DETAILS</h4></div>
+                    <div class="col-md-9"><h4>HOME DETAILS</h4></div>
 
                     <form th:object="${personalAsset}" th:action="@{/personal_asset_save}" action="#" method="post">
                         <input type="hidden" class="form-control" th:field="*{id}"/>
                         <input type="hidden" class="form-control" th:field="*{clientId}"/>
                         <div class="col-md-5">
                             Do you own your property?&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{propertyOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{propertyOne}">No</label>
+                            <label><input type="radio" name="choice-radio" value="1"
+                                          th:field="*{propertyOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2"
+                                          th:field="*{propertyOne}">No</label>
                         </div>
                         <div class="col-md-5">
                             Do you have a mortgage?&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{mortgageOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{mortgageOne}">No</label>
-                        </div><br>
+                            <label><input type="radio" name="choice-radio" value="1"
+                                          th:field="*{mortgageOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2"
+                                          th:field="*{mortgageOne}">No</label>
+                        </div>
+                        <br>
 
                         <div class="col-md-10">
                             In whose name is the property registered? &nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{propertyRegisteredOne}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{propertyRegisteredOne}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="3" th:field="*{propertyRegisteredOne}">Joint</label>
+                            <label><input type="radio" name="choice-radio" value="1"
+                                          th:field="*{propertyRegisteredOne}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2"
+                                          th:field="*{propertyRegisteredOne}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="3"
+                                          th:field="*{propertyRegisteredOne}">Joint</label>
                             <!--Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">-->
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="col-md-10">
                             If joint (co-owners) do you own your property as:&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointOne}">Joint Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointOne}">Tenants in Common</label>
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointOne}">Joint
+                                Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointOne}">Tenants in
+                                Common</label>
                             <!--<input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common-->
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="col-md-10">
-                            Lender Details: &nbsp;&nbsp;<input type="text" th:value="*{lenderDetails}"  th:field="*{lenderDetails}">
-                        </div><br>
+                            Lender Details: &nbsp;&nbsp;<input type="text" th:value="*{lenderDetails}"
+                                                               th:field="*{lenderDetails}">
+                        </div>
+                        <br>
 
                         <div class="col-md-5" style="margin-top: 10px;">
-                            Amount outstanding? £ <input type="text" th:value="*{amountOSOne}"  th:field="*{amountOSOne}">
+                            Amount outstanding? £ <input type="text" th:value="*{amountOSOne}"
+                                                         th:field="*{amountOSOne}">
                         </div>
                         <div class="col-md-5" style="margin-top: 10px;">
-                            Current Value? £ <input type="text" th:value="*{currentValueOne}"  th:field="*{currentValueOne}">
-                        </div><br>
+                            Current Value? £ <input type="text" th:value="*{currentValueOne}"
+                                                    th:field="*{currentValueOne}">
+                        </div>
+                        <br>
 
                         <div class="col-md-10" style="margin-top: 10px;">
-                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldOne}"  th:field="*{propertyHeldOne}">
-                        </div><br>
+                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldOne}"
+                                                                             th:field="*{propertyHeldOne}">
+                        </div>
+                        <br>
                         <div class="col-md-10" style="margin-top: 10px;">
-                            Financial arrangements for the purchase (how did each spouse/partner contribute? <textarea th:value="*{contributeOne}" th:field="*{contributeOne}"></textarea>
-                        </div><br>
+                            Financial arrangements for the purchase (how did each spouse/partner contribute? <textarea
+                                th:value="*{contributeOne}" th:field="*{contributeOne}"></textarea>
+                        </div>
+                        <br>
 
                         <div class="col-md-10" style="margin-top: 10px;">
                             <strong>OTHER PROPERTY</strong>
-                         <b>  (including property abroad) Address</b>&nbsp;&nbsp; <input type="text" th:value="*{otherProperty}"  th:field="*{otherProperty}"> </div><br>
+                            <b> (including property abroad) Address</b>&nbsp;&nbsp; <input type="text"
+                                                                                           th:value="*{otherProperty}"
+                                                                                           th:field="*{otherProperty}">
+                        </div>
+                        <br>
 
                         <div class="col-md-5">
                             Do you have a mortgage?&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{mortgageTwo}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{mortgageTwo}">No</label>
-                           <!-- <input type="checkbox"> YES &nbsp; <input type="checkbox"> NO-->
-                        </div><br>
+                            <label><input type="radio" name="choice-radio" value="1"
+                                          th:field="*{mortgageTwo}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2"
+                                          th:field="*{mortgageTwo}">No</label>
+                            <!-- <input type="checkbox"> YES &nbsp; <input type="checkbox"> NO-->
+                        </div>
+                        <br>
 
                         <div class="col-md-10">
                             In whose name is the property registered? &nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{propertyRegisteredTwo}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{propertyRegisteredTwo}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="3" th:field="*{propertyRegisteredTwo}">Joint</label>
+                            <label><input type="radio" name="choice-radio" value="1"
+                                          th:field="*{propertyRegisteredTwo}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2"
+                                          th:field="*{propertyRegisteredTwo}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="3"
+                                          th:field="*{propertyRegisteredTwo}">Joint</label>
                             <!--Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">-->
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="col-md-10">
                             If joint (co-owners) do you own your property as:&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointTwo}">Joint Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointTwo}">Tenants in Common</label>
+                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointTwo}">Joint
+                                Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointTwo}">Tenants in
+                                Common</label>
                             <!--<input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common-->
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="col-md-5" style="margin-top: 10px;">
-                            Amount outstanding? £ <input type="text" th:value="*{amountOSTwo}"  th:field="*{amountOSTwo}">
+                            Amount outstanding? £ <input type="text" th:value="*{amountOSTwo}"
+                                                         th:field="*{amountOSTwo}">
                         </div>
                         <div class="col-md-5" style="margin-top: 10px;">
-                            Current Value? £ <input type="text" th:value="*{currentValueTwo}"  th:field="*{currentValueTwo}">
-                        </div><br>
+                            Current Value? £ <input type="text" th:value="*{currentValueTwo}"
+                                                    th:field="*{currentValueTwo}">
+                        </div>
+                        <br>
 
                         <div class="col-md-10" style="margin-top: 10px;">
-                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldTwo}"  th:field="*{propertyHeldTwo}">
-                        </div><br>
+                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldTwo}"
+                                                                             th:field="*{propertyHeldTwo}">
+                        </div>
+                        <br>
                         <div class="col-md-10" style="margin-top: 10px;">
-                            Financial arrangements for the purchase (how did each spouse/partner contribute? <input type="text" th:value="*{contributeTwo}"  th:field="*{contributeTwo}">
+                            Financial arrangements for the purchase (how did each spouse/partner contribute? <input
+                                type="text" th:value="*{contributeTwo}" th:field="*{contributeTwo}">
                         </div>
                         <div class="portlet-body" style="margin-top: 20px;">
                             <table id="mytable1" class="table">
@@ -203,104 +251,117 @@
 
                                 <tr class="active">
                                     <th scope="row">Bank Accounts</th>
-                                    <th><input type="text" th:value="*{baDetails}"  th:field="*{baDetails}"></th>
-                                    <th><input type="text" th:value="*{baClient1}"  th:field="*{baClient1}"></th>
-                                    <th><input type="text" th:value="*{baClient2}"  th:field="*{baClient2}"></th>
-                                    <th><input type="text" th:value="*{baJoint}"  th:field="*{baJoint}"></th>
+                                    <th><input type="text" th:value="*{baDetails}" th:field="*{baDetails}"></th>
+                                    <th><input type="text" th:value="*{baClient1}" th:field="*{baClient1}"></th>
+                                    <th><input type="text" th:value="*{baClient2}" th:field="*{baClient2}"></th>
+                                    <th><input type="text" th:value="*{baJoint}" th:field="*{baJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row">Stocks & Shares</th>
-                                    <th><input type="text" th:value="*{ssDetails}"  th:field="*{ssDetails}"></th>
-                                    <th><input type="text" th:value="*{ssClient1}"  th:field="*{ssClient1}"></th>
-                                    <th><input type="text" th:value="*{ssClient2}"  th:field="*{ssClient2}"></th>
-                                    <th><input type="text" th:value="*{ssJoint}"  th:field="*{ssJoint}"></th>
+                                    <th><input type="text" th:value="*{ssDetails}" th:field="*{ssDetails}"></th>
+                                    <th><input type="text" th:value="*{ssClient1}" th:field="*{ssClient1}"></th>
+                                    <th><input type="text" th:value="*{ssClient2}" th:field="*{ssClient2}"></th>
+                                    <th><input type="text" th:value="*{ssJoint}" th:field="*{ssJoint}"></th>
                                 </tr>
                                 <tr class="success">
                                     <th scope="row">Interest in a Trust</th>
-                                    <th><input type="text" th:value="*{itDetails}"  th:field="*{itDetails}"></th>
-                                    <th><input type="text" th:value="*{itClient1}"  th:field="*{itClient1}"></th>
-                                    <th><input type="text" th:value="*{itClient2}"  th:field="*{itClient2}"></th>
-                                    <th><input type="text" th:value="*{itJoint}"  th:field="*{itJoint}"></th>
+                                    <th><input type="text" th:value="*{itDetails}" th:field="*{itDetails}"></th>
+                                    <th><input type="text" th:value="*{itClient1}" th:field="*{itClient1}"></th>
+                                    <th><input type="text" th:value="*{itClient2}" th:field="*{itClient2}"></th>
+                                    <th><input type="text" th:value="*{itJoint}" th:field="*{itJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row">Building Society Acc.</th>
-                                    <th><input type="text" th:value="*{bsaDetails}"  th:field="*{bsaDetails}"></th>
-                                    <th><input type="text" th:value="*{bsaClient1}"  th:field="*{bsaClient1}"></th>
-                                    <th><input type="text" th:value="*{bsaClient2}"  th:field="*{bsaClient2}"></th>
-                                    <th><input type="text" th:value="*{bsaJoint}"  th:field="*{bsaJoint}"></th>
+                                    <th><input type="text" th:value="*{bsaDetails}" th:field="*{bsaDetails}"></th>
+                                    <th><input type="text" th:value="*{bsaClient1}" th:field="*{bsaClient1}"></th>
+                                    <th><input type="text" th:value="*{bsaClient2}" th:field="*{bsaClient2}"></th>
+                                    <th><input type="text" th:value="*{bsaJoint}" th:field="*{bsaJoint}"></th>
                                 </tr>
                                 <tr class="info">
                                     <th scope="row">Nat. Savings/ P Bonds</th>
-                                    <th><input type="text" th:value="*{nspbDetails}"  th:field="*{nspbDetails}"></th>
-                                    <th><input type="text" th:value="*{nspbClient1}"  th:field="*{nspbClient1}"></th>
-                                    <th><input type="text" th:value="*{nspbClient2}"  th:field="*{nspbClient2}"></th>
-                                    <th><input type="text" th:value="*{nspbJoint}"  th:field="*{nspbJoint}"></th>
+                                    <th><input type="text" th:value="*{nspbDetails}" th:field="*{nspbDetails}"></th>
+                                    <th><input type="text" th:value="*{nspbClient1}" th:field="*{nspbClient1}"></th>
+                                    <th><input type="text" th:value="*{nspbClient2}" th:field="*{nspbClient2}"></th>
+                                    <th><input type="text" th:value="*{nspbJoint}" th:field="*{nspbJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row">Cash</th>
-                                    <th><input type="text" th:value="*{cashDetails}"  th:field="*{cashDetails}"></th>
-                                    <th><input type="text" th:value="*{cashClient1}"  th:field="*{cashClient1}"></th>
-                                    <th><input type="text" th:value="*{cashClient2}"  th:field="*{cashClient2}"></th>
-                                    <th><input type="text" th:value="*{cashJoint}"  th:field="*{cashJoint}"></th>
+                                    <th><input type="text" th:value="*{cashDetails}" th:field="*{cashDetails}"></th>
+                                    <th><input type="text" th:value="*{cashClient1}" th:field="*{cashClient1}"></th>
+                                    <th><input type="text" th:value="*{cashClient2}" th:field="*{cashClient2}"></th>
+                                    <th><input type="text" th:value="*{cashJoint}" th:field="*{cashJoint}"></th>
                                 </tr>
                                 <tr class="warning">
                                     <th scope="row">Car/ Vehicles</th>
-                                    <th><input type="text" th:value="*{cvDetails}"  th:field="*{cvDetails}"></th>
-                                    <th><input type="text" th:value="*{cvClient1}"  th:field="*{cvClient1}"></th>
-                                    <th><input type="text" th:value="*{cvClient2}"  th:field="*{cvClient2}"></th>
-                                    <th><input type="text" th:value="*{cvJoint}"  th:field="*{cvJoint}"></th>
+                                    <th><input type="text" th:value="*{cvDetails}" th:field="*{cvDetails}"></th>
+                                    <th><input type="text" th:value="*{cvClient1}" th:field="*{cvClient1}"></th>
+                                    <th><input type="text" th:value="*{cvClient2}" th:field="*{cvClient2}"></th>
+                                    <th><input type="text" th:value="*{cvJoint}" th:field="*{cvJoint}"></th>
                                 </tr>
 
                                 <tr>
                                     <th scope="row">Furniture/ Personal</th>
-                                    <th><input type="text" th:value="*{fpDetails}"  th:field="*{fpDetails}"></th>
-                                    <th><input type="text" th:value="*{fpClient1}"  th:field="*{fpClient1}"></th>
-                                    <th><input type="text" th:value="*{fpClient2}"  th:field="*{fpClient2}"></th>
-                                    <th><input type="text" th:value="*{fpJoint}"  th:field="*{fpJoint}"></th>
+                                    <th><input type="text" th:value="*{fpDetails}" th:field="*{fpDetails}"></th>
+                                    <th><input type="text" th:value="*{fpClient1}" th:field="*{fpClient1}"></th>
+                                    <th><input type="text" th:value="*{fpClient2}" th:field="*{fpClient2}"></th>
+                                    <th><input type="text" th:value="*{fpJoint}" th:field="*{fpJoint}"></th>
                                 </tr>
                                 <tr class="danger">
                                     <th scope="row">Other</th>
-                                    <th><input type="text" th:value="*{otherDetails}"  th:field="*{otherDetails}"></th>
-                                    <th><input type="text" th:value="*{otherClient1}"  th:field="*{otherClient1}"></th>
-                                    <th><input type="text" th:value="*{otherClient2}"  th:field="*{otherClient2}"></th>
-                                    <th><input type="text" th:value="*{otherJoint}"  th:field="*{otherJoint}"></th>
+                                    <th><input type="text" th:value="*{otherDetails}" th:field="*{otherDetails}"></th>
+                                    <th><input type="text" th:value="*{otherClient1}" th:field="*{otherClient1}"></th>
+                                    <th><input type="text" th:value="*{otherClient2}" th:field="*{otherClient2}"></th>
+                                    <th><input type="text" th:value="*{otherJoint}" th:field="*{otherJoint}"></th>
                                 </tr>
                                 <tr>
                                     <th scope="row"><b>TOTAL:</b></th>
-                                    <th><input type="text" th:value="*{totalDetails}"  th:field="*{totalDetails}"></th>
-                                    <th><input type="text" th:value="*{totalClient1}"  th:field="*{totalClient1}"></th>
-                                    <th><input type="text" th:value="*{totalClient2}"  th:field="*{totalClient2}"></th>
-                                    <th><input type="text" th:value="*{totalJoint}"  th:field="*{totalJoint}"></th>
+                                    <th><input type="text" th:value="*{totalDetails}" th:field="*{totalDetails}"></th>
+                                    <th><input type="text" th:value="*{totalClient1}" th:field="*{totalClient1}"></th>
+                                    <th><input type="text" th:value="*{totalClient2}" th:field="*{totalClient2}"></th>
+                                    <th><input type="text" th:value="*{totalJoint}" th:field="*{totalJoint}"></th>
                                 </tr>
                                 <tr class="success">
                                     <td scope="row" colspan="2">LIFE ASSURANCE (in trust/ nominated/ Pilot Trust?)</td>
-                                    <th><input type="text" th:value="*{lifeAssClient1}"  th:field="*{lifeAssClient1}"></th>
-                                    <th><input type="text" th:value="*{lifeAssClient2}"  th:field="*{lifeAssClient2}"></th>
-                                    <th><input type="text" th:value="*{lifeAssJoint}"  th:field="*{lifeAssJoint}"></th>
+                                    <th><input type="text" th:value="*{lifeAssClient1}" th:field="*{lifeAssClient1}">
+                                    </th>
+                                    <th><input type="text" th:value="*{lifeAssClient2}" th:field="*{lifeAssClient2}">
+                                    </th>
+                                    <th><input type="text" th:value="*{lifeAssJoint}" th:field="*{lifeAssJoint}"></th>
                                 </tr>
                                 <tr>
-                                    <td colspan="4">When did you last review your pension or other financial arrangements? Would you like Steele Rose & Co Ltd to arrange for
-                                        a Financial Adviser to call you? No cost is involved and a financial review could well save you money, improve your investment
+                                    <td colspan="4">When did you last review your pension or other financial
+                                        arrangements? Would you like Steele Rose & Co Ltd to arrange for
+                                        a Financial Adviser to call you? No cost is involved and a financial review
+                                        could well save you money, improve your investment
                                         income or increase your pension income.
-                                        (If YES Consultant please submit referral form) </td>
-                                    <td><label><input type="radio" name="choice-radio" value="1" th:field="*{referralYes}">Yes</label>&nbsp;
-                                        <label><input type="radio" name="choice-radio" value="2" th:field="*{referralYes}">No</label></td>
+                                        (If YES Consultant please submit referral form)
+                                    </td>
+                                    <td><label><input type="radio" name="choice-radio" value="1"
+                                                      th:field="*{referralYes}">Yes</label>&nbsp;
+                                        <label><input type="radio" name="choice-radio" value="2"
+                                                      th:field="*{referralYes}">No</label></td>
                                 </tr>
                                 <tr>
-                                    <th colspan="5">DEATH IN SERVICE BENEFIT (SEE PILOT TRUSTS PAGE 6) AND ANY OTHER FINANCIAL DETAILS?</th>
+                                    <th colspan="5">DEATH IN SERVICE BENEFIT (SEE PILOT TRUSTS PAGE 6) AND ANY OTHER
+                                        FINANCIAL DETAILS?
+                                    </th>
                                 </tr>
                                 <tr>
-                                    <td colspan="5"><textarea th:value="*{financialDetails}"  th:field="*{financialDetails}"></textarea></td>
+                                    <td colspan="5"><textarea th:value="*{financialDetails}"
+                                                              th:field="*{financialDetails}"></textarea></td>
                                 </tr>
                             </table>
                         </div>
 
                         <div class="col-md-12">
                             TOTAL ESTATE VALUE (LESS LIABILITIES, MORTGAGES, OVERDRAFTS, CREDIT CARDS ETC) £
-                        <input type="text" th:value="*{estateValue}"  th:field="*{estateValue}"></div> <br>
+                            <input type="text" th:value="*{estateValue}" th:field="*{estateValue}"></div>
+                        <br>
                         <div class="col-md-10">
-                            APPROXIMATE INHERITANCE TAX TO PAY £ <input type="text" th:value="*{taxToPay}"  th:field="*{taxToPay}">
-                        </div><br>
+                            APPROXIMATE INHERITANCE TAX TO PAY £ <input type="text" th:value="*{taxToPay}"
+                                                                        th:field="*{taxToPay}">
+                        </div>
+                        <br>
                         <div class="col-md-5">
                             <input type="submit" class="btn btn-success" value="SAVE">
                         </div>
@@ -349,16 +410,26 @@
                                     <div class="comment-actions">
                                         <div class="reply">
                                             <div class="btn-group align-top">
-                                                <button class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#editUserModal" th:comment-message="${task.message}" th:client-id="${show_client.id}"
-                                                        th:comment-id="${task.id}" onclick="editModalContent(this, this.getAttribute('client-id'), this.getAttribute('comment-id'), this.getAttribute('comment-message'));"><i class="fa fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-outline-secondary badge" type="button"
+                                                        data-toggle="modal" data-target="#editUserModal"
+                                                        th:comment-message="${task.message}"
+                                                        th:client-id="${show_client.id}"
+                                                        th:comment-id="${task.id}"
+                                                        onclick="editModalContent(this, this.getAttribute('client-id'), this.getAttribute('comment-id'), this.getAttribute('comment-message'));">
+                                                    <i class="fa fa-edit"></i></button>
 
-                                                <button sec:authorize="hasAuthority('ADMIN')" class="btn btn-sm btn-outline-secondary badge" type="button" data-toggle="modal" data-target="#deleteModal" th:comment-id="${task.id}" th:client-id="${show_client.id}" onclick="deleteModalContent(this, this.getAttribute('client-id'), this.getAttribute('comment-id'));"> &nbsp;&nbsp; <i class="fa fa-remove"></i></button>
+                                                <button sec:authorize="hasAuthority('ADMIN')"
+                                                        class="btn btn-sm btn-outline-secondary badge" type="button"
+                                                        data-toggle="modal" data-target="#deleteModal"
+                                                        th:comment-id="${task.id}" th:client-id="${show_client.id}"
+                                                        onclick="deleteModalContent(this, this.getAttribute('client-id'), this.getAttribute('comment-id'));">
+                                                    &nbsp;&nbsp; <i class="fa fa-remove"></i></button>
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
-                                    <span class="label label-warning" th:unless="*{task.editedAuthor == null}">Edited History:</span>
-                                        <span th:unless="*{task.editedAuthor == null}" th:text="*{task.editedAuthor}"></span>
+                                </div>
+                                <span class="label label-warning" th:unless="*{task.editedAuthor == null}">Edited History:</span>
+                                <span th:unless="*{task.editedAuthor == null}" th:text="*{task.editedAuthor}"></span>
 
                             </li>
                         </tr>
@@ -374,18 +445,20 @@
 
             <div class="row">
                 <div class="col-md-8 mx-auto">
-                   <h2>Please upload document here.</h2>
-                  <!--  <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>-->
+                    <h2>Please upload document here.</h2>
+                    <!--  <p th:text="${message}" th:if="${message ne null}" class="alert alert-primary"></p>-->
 
-                    <form method="post" enctype="multipart/form-data" th:action="@{/upload/{clientId}(clientId=${show_client.id})}" action="#">
+                    <form method="post" enctype="multipart/form-data"
+                          th:action="@{/upload/{clientId}(clientId=${show_client.id})}" action="#">
                         <div class="form-group">
                             <div class="custom-file">
 
-                                <input type="file" class="custom-file-input" id="customFile" name="file" required autofocus>
+                                <input type="file" class="custom-file-input" id="customFile" name="file" required
+                                       autofocus>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit"> Upload File </button>
+                        <button class="btn btn-primary" type="submit"> Upload File</button>
                     </form>
 
                 </div>
@@ -395,7 +468,8 @@
                 <table>
                     <tbody>
                     <tr class="comment-wrap-tr" th:each="s3file : ${s3FileNames}">
-                        <td th:text="${s3file.fileName}"/> <td> &nbsp; </td>
+                        <td th:text="${s3file.fileName}"/>
+                        <td> &nbsp;</td>
                         <td><a th:href="@{/downloadFile/{fileName}(fileName=${s3file.fileName})}"> Download </a></td>
                     </tr>
                     </tbody>
@@ -407,11 +481,11 @@
         <div class="tab-pane" id="4">
 
             <form action="#" th:action="@{/draftWordFile}" th:object="${draftLetter}" method="POST">
-            <!--<form th:action="@{/draftWordFile}" method="post">-->
-            <div class="container">
-                <div class="row gutters">
+                <!--<form th:action="@{/draftWordFile}" method="post">-->
+                <div class="container">
+                    <div class="row gutters">
 
-                    <div class="col-lg-9">
+                        <div class="col-lg-9">
 
                             <div class="card-body">
                                 <div class="row">
@@ -423,7 +497,8 @@
                                         <div class="form-group">
                                             <label>Deceased Name</label>
                                             <!--<input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" required autofocus>-->
-                                            <input type="text" class="form-control" th:field="*{deceasedName}" placeholder="Enter deceased name" required autofocus>
+                                            <input type="text" class="form-control" th:field="*{deceasedName}"
+                                                   placeholder="Enter deceased name" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -447,7 +522,8 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Date of Death</label>
-                                            <input type="date" class="form-control" th:field="*{doDeath}" required autofocus>
+                                            <input type="date" class="form-control" th:field="*{doDeath}" required
+                                                   autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -459,7 +535,8 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Deceased Address</label>
-                                            <textarea class="form-control" rows="3" th:field="*{deceasedAddress}" placeholder="Enter deceased address"/>
+                                            <textarea class="form-control" rows="3" th:field="*{deceasedAddress}"
+                                                      placeholder="Enter deceased address"/>
                                         </div>
                                     </div>
                                 </div>
@@ -471,26 +548,30 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input type="text" class="form-control" th:field="*{executorName}" placeholder="Enter executor name" required autofocus>
+                                            <input type="text" class="form-control" th:field="*{executorName}"
+                                                   placeholder="Enter executor name" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Relationship</label>
-                                            <input type="text" class="form-control" th:field="*{relationship}" placeholder="Enter relationship">
+                                            <input type="text" class="form-control" th:field="*{relationship}"
+                                                   placeholder="Enter relationship">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Contact Number</label>
-                                            <input type="text" class="form-control" th:field="*{contactNumber}" placeholder="Enter contact number">
+                                            <input type="text" class="form-control" th:field="*{contactNumber}"
+                                                   placeholder="Enter contact number">
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Executor Address</label>
-                                            <textarea class="form-control" rows="3" th:field="*{executorAddress}" placeholder="Enter executor address"/>
+                                            <textarea class="form-control" rows="3" th:field="*{executorAddress}"
+                                                      placeholder="Enter executor address"/>
                                         </div>
                                     </div>
                                 </div>
@@ -502,31 +583,36 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Our Reference</label>
-                                            <input type="text" class="form-control" th:field="*{ourReference}" placeholder="Enter our reference" required autofocus>
+                                            <input type="text" class="form-control" th:field="*{ourReference}"
+                                                   placeholder="Enter our reference" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Your Reference</label>
-                                            <input type="text" class="form-control" th:field="*{yourReference}" placeholder="Enter your reference" required autofocus>
+                                            <input type="text" class="form-control" th:field="*{yourReference}"
+                                                   placeholder="Enter your reference" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Estate of</label>
-                                            <input type="text" class="form-control" th:field="*{estateOf}" placeholder="Estate of" required autofocus>
+                                            <input type="text" class="form-control" th:field="*{estateOf}"
+                                                   placeholder="Estate of" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Account Number</label>
-                                            <input type="text" class="form-control" th:field="*{accountNumber}" placeholder="Enter account number" required autofocus>
+                                            <input type="text" class="form-control" th:field="*{accountNumber}"
+                                                   placeholder="Enter account number" required autofocus>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Bank Address</label>
-                                            <textarea class="form-control" rows="4" th:field="*{bankAddress}" placeholder="Enter bank address" required autofocus/>
+                                            <textarea class="form-control" rows="4" th:field="*{bankAddress}"
+                                                      placeholder="Enter bank address" required autofocus/>
                                         </div>
                                     </div>
                                     <!--<div class="col-lg-6">
@@ -541,15 +627,150 @@
                                 <div class="row gutters">
                                     <div class="col-lg-12">
                                         <div class="text-right">
-                                            <button type="submit" id="submit" name="submit" class="btn btn-primary">Send/Save</button>
+                                            <button type="submit" id="submit" name="submit" class="btn btn-primary">
+                                                Send/Save
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="5">
+
+            <form action="#" th:action="@{/saveEstateAsset}" method="POST">
+                <div class="container">
+                    <div class="row gutters">
+                        <div class="col-lg-9">
+                            <div class="card-body">
+                                <div class="row" th:object="${estateProperty}">
+                                    <div class="col-lg-12" style="text-align: center; color: #4b8df9">
+                                        <h3>&nbsp;</h3>
+                                    </div>
+                                    <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
+                                    <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Estimated Estate Worth</label>
+                                            <input type="text" class="form-control" th:field="*{worth}"
+                                                   placeholder="estate worth" required autofocus>
+                                            <label>Estimated Value</label>
+                                            <input type="text" class="form-control" th:field="*{value}"
+                                                   placeholder="estimated value" required autofocus>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea class="form-control" rows="3" th:field="*{address}"
+                                                      placeholder="enter address"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Do you own property?</label> &nbsp;&nbsp;
+                                                <label><input type="radio" name="choice-radio" value="true" th:field="*{own}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label><input type="radio" name="choice-radio" value="false" th:field="*{own}">No</label>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="row" th:object="${kinInfo}">
+                                    <div class="col-lg-12" style="text-align: center; color: #b843ea">
+                                        <h3>Next of Kin information</h3>
+                                    </div>
+                                    <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
+                                    <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" th:field="*{kinname}"
+                                                   placeholder="kin name" required autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Relationship</label>
+                                            <input type="text" class="form-control" th:field="*{kinrelationship}"
+                                                   placeholder="kin relationship">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" th:field="*{kinemail}" placeholder="email">
+                                            <label>Phone</label>
+                                            <input type="text" class="form-control" th:field="*{kinphone}"
+                                                   placeholder="phone number">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea class="form-control" rows="4" th:field="*{kinaddress}"
+                                                      placeholder="kin address"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" th:object="${familyContacts}">
+                                    <div class="col-lg-12" style="text-align: center; color: #398439">
+                                        <h3>Family contacts</h3>
+                                    </div>
+                                    <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
+                                    <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" th:field="*{name}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Relationship</label>
+                                            <input type="text" class="form-control" th:field="*{relationship}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" th:field="*{email}">
+                                            <label>Phone</label>
+                                            <input type="text" class="form-control" th:field="*{phone}">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea class="form-control" rows="4" th:field="*{familyaddress}"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row gutters">
+                                    <div class="col-lg-12">
+                                        <div class="text-right">
+                                            <button type="submit" id="submist" name="submit" class="btn btn-primary">
+                                                Send/Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -558,7 +779,8 @@
 <hr/>
 
 <!-- Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -572,7 +794,8 @@
                     <div>
                         <input type="hidden" class="form-control" id="commentId" name="comId"/>
                         <input type="hidden" class="form-control" id="clientId" name="cId"/>
-                        <textarea id="commentMessage" class="form-control" rows="5" name="comMessage" placeholder="Write your comments..." required autofocus></textarea>
+                        <textarea id="commentMessage" class="form-control" rows="5" name="comMessage"
+                                  placeholder="Write your comments..." required autofocus></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -584,7 +807,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -601,7 +825,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit"  class="btn btn-danger" value="Delete">
+                    <input type="submit" class="btn btn-danger" value="Delete">
                 </div>
             </form>
         </div>
@@ -614,22 +838,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-   function editModalContent(t, clientId, commentId, message) {
-       var modal = $('#editUserModal');
-       // change modal content
-     //  console.log('clientId:' + clientId + ', commentId:' + commentId + ', message:' + message);
-       modal.find('#commentId').val(commentId);
-       modal.find('#clientId').val(clientId);
-       modal.find('#commentMessage').val(message);
-   }
+    function editModalContent(t, clientId, commentId, message) {
+        var modal = $('#editUserModal');
+        // change modal content
+        //  console.log('clientId:' + clientId + ', commentId:' + commentId + ', message:' + message);
+        modal.find('#commentId').val(commentId);
+        modal.find('#clientId').val(clientId);
+        modal.find('#commentMessage').val(message);
+    }
 
-   function deleteModalContent(t, clientId, commentId) {
-       var modal = $('#deleteModal');
-       // change modal content
-    //   console.log('clientId:' + clientId + ', commentId:' + commentId);
-       modal.find('#deleteId').val(commentId);
-       modal.find('#cltId').val(clientId);
-   }
+    function deleteModalContent(t, clientId, commentId) {
+        var modal = $('#deleteModal');
+        // change modal content
+        //   console.log('clientId:' + clientId + ', commentId:' + commentId);
+        modal.find('#deleteId').val(commentId);
+        modal.find('#cltId').val(clientId);
+    }
 </script>
 
 <script type='text/javascript' src='http://code.jquery.com/jquery-1.8.2.js'></script>
@@ -637,7 +861,7 @@
 <script type='text/javascript' src="/scripts/mention.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         $("#message-text, #commentMessage").mention({
             users: [{
