@@ -188,7 +188,7 @@
             <tbody>
             <tr th:each="calls:${data}">
                 <td th:text="${calls.id}">Client ID</td>
-                <td th:text="${#dates.format(calls.createdAt, 'dd-MM-yyyy HH:mm')}">Record Date</td>
+                <td th:text="${#dates.format(calls.createdAt, 'dd MMM HH:mm')}">Record Date</td>
                 <td th:if="${calls.clientId == null}" th:text="${calls.contactName}">Client Name</td>
                 <td th:unless="${calls.clientId == null}">
                     <a th:href="@{showClient/{id}(id=${calls.clientId})}" th:text="${calls.contactName}"> </a>

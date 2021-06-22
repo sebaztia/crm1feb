@@ -49,26 +49,28 @@
                     <tr>
                         <th>Date</th>
                         <th>Company Name</th>
+                        <td width="10px">Client Count</td>
                         <th>Contact Person</th>
                         <th>Telephone</th>
                         <th>Email</th>
-                        <th>Actions</th>
+                        <th width="19%">Actions</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
                     <tr th:each="company:${companyListActive}">
-                        <td th:text="${#dates.format(company.createdAt, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#dates.format(company.createdAt, 'dd MMM')}"></td>
                         <td><a th:href="@{showCompany/{id}(id=${company.id})}" th:text="${company.name}"></a></td>
+                        <td th:text="${company.clientSet.size() > 0 ? company.clientSet.size() : ''}"></td>
                         <td th:text="${company.contact}"></td>
                         <td th:text="${company.telephone}"></td>
                         <td th:text="${company.email}"></td>
                         <td>
-                            <a th:href="@{/clientAdd/{id}(id=${company.id})}" class="btn btn-success">Add Client</a>
-                            <a th:href="@{/companyEdit/{id}(id=${company.id})}" class="btn btn-primary">Edit</a>
+                            <a th:href="@{/clientAdd/{id}(id=${company.id})}" class="btn btn-success btn-sm">Add Client</a>
+                            <a th:href="@{/companyEdit/{id}(id=${company.id})}" class="btn btn-primary btn-sm">Edit</a>
                             <span sec:authorize="hasAuthority('ADMIN')">
-                        <a th:href="@{/companyDelete/{id}(id=${company.id})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/companyDelete/{id}(id=${company.id})}" class="btn btn-danger btn-sm">Delete</a>
                         </span>
                         </td>
                     </tr>
@@ -90,26 +92,28 @@
                     <tr>
                         <th>Date</th>
                         <th>Company Name</th>
+                        <td width="10px">Client Count</td>
                         <th>Contact Person</th>
                         <th>Telephone</th>
                         <th>Email</th>
-                        <th>Actions</th>
+                        <th width="19%">Actions</th>
                     </tr>
                     </thead>
 
                     <tbody>
 
                     <tr th:each="company:${companyListInactive}">
-                        <td th:text="${#dates.format(company.createdAt, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#dates.format(company.createdAt, 'dd MMM')}"></td>
                         <td><a th:href="@{showCompany/{id}(id=${company.id})}" th:text="${company.name}"></a></td>
+                        <td th:text="${company.clientSet.size() > 0 ? company.clientSet.size() : ''}"></td>
                         <td th:text="${company.contact}"></td>
                         <td th:text="${company.telephone}"></td>
                         <td th:text="${company.email}"></td>
                         <td>
-                            <a th:href="@{/clientAdd/{id}(id=${company.id})}" class="btn btn-success">Add Client</a>
-                            <a th:href="@{/companyEdit/{id}(id=${company.id})}" class="btn btn-primary">Edit</a>
+                            <a th:href="@{/clientAdd/{id}(id=${company.id})}" class="btn btn-success btn-sm">Add Client</a>
+                            <a th:href="@{/companyEdit/{id}(id=${company.id})}" class="btn btn-primary btn-sm">Edit</a>
                             <span sec:authorize="hasAuthority('ADMIN')">
-                        <a th:href="@{/companyDelete/{id}(id=${company.id})}" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/companyDelete/{id}(id=${company.id})}" class="btn btn-danger btn-sm">Delete</a>
                         </span>
                         </td>
                     </tr>
