@@ -170,7 +170,8 @@ public class ClientController {
         if (null == srcPng) {
             srcPng = srcRepository.findByAuthor("Sebastian");
         }
-
+        client.setUpdatedAt(new Date());
+        clientService.saveClient(client);
         saveNotification(message, author, client);
 
         recentActivityService.save(new RecentActivity(client.getName(), message, comments.getId(), "addComment", (srcPng.getAuthor().equals("Sebastian")? author : srcPng.getAuthor()),
@@ -223,7 +224,8 @@ public class ClientController {
         Client client = clientService.getClientById(id);
         saveNotification(message, author, client);
         RecentActivity recentActivity = recentActivityService.findByCommentId(comId);
-
+        client.setUpdatedAt(new Date());
+        clientService.saveClient(client);
         if (null == recentActivity) {
             SrcPng srcPng = srcRepository.findByAuthor(author);
             if (null == srcPng) {
