@@ -150,7 +150,7 @@ public class ClientController {
         model.addAttribute("linkedComments", commentsList);
         model.addAttribute("personalAsset", personalAsset);
         model.addAttribute("draftLetter", new LetterDto(id));
-        model.addAttribute("estateProperty", commonService.getEstateProperty(id));
+        model.addAttribute("estateProperty", commonService.getEstateProperty(id));// getEstate());
         model.addAttribute("kinInfo", commonService.getKinInfo(id));
         model.addAttribute("familyContacts", commonService.getFamilyContacts(id));
 
@@ -323,16 +323,12 @@ public class ClientController {
     @PostMapping("saveEstateAsset")
     public String saveEstateAsset(@ModelAttribute("estateProperty") EstateProperty estateProperty,
                                   @ModelAttribute("kinInfo") KinInfo kinInfo,
-                                  @ModelAttribute("familyContacts") FamilyContact familyContact,
+                                  @ModelAttribute("familyContacts") FamilyContact familyContact, BindingResult result, Model model,
                                   RedirectAttributes attributes) {
-
-        logger.info("estateProperty====" + estateProperty);
-        logger.info("kinInfo====" + kinInfo);
-        logger.info("familyContact====" + familyContact);
 
         commonService.saveEstateAsset(estateProperty, kinInfo, familyContact);
 
-        attributes.addAttribute("id", estateProperty.getClientId());
+        attributes.addAttribute("id", kinInfo.getClientId());
         return "redirect:/showClient/{id}";
     }
     private String getUsername() {

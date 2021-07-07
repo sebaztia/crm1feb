@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Steele Rose CRM</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashbord.css}">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        .card-box {
+            border-top-right-radius: 40px;
+            border-top-left-radius: 20px;
+        }
+    </style>
+</head>
+
+<body class="page-container-bg-solid">
+
+<div th:replace="fragm :: menu"></div>
+<div class="container">
+    <div class="row" style="margin-top:20px">
+        <p class="pull-right">
+            Hi <span sec:authentication="principal.username">User</span>
+        </p>
+        <div class="row" style="margin-bottom:30px">
+            <div class="col-md-6">
+                <h2>Reports Dashboard</h2>
+            </div>
+        </div>
+
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                   <!-- <h3 th:text="${totalLeadsClients}"> </h3>-->
+                    <p>Estate Reports</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                </div>
+                <a th:href="@{/estateReports}" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <!--<div class="col-lg-3 col-sm-6">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h3 th:text="${totalLeadsArchive}"> </h3>
+                    <p>Leads Archive</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-building"></i>
+                </div>
+                <a th:href="@{/showLeadsArchive}" class="card-box-footer">View More <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>-->
+
+    </div>
+
+</div>
+</body>
+</html>

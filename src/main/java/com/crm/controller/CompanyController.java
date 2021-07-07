@@ -1,15 +1,12 @@
 package com.crm.controller;
 
 import com.crm.dto.CompanyDto;
-import com.crm.dto.Movie;
 import com.crm.model.Client;
 import com.crm.model.Company;
+import com.crm.model.Contact;
 import com.crm.service.ClientService;
 import com.crm.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 public class CompanyController {
@@ -29,7 +23,7 @@ public class CompanyController {
     private static int pageSize = 5;
 
     private CompanyService companyService;
-    private ClientService clientService;
+    private ClientService clientService;;
 
     @Autowired
     public CompanyController(CompanyService companyService, ClientService clientService) {
@@ -40,7 +34,8 @@ public class CompanyController {
     @GetMapping("companyAdd")
     public String addCompany(@Valid Model model) {
         List moList = new ArrayList();
-        moList.add(new Movie("Contact:", ""));
+      //  moList.add(new Movie("Contact:", ""));
+        moList.add(new Contact());
         model.addAttribute("company", new CompanyDto(null, moList));
 
         return "add_company";
@@ -48,7 +43,7 @@ public class CompanyController {
     @GetMapping("companyAddInactive")
     public String companyAddInactive(@Valid Model model) {
         List moList = new ArrayList();
-        moList.add(new Movie("Contact:", ""));
+        moList.add(new Contact());
         model.addAttribute("company", new CompanyDto(true, moList));
         return "add_company";
     }

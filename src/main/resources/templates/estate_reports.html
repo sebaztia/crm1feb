@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Steele Rose CRM</title>
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+
+<div th:replace="fragm :: menu"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="grid search">
+                <div class="grid-body">
+                    <div class="row">
+                        <!-- BEGIN FILTERS -->
+                        <form th:action="@{/searchReport}" action="#" method="get">
+                            <div class="col-md-3">
+                                <h2 class="grid-title"><i class="fa fa-filter"></i> Filters</h2>
+                                <hr>
+
+                                <h4>Estate worth:</h4>
+                                <div class="row">
+                                    <div class="input-group">
+                                        <div class="input-group-btn search-panel">
+                                            <select name="eWorth" class="btn btn-default">
+                                                <!--<span id="search_concept">Filter by</span> <span class="caret"></span>-->
+                                                <option value="all">All</option>
+                                                <option value="eq">It's equal</option>
+                                                <option value="gt">Greater than ></option>
+                                                <option value="lt">Less than <</option>
+                                                <!--<option class="divider"></option>
+                                                <option>All</option>-->
+                                            </select>
+                                        </div>
+                                        <input type="number" class="form-control" name="textWorth"
+                                               placeholder="Search term...">
+
+                                    </div>
+                                </div>
+                                <div class="padding"></div>
+
+                                <h4>Estate value:</h4>
+                                <div class="row">
+                                    <div class="input-group">
+                                        <div class="input-group-btn search-panel">
+                                            <select name="eValue" class="btn btn-default dropdown-toggle">
+                                                <!--<span id="search_concept">Filter by</span> <span class="caret"></span>-->
+                                                <option value="all">All</option>
+                                                <option value="eq">It's equal</option>
+                                                <option value="gt">Greater than ></option>
+                                                <option value="lt">Less than <</option>
+                                                <!--<option class="divider"></option>
+                                                <option>All</option>-->
+                                            </select>
+                                        </div>
+                                        <input type="number" class="form-control" name="textValue"
+                                               placeholder="Search term...">
+
+                                    </div>
+                                </div>
+
+                                <div class="padding" style="padding-top: 15px"></div>
+
+
+                                <div class="row">
+                                    <span>Do you own property?</span> &nbsp;&nbsp;
+                                    <label><input type="radio" name="choice-radio" value="true">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label><input type="radio" name="choice-radio" value="false">No</label>
+                                    <div class="padding"></div>
+                                </div>
+
+                                <div style="padding-top: 10px"></div>
+
+                                <div class="row">
+                                    <span>Marital Status:</span>
+
+                                    <select name="maritalStatus" class="btn btn-default">
+                                        <option class="divider"></option>
+                                        <option th:value="Married">Married</option>
+                                        <option th:value="Single">Single</option>
+                                        <option th:value="Widowed">Widowed</option>
+                                        <option th:value="Divorced">Divorced</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="padding"></div>
+                                <hr>
+                                <div class="row">
+
+                                    <button class="btn btn-primary pull-right" type="submit"><i
+                                            class="fa fa-search"></i></button>
+
+
+                                </div>
+                            </div>
+                        </form>
+                        <!-- END FILTERS -->
+
+                        <div class="col-md-9">
+                            <h2><i class="fa fa-file-o"></i> Result</h2>
+                            <hr>
+                            <!-- BEGIN TABLE RESULT -->
+                            <div class="table-responsive">
+                                <table class="table" id="myTable">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Client Name</th>
+                                        <th>Worth</th>
+                                        <th>Value</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="report:${estateReport}">
+                                        <td th:text="*{report.id}"></td>
+                                        <td><a th:href="@{showClient/{id}(id=${report.clientId})}"
+                                               th:text="*{report.clientName}"></a></td>
+                                        <td th:text="*{report.estateWorth}"></td>
+                                        <td th:text="*{report.estateValue}"></td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable({'order': [0, 'desc']});
+    });
+</script>
+</body>
+</html>

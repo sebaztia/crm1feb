@@ -1,12 +1,14 @@
 package com.crm.dto;
 
 import com.crm.model.Client;
+import com.crm.model.Contact;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,22 +21,24 @@ public class CompanyDto {
 
     @NotEmpty
     private String name;
-    private List<Movie> movies;
+  //  private List<Movie> movies;
+    private List<Contact> contacts;
     private String address;
-    @NotEmpty
     private String telephone;
-    @NotEmpty
-    @Email(message = "Invalid email ID")
+    private String contact;
+  //  @NotEmpty
+ //   @Email(message = "Invalid email ID")
     private String email;
     private String website;
     private Boolean inActive;
     private String isbn;
+    private Date createdAt;
 
     private Set<Client> clientSet;
 
     public CompanyDto(Boolean aTrue, List aList) {
         this.inActive = aTrue;
-        this.movies = aList;
+        this.contacts = aList;
     }
 
     public CompanyDto() { }

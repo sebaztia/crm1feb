@@ -35,6 +35,7 @@ public class Client implements Serializable {
     private int priority;
     private Boolean isLeads;
     private Integer callListId;
+    private String maritalStatus;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "company_id", nullable = false)
@@ -72,24 +73,5 @@ public class Client implements Serializable {
     @PreUpdate
     public void onPreUpdate() {
         this.updatedAt = new Date();
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", contact='" + contact + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", status='" + status + '\'' +
-                ", cleared=" + cleared +
-                ", deceased=" + deceased +
-                ", company=" + company +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", commentsSet=" + commentsSet +
-                '}';
     }
 }

@@ -2,12 +2,14 @@ package com.crm.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,10 +27,10 @@ class Company implements Serializable {
 
     private String contact;
     private String address;
-    @NotEmpty
+   // @NotEmpty
     private String telephone;
-    @NotEmpty
-    @Email(message = "Invalid email ID")
+  //  @NotEmpty
+  //  @Email(message = "Invalid email ID")
     private String email;
     private String website;
     private Boolean inActive;

@@ -20,6 +20,7 @@
         <input type="hidden" class="form-control" th:field="*{contact}"/>
         <input type="hidden" class="form-control" th:field="*{email}"/>
         <input type="hidden" class="form-control" th:field="*{address}"/>
+        <input type="hidden" class="form-control" th:field="*{maritalStatus}"/>
 
         <input type="hidden" class="form-control" th:field="*{company}"/>
         <input type="hidden" class="form-control" th:field="*{createdAt}"/>
@@ -648,19 +649,29 @@
                     <div class="row gutters">
                         <div class="col-lg-9">
                             <div class="card-body">
-                                <div class="row" th:object="${estateProperty}">
+
+                                <div class="row gutters">
                                     <div class="col-lg-12" style="text-align: center; color: #4b8df9">
                                         <h3>&nbsp;</h3>
                                     </div>
+                                    <div class="col-lg-12">
+                                        <div class="text-right">
+                                            <button type="submit" class="btn btn-danger">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" th:object="${estateProperty}">
+
                                     <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
                                     <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Estimated Estate Worth</label>
-                                            <input type="text" class="form-control" th:field="*{worth}"
+                                            <input type="number" class="form-control" th:field="*{worth}"
                                                    placeholder="estate worth" required autofocus>
                                             <label>Estimated Value</label>
-                                            <input type="text" class="form-control" th:field="*{value}"
+                                            <input type="number" class="form-control" th:field="*{value}"
                                                    placeholder="estimated value" required autofocus>
                                         </div>
                                     </div>
@@ -675,8 +686,8 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Do you own property?</label> &nbsp;&nbsp;
-                                                <label><input type="radio" name="choice-radio" value="true" th:field="*{own}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label><input type="radio" name="choice-radio" value="false" th:field="*{own}">No</label>
+                                            <label><input type="radio" name="choice-radio" value="true" th:field="*{own}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label><input type="radio" name="choice-radio" value="false" th:field="*{own}">No</label>
                                         </div>
                                     </div>
 
@@ -757,15 +768,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row gutters">
-                                    <div class="col-lg-12">
-                                        <div class="text-right">
-                                            <button type="submit" id="submist" name="submit" class="btn btn-primary">
-                                                Send/Save
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
 
                         </div>

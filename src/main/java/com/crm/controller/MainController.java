@@ -67,6 +67,13 @@ public class MainController {
         return "probate_dashboard";
     }
 
+    @GetMapping("/reportsPage")
+    public String reportsPage(Model model) {
+       /* model.addAttribute("totalLeadsClients", callListService.countByIsLeads());
+        model.addAttribute("totalLeadsArchive", callListService.countByLeadsArchive());*/
+        return "report_dashboard";
+    }
+
     @GetMapping("/getNotifications")
     public @ResponseBody Object getNotifications() {
         return notificationService.getNotificationByMentioned(getUsername());
