@@ -1,6 +1,7 @@
 package com.crm.controller;
 
 import com.crm.config.Utility;
+import com.crm.dto.ClientEPDto;
 import com.crm.dto.LetterDto;
 import com.crm.model.*;
 import com.crm.repository.SrcRepository;
@@ -150,9 +151,11 @@ public class ClientController {
         model.addAttribute("linkedComments", commentsList);
         model.addAttribute("personalAsset", personalAsset);
         model.addAttribute("draftLetter", new LetterDto(id));
-        model.addAttribute("estateProperty", commonService.getEstateProperty(id));// getEstate());
+      /*  model.addAttribute("estateProperty", commonService.getEstateProperty(id));// getEstate());
         model.addAttribute("kinInfo", commonService.getKinInfo(id));
-        model.addAttribute("familyContacts", commonService.getFamilyContacts(id));
+        model.addAttribute("familyContacts", commonService.getFamilyContacts(id));*/
+
+        model.addAttribute("clientEP", commonService.getClientEP(id));
 
         List<ClientStatus> statusList = clientStatusService.getAllClientStatus();
         model.addAttribute("statusList", statusList);
@@ -321,14 +324,12 @@ public class ClientController {
     }
 
     @PostMapping("saveEstateAsset")
-    public String saveEstateAsset(@ModelAttribute("estateProperty") EstateProperty estateProperty,
-                                  @ModelAttribute("kinInfo") KinInfo kinInfo,
-                                  @ModelAttribute("familyContacts") FamilyContact familyContact, BindingResult result, Model model,
+    public String saveEstateAsset(@ModelAttribute("clientEP") ClientEPDto clientEPDto, BindingResult result, Model model,
                                   RedirectAttributes attributes) {
 
-        commonService.saveEstateAsset(estateProperty, kinInfo, familyContact);
+        commonService.saveEstateAsset(clientEPDto);
 
-        attributes.addAttribute("id", kinInfo.getClientId());
+        attributes.addAttribute("id", clientEPDto.getClientId());
         return "redirect:/showClient/{id}";
     }
     private String getUsername() {

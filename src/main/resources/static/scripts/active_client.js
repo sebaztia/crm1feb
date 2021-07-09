@@ -6,7 +6,7 @@ dragula([
     document.getElementById('checking'),
     document.getElementById('stored'),
     document.getElementById('archived'),
-    document.getElementById('8')
+    document.getElementById('pre-sign')
 ])
 
     .on('drag', function(el) {

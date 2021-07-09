@@ -23,5 +23,5 @@ public interface UserService extends UserDetailsService {
     void updatePassword(User user, String newPassword);
     List<UserDto> getUserDto();
     UserDto getUserDto(Long userId);
-    Map updateRoles(Long userId, Boolean admin, Boolean roleUser, Boolean wills, Boolean leads);
+    Map updateRoles(Long userId, Boolean admin, Boolean roleUser, Boolean wills, Boolean leads, Boolean todo);
 }

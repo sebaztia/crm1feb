@@ -66,7 +66,9 @@ public class ActiveController {
         else if (colName.equals("checking"))
             return "Checking";
         else if (colName.equals("stored"))
-            return "Stored";
+            return "Closed";
+        else if (colName.equals("pre-sign"))
+            return "Pre-Signing";
         else
             return "Archived";
     }

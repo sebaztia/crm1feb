@@ -10,6 +10,7 @@ $(document).ready(function() {
                     $('#user').prop("checked", result["roleUser"]);
                     $('#wills').prop("checked", result["wills"]);
                     $('#leads').prop("checked", result["leads"]);
+                    $('#todo').prop("checked", result["todo"]);
                     $('#resultLbl').text('');
                 }
             });
@@ -21,6 +22,7 @@ $(document).ready(function() {
         $('#user').prop("checked", false);
         $('#wills').prop("checked", false);
         $('#leads').prop("checked", false);
+        $('#todo').prop("checked", false);
         $('#resultLbl').text('');
     });
 
@@ -30,13 +32,14 @@ $(document).ready(function() {
         var usr = $('#user').is(":checked");
         var wls = $('#wills').is(":checked");
         var lds = $('#leads').is(":checked");
+        var todos = $('#todo').is(":checked");
 
         var userId = $('#users').prop("value")
         if (userId > 0) {
             $.ajax({
 
                 url : 'updateUserDto',
-                data : { "userId" : userId, "admin" : adm, "roleUser" : usr, "wills" : wls, "leads" : lds},
+                data : { "userId" : userId, "admin" : adm, "roleUser" : usr, "wills" : wls, "leads" : lds, "todo" : todos},
                 success : function(result) {
                    console.log('dfsfdfd' + JSON.stringify(result));
                    $('#resultLbl').text('Roles have been assigned successfully.');

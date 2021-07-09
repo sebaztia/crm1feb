@@ -3,11 +3,12 @@ package com.crm.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Entity
-public class EstateProperty {
+public class EstateProperty implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +26,8 @@ public class EstateProperty {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    public EstateProperty(Long clientId) { this.clientId = clientId; }
+    public EstateProperty(){ }
     @PrePersist
     public void onPrePersist() {
         this.createdAt = new Date();

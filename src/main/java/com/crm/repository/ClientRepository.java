@@ -24,4 +24,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     List<Client> findByIsLeadsNull();
 
     Long countByIsLeadsNull();
+    List<Client> findAllByTodosTrue();
 }

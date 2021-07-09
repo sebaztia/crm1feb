@@ -43,6 +43,9 @@
                         <div style="margin-top: 15px;" sec:authorize="hasAuthority('LEADS')">
                             <a th:cellpadding="2" style="width: 170px; height: 40px;" th:href="@{/probatePage}" class="btn btn-warning"> PROBATE </a>
                         </div>
+                        <div style="margin-top: 15px;" sec:authorize="hasAuthority('TODO')">
+                            <a style="width: 170px; height: 40px;" th:href="@{/todoList}" class="btn btn-primary">TODO List</a>
+                        </div>
                         <div style="margin-top: 15px;">
                             <a style="width: 170px; height: 40px;" th:href="@{/reportsPage}" class="btn btn-success">REPORTS</a>
                         </div>

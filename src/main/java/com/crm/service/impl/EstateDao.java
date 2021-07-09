@@ -23,34 +23,35 @@ public class EstateDao implements IEstateDao {
         StringBuffer sql = new StringBuffer("");
         if (null != textWorth && !textWorth.equals("")) {
             if (eWorth.equals("gt"))
-                sql.append(" and e.worth >= " + textWorth);
+                sql.append(" having sw > " + textWorth);
             else if (eWorth.equals("lt"))
-                sql.append(" and e.worth <= " + textWorth);
+                sql.append(" having sw < " + textWorth);
             else if (eWorth.equals("eq"))
-                sql.append(" and e.worth = " + textWorth);
+                sql.append(" having sw = " + textWorth);
         }
 
         if (null != textValue && !textValue.equals("")) {
+            String sql2 = sql.equals("") ? " having" : " and";
             if (eValue.equals("gt"))
-                sql.append(" and e.value >= " + textValue);
+                sql.append(sql2 + " sv > " + textValue);
             else if (eValue.equals("lt"))
-                sql.append(" and e.value <= " + textValue);
+                sql.append(sql2 + " sv < " + textValue);
             else if (eValue.equals("eq"))
-                sql.append(" and e.value = " + textValue);
+                sql.append(sql2 + " sv = " + textValue);
         }
-
+        StringBuffer sql3 = new StringBuffer("");
         if (null != choiceradio) {
             if (choiceradio.equals("true"))
-                sql.append(" and e.own = '1'");
+                sql3.append(" and e.own = '1'");
             else
-                sql.append(" and (e.own = '0' or e.own is null)");
+                sql3.append(" and (e.own = '0' or e.own is null)");
         }
 
         if (null != maritalStatus && !maritalStatus.equals(""))
-            sql.append(" and c.marital_status = '" + maritalStatus + "'");
+            sql3.append(" and c.marital_status = '" + maritalStatus + "'");
 
 
-        String completeQuery = "SELECT e.id, c.name, e.worth, e.value, e.client_id FROM estate_property e, client c where c.id = e.client_id" + sql;
+        String completeQuery = "SELECT e.id, c.name, sum(e.worth) as sw, sum(e.value) as sv, e.client_id FROM estate_property e, client c where c.id = e.client_id " + sql3 + " group by e.client_id" + sql;
         System.out.println("completeQuery=== " + completeQuery);
         Query query = entityManager.createNativeQuery(completeQuery);
 

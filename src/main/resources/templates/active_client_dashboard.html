@@ -112,6 +112,41 @@
                 </li>
             </ul>
         </li>
+
+
+        <li class="drag-column drag-column-needs-pre-sign">
+      <span class="drag-column-header">
+        <h2>Pre-Signing</h2>
+        <svg data-target="options8" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
+      </span>
+            <div class="drag-options" id="options8"></div>
+            <ul class="drag-inner-list" id="pre-sign">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${preSignList}">
+                    <div class="panel panel-warning" align="center">
+                        <div class="panel-heading fa-sticky-note-o">
+                            <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="pull-right" th:if="*{first.elapsedDays > 0 }">
+                                    <span class="label label-default">Elapsed:</span>&nbsp;
+                                    <i th:if="*{first.elapsedDays > 0 && first.elapsedDays < 2}">1Day</i>
+                                    <i th:if="*{first.elapsedDays > 1 }" th:text="*{first.elapsedDays + 'Days'}"></i>
+                                </div>
+                            </div>
+                            <p th:text="*{first.companyName}"></p>
+                            <span th:if="*{first.priority == 1}" class="label label-success">LOW</span>
+                            <span th:if="*{first.priority == 2}" class="label label-warning">MEDIUM</span>
+                            <span th:if="*{first.priority == 3}" class="label label-danger">HIGH</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+
+
+
         <li class="drag-column drag-column-approved">
       <span class="drag-column-header">
         <h2>Signing</h2>
@@ -177,12 +212,12 @@
 
         <li class="drag-column drag-column-stored">
       <span class="drag-column-header">
-        <h2>Stored</h2>
+        <h2>Closed</h2>
         <svg data-target="options6" class="drag-header-more" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/</svg>
       </span>
             <div class="drag-options" id="options6"></div>
             <ul class="drag-inner-list" id="stored">
-                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${storedList}">
+                <li th:attr="data-id=${first.id}" class="drag-item" th:each="first : ${closedList}">
                     <div class="panel panel-default" align="center">
                         <div class="panel-heading fa-sticky-note-o">
                             <a th:href="@{showClient/{id}(id=${first.id})}" th:text="${first.name}"></a>

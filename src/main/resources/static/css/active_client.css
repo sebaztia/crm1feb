@@ -65,6 +65,13 @@ ul {
 .drag-column-needs-review .drag-options {
     background: #F4CE46;
 }
+
+.drag-column-needs-pre-sign .drag-column-header,
+.drag-column-needs-pre-sign .is-moved,
+.drag-column-needs-pre-sign .drag-options {
+    background: #b6f0e5;
+}
+
 .drag-column-approved .drag-column-header,
 .drag-column-approved .is-moved,
 .drag-column-approved .drag-options {

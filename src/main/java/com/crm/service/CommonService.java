@@ -1,5 +1,6 @@
 package com.crm.service;
 
+import com.crm.dto.ClientEPDto;
 import com.crm.dto.EstateReports;
 import com.crm.model.Client;
 import com.crm.model.EstateProperty;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,15 @@ public class CommonService {
         return  estateProperty;
     }
 
+    private List<EstateProperty> getEstateProperties(long clientId) {
+        List<EstateProperty> estateProperties = estatePropertyRepository.findAllByClientId(clientId);
+        if (null == estateProperties || estateProperties.size() == 0) {
+            estateProperties = new ArrayList<>();
+            estateProperties.add(new EstateProperty(clientId));
+        }
+        return estateProperties;
+    }
+
     public KinInfo getKinInfo(Long clientId) {
 
         KinInfo kinInfo = kinInfoRepository.findByClientId(clientId);
@@ -58,10 +69,11 @@ public class CommonService {
         return familyContact;
     }
 
-    public void saveEstateAsset(EstateProperty estateProperty, KinInfo kinInfo, FamilyContact familyContact) {
-        estatePropertyRepository.save(estateProperty);
-        kinInfoRepository.save(kinInfo);
-        familyContactRepository.save(familyContact);
+    public void saveEstateAsset(ClientEPDto clientEPDto) {
+
+        estatePropertyRepository.save(clientEPDto.getEstateProperties());
+        kinInfoRepository.save(clientEPDto.getKinInfo());
+        familyContactRepository.save(clientEPDto.getFamilyContact());
 
     }
 
@@ -71,14 +83,28 @@ public class CommonService {
     public List<EstateReports> findReports() {
 
        return estatePropertyRepository.findReports().stream().map(x ->
-               new EstateReports(Long.valueOf(x[0].toString()), x[1].toString(), Integer.valueOf(x[2].toString()),
-                       Integer.valueOf(x[3].toString()), Long.valueOf(x[4].toString()))).collect(Collectors.toList());
+               new EstateReports(Long.valueOf(x[0].toString()), x[1].toString(), Double.valueOf(x[2].toString()),
+                       Double.valueOf(x[3].toString()), Long.valueOf(x[4].toString()))).collect(Collectors.toList());
     }
 
     public List<EstateReports> findReports(String eWorth, String textWorth, String eValue, String textValue, String choiceradio, String maritalStatus) {
 
         return api.searchUser(eWorth, textWorth, eValue, textValue, choiceradio, maritalStatus).stream().map(x ->
-                new EstateReports(Long.valueOf(x[0].toString()), x[1].toString(), Integer.valueOf(x[2].toString()),
-                        Integer.valueOf(x[3].toString()), Long.valueOf(x[4].toString()))).collect(Collectors.toList());
+                new EstateReports(Long.valueOf(x[0].toString()), x[1].toString(), Double.valueOf(x[2].toString()),
+                        Double.valueOf(x[3].toString()), Long.valueOf(x[4].toString()))).collect(Collectors.toList());
+    }
+
+    public ClientEPDto getClientEP(long clientId) {
+        ClientEPDto clientEPDto = new ClientEPDto();
+        clientEPDto.setClientId(clientId);
+        clientEPDto.setFamilyContact(getFamilyContacts(clientId));
+        clientEPDto.setKinInfo(getKinInfo(clientId));
+        clientEPDto.setEstateProperties(getEstateProperties(clientId));
+
+        return clientEPDto;
+    }
+
+    public void deleteComment(Long deleteEPId) {
+        estatePropertyRepository.delete(deleteEPId);
     }
 }

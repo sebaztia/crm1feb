@@ -99,4 +99,6 @@ public class ClientService {
     }
 
     public List<Client> findClients() { return clientRepository.findByIsLeadsNull(); }
+
+    public List<Client> getTodoList() { return clientRepository.findAllByTodosTrue(); }
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Steele Rose CRM Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#data-table').DataTable({'order': [0, 'desc']});
+        });
+    </script>
+</head>
+
+<body class="page-container-bg-solid">
+<div th:replace="fragm :: menu">Static Menu</div>
+<div class="container">
+    <p class="pull-right">
+        Welcome <b><span sec:authentication="principal.username">User</span></b>
+    </p>
+    <div class="pull-right" sec:authorize="hasAuthority('ADMIN')">
+        <i><span sec:authentication="principal.authorities">Roles</span></i>&nbsp;
+        <a th:href="@{/settingForm}">Settings</a>
+    </div>
+</div>
+<div class="container">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">
+                            <h1 style="text-align: center; color: #b30000; font-weight: bold;">TODO LISTS</h1>
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <table id="data-table" class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Client Name</th>
+                                <th>Phone</th>
+                                <th>Company Name (Referred)</th>
+                                <th>Contact Person</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr th:each="todo:${todoList}">
+
+                                <td th:text="${todo.id}"></td>
+                                <td th:text="${#dates.format(todo.createdAt, 'dd MMM HH:MM')}"></td>
+                                <td><a th:href="@{showClient/{id}(id=${todo.id})}" th:text="${todo.name}"></a></td>
+                                <td th:text="${todo.phone}"></td>
+                                <td th:text="${todo.company.name}"></td>
+                                <td th:text="${todo.contact}"></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

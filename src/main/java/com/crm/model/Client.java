@@ -32,6 +32,7 @@ public class Client implements Serializable {
     private String status;
     private Boolean cleared;
     private Boolean deceased;
+    private Boolean todos;
     private int priority;
     private Boolean isLeads;
     private Integer callListId;

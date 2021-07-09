@@ -25,35 +25,6 @@
     </div>
     <br/>
     <div class="row">
-        <!--<div class="col-md-10">
-            <div th:switch="${users}">
-                <h2 th:case="null">No users yet!</h2>
-                <div th:case="*">
-                    <h2>Users</h2>
-                    <table width="50%;" class="table colored-header datatable project-list">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th colspan="2">Rights</th>
-                            <th colspan="2">Wills </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.username}"></td>
-                            <td th:text="${user.email}"></td>
-                            <td><span th:unless="${user.admin}"><a th:href="@{/makeAdmin/{id}(id=${user.id})}">Make Admin</a></span></td><td>
-                            <span th:if="${user.admin}"><a th:href="@{/removeAdmin/{id}(id=${user.id})}">Remove Admin</a></span></td>
-
-                            <td><span th:unless="${user.willRole}"><a th:href="@{/makeWillRole/{id}(id=${user.id})}"> Yes </a></span></td>
-                            <td><span th:if="${user.willRole}"><a th:href="@{/removeWillRole/{id}(id=${user.id})}"> No </a></span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>-->
 
         <div class="col-md-4">
             <h2>Staff List</h2>
@@ -102,8 +73,86 @@
                 <input type="checkbox" id="user" th:text="ROLE_USER">&nbsp;&nbsp;
                 <input type="checkbox" id="wills" th:text="WILLS">&nbsp;&nbsp;
                 <input type="checkbox" id="leads" th:text="LEADS">
+                <input type="checkbox" id="todo" th:text="TODO">
             </div>
         </div>
+
+
+    </div>
+    <div class="row">
+        <h4>RIGHTS</h4>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Page</th>
+                <th>Event</th>
+                <th>Type</th>
+                <th>RIGHTS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>HOME</td>
+                <td>WILLS</td>
+                <td>Button</td>
+                <td>ROLE_WILLS</td>
+            </tr>
+            <tr>
+                <td>frag</td>
+                <td>Dashboard</td>
+                <td>Button</td>
+                <td>ROLE_WILLS</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Active Client</td>
+                <td>Link</td>
+                <td>ROLE_WILLS</td>
+            </tr>
+            <tr>
+                <td>Archive</td>
+                <td>Setting</td>
+                <td>Link</td>
+                <td>ADMIN</td>
+            </tr>
+            <tr>
+                <td>Archive</td>
+                <td>Restore, Delete</td>
+                <td>Button</td>
+                <td>ADMIN</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>HOME</td>
+                <td>LEADS</td>
+                <td>Button</td>
+                <td>LEADS</td>
+            </tr>
+            <tr>
+                <td>Enquiry model</td>
+                <td>Make Leads</td>
+                <td>Button</td>
+                <td>LEADS</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>show client</td>
+                <td>TODO</td>
+                <td>Checkbox</td>
+                <td>TODO</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

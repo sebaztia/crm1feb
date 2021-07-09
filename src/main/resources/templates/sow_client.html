@@ -27,7 +27,7 @@
         <input type="hidden" class="form-control" th:field="*{updatedAt}"/>
 
         <div class="row" style="padding-top: 15px;">
-            <div class="col-md-10">
+            <div class="col-md-12">
 
                 <div class="panel panel-default">
                     <div class="panel-heading"><h3 style="align-content: center">Client Info</h3></div>
@@ -39,11 +39,12 @@
                         Name: <b th:text="*{name}"/> <br/>
                         Contact Person: <b th:text="*{contact}"/> <br/>
                     </div>
-                    <div class="col-md-4"><br/><br/>
+                    <div class="col-md-5"><br/><br/>
                         Telephone: <b th:text="${show_client.phone}"/> <br/>
-                        Email: <span th:text="${show_client.email}"/><br/>
+                        Email: <b th:text="${show_client.email}"/><br/>
+                        Reference: <b th:text="${show_client.company.name}"/><br/>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <br/><br/>
                         <select class="form-control" th:field="*{status}">
                             <option th:each="status : ${statusList}"
@@ -80,6 +81,13 @@
                    th:href="@{/makeLeads/{id}(id=${show_client.id})}" class="btn btn-danger">Leads</a>
             </div>
         </div>
+        <div class="row" style="padding-bottom: 25px;">
+            <div class="col-md-7"></div>
+            <div class="col-md-2" style="padding-left: 30px;"  sec:authorize="hasAuthority('TODO')">
+                <input type="checkbox" id="todo" th:field="*{todos}"
+                       th:checked="*{deceased}"> &nbsp;&nbsp; TODO
+            </div>
+        </div>
     </form>
 
 </div>
@@ -88,10 +96,7 @@
 <div id="exTab2" class="container">
     <ul class="nav nav-tabs">
         <li>
-            <a href="#5" data-toggle="tab">FINANCIAL SUMMARY</a>
-        </li>
-        <li>
-            <a href="#1" data-toggle="tab">FINANCIAL</a>
+            <a href="#5" data-toggle="tab">FINANCIAL</a>
         </li>
         <li class="active"><a href="#2" data-toggle="tab">COMMENTS</a>
         </li>
@@ -102,276 +107,6 @@
     </ul>
 
     <div class="tab-content ">
-        <div class="tab-pane" id="1">
-            <div sec:authorize="hasAuthority('ROLE_WILLS')" class="row" style="padding-top: 60px;">
-                <div class="col-md-12">
-                    <div style="background: #e1e5ec;">
-                        <h3>PERSONAL ASSETS</h3>
-                    </div>
-                    <div class="col-md-9">
-                        <p>You will probably want your Estate to pass to your immediate family. Whatever your decision,
-                            before distributing your Estate you
-                            should establish its nature and value by completing this section</p>
-                    </div>
-                    <div class="col-md-9"><h4>HOME DETAILS</h4></div>
-
-                    <form th:object="${personalAsset}" th:action="@{/personal_asset_save}" action="#" method="post">
-                        <input type="hidden" class="form-control" th:field="*{id}"/>
-                        <input type="hidden" class="form-control" th:field="*{clientId}"/>
-                        <div class="col-md-5">
-                            Do you own your property?&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1"
-                                          th:field="*{propertyOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2"
-                                          th:field="*{propertyOne}">No</label>
-                        </div>
-                        <div class="col-md-5">
-                            Do you have a mortgage?&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1"
-                                          th:field="*{mortgageOne}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2"
-                                          th:field="*{mortgageOne}">No</label>
-                        </div>
-                        <br>
-
-                        <div class="col-md-10">
-                            In whose name is the property registered? &nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1"
-                                          th:field="*{propertyRegisteredOne}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2"
-                                          th:field="*{propertyRegisteredOne}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="3"
-                                          th:field="*{propertyRegisteredOne}">Joint</label>
-                            <!--Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">-->
-                        </div>
-                        <br>
-                        <div class="col-md-10">
-                            If joint (co-owners) do you own your property as:&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointOne}">Joint
-                                Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointOne}">Tenants in
-                                Common</label>
-                            <!--<input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common-->
-                        </div>
-                        <br>
-                        <div class="col-md-10">
-                            Lender Details: &nbsp;&nbsp;<input type="text" th:value="*{lenderDetails}"
-                                                               th:field="*{lenderDetails}">
-                        </div>
-                        <br>
-
-                        <div class="col-md-5" style="margin-top: 10px;">
-                            Amount outstanding? £ <input type="text" th:value="*{amountOSOne}"
-                                                         th:field="*{amountOSOne}">
-                        </div>
-                        <div class="col-md-5" style="margin-top: 10px;">
-                            Current Value? £ <input type="text" th:value="*{currentValueOne}"
-                                                    th:field="*{currentValueOne}">
-                        </div>
-                        <br>
-
-                        <div class="col-md-10" style="margin-top: 10px;">
-                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldOne}"
-                                                                             th:field="*{propertyHeldOne}">
-                        </div>
-                        <br>
-                        <div class="col-md-10" style="margin-top: 10px;">
-                            Financial arrangements for the purchase (how did each spouse/partner contribute? <textarea
-                                th:value="*{contributeOne}" th:field="*{contributeOne}"></textarea>
-                        </div>
-                        <br>
-
-                        <div class="col-md-10" style="margin-top: 10px;">
-                            <strong>OTHER PROPERTY</strong>
-                            <b> (including property abroad) Address</b>&nbsp;&nbsp; <input type="text"
-                                                                                           th:value="*{otherProperty}"
-                                                                                           th:field="*{otherProperty}">
-                        </div>
-                        <br>
-
-                        <div class="col-md-5">
-                            Do you have a mortgage?&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1"
-                                          th:field="*{mortgageTwo}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2"
-                                          th:field="*{mortgageTwo}">No</label>
-                            <!-- <input type="checkbox"> YES &nbsp; <input type="checkbox"> NO-->
-                        </div>
-                        <br>
-
-                        <div class="col-md-10">
-                            In whose name is the property registered? &nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1"
-                                          th:field="*{propertyRegisteredTwo}">Client 1</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2"
-                                          th:field="*{propertyRegisteredTwo}">Client 2</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="3"
-                                          th:field="*{propertyRegisteredTwo}">Joint</label>
-                            <!--Client 1<input type="checkbox"> &nbsp;&nbsp; 2 <input type="checkbox"> &nbsp;&nbsp; Joint <input type="checkbox">-->
-                        </div>
-                        <br>
-                        <div class="col-md-10">
-                            If joint (co-owners) do you own your property as:&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="1" th:field="*{ifJointTwo}">Joint
-                                Tenants</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="choice-radio" value="2" th:field="*{ifJointTwo}">Tenants in
-                                Common</label>
-                            <!--<input type="checkbox"> Joint Tenants &nbsp; <input type="checkbox"> Tenants in Common-->
-                        </div>
-                        <br>
-                        <div class="col-md-5" style="margin-top: 10px;">
-                            Amount outstanding? £ <input type="text" th:value="*{amountOSTwo}"
-                                                         th:field="*{amountOSTwo}">
-                        </div>
-                        <div class="col-md-5" style="margin-top: 10px;">
-                            Current Value? £ <input type="text" th:value="*{currentValueTwo}"
-                                                    th:field="*{currentValueTwo}">
-                        </div>
-                        <br>
-
-                        <div class="col-md-10" style="margin-top: 10px;">
-                            Where are the deeds to the property held? <input type="text" th:value="*{propertyHeldTwo}"
-                                                                             th:field="*{propertyHeldTwo}">
-                        </div>
-                        <br>
-                        <div class="col-md-10" style="margin-top: 10px;">
-                            Financial arrangements for the purchase (how did each spouse/partner contribute? <input
-                                type="text" th:value="*{contributeTwo}" th:field="*{contributeTwo}">
-                        </div>
-                        <div class="portlet-body" style="margin-top: 20px;">
-                            <table id="mytable1" class="table">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Details</th>
-                                    <th>Client 1</th>
-                                    <th>Client 2</th>
-                                    <th>Joint</th>
-                                </tr>
-                                </thead>
-
-                                <tr class="active">
-                                    <th scope="row">Bank Accounts</th>
-                                    <th><input type="text" th:value="*{baDetails}" th:field="*{baDetails}"></th>
-                                    <th><input type="text" th:value="*{baClient1}" th:field="*{baClient1}"></th>
-                                    <th><input type="text" th:value="*{baClient2}" th:field="*{baClient2}"></th>
-                                    <th><input type="text" th:value="*{baJoint}" th:field="*{baJoint}"></th>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Stocks & Shares</th>
-                                    <th><input type="text" th:value="*{ssDetails}" th:field="*{ssDetails}"></th>
-                                    <th><input type="text" th:value="*{ssClient1}" th:field="*{ssClient1}"></th>
-                                    <th><input type="text" th:value="*{ssClient2}" th:field="*{ssClient2}"></th>
-                                    <th><input type="text" th:value="*{ssJoint}" th:field="*{ssJoint}"></th>
-                                </tr>
-                                <tr class="success">
-                                    <th scope="row">Interest in a Trust</th>
-                                    <th><input type="text" th:value="*{itDetails}" th:field="*{itDetails}"></th>
-                                    <th><input type="text" th:value="*{itClient1}" th:field="*{itClient1}"></th>
-                                    <th><input type="text" th:value="*{itClient2}" th:field="*{itClient2}"></th>
-                                    <th><input type="text" th:value="*{itJoint}" th:field="*{itJoint}"></th>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Building Society Acc.</th>
-                                    <th><input type="text" th:value="*{bsaDetails}" th:field="*{bsaDetails}"></th>
-                                    <th><input type="text" th:value="*{bsaClient1}" th:field="*{bsaClient1}"></th>
-                                    <th><input type="text" th:value="*{bsaClient2}" th:field="*{bsaClient2}"></th>
-                                    <th><input type="text" th:value="*{bsaJoint}" th:field="*{bsaJoint}"></th>
-                                </tr>
-                                <tr class="info">
-                                    <th scope="row">Nat. Savings/ P Bonds</th>
-                                    <th><input type="text" th:value="*{nspbDetails}" th:field="*{nspbDetails}"></th>
-                                    <th><input type="text" th:value="*{nspbClient1}" th:field="*{nspbClient1}"></th>
-                                    <th><input type="text" th:value="*{nspbClient2}" th:field="*{nspbClient2}"></th>
-                                    <th><input type="text" th:value="*{nspbJoint}" th:field="*{nspbJoint}"></th>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Cash</th>
-                                    <th><input type="text" th:value="*{cashDetails}" th:field="*{cashDetails}"></th>
-                                    <th><input type="text" th:value="*{cashClient1}" th:field="*{cashClient1}"></th>
-                                    <th><input type="text" th:value="*{cashClient2}" th:field="*{cashClient2}"></th>
-                                    <th><input type="text" th:value="*{cashJoint}" th:field="*{cashJoint}"></th>
-                                </tr>
-                                <tr class="warning">
-                                    <th scope="row">Car/ Vehicles</th>
-                                    <th><input type="text" th:value="*{cvDetails}" th:field="*{cvDetails}"></th>
-                                    <th><input type="text" th:value="*{cvClient1}" th:field="*{cvClient1}"></th>
-                                    <th><input type="text" th:value="*{cvClient2}" th:field="*{cvClient2}"></th>
-                                    <th><input type="text" th:value="*{cvJoint}" th:field="*{cvJoint}"></th>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Furniture/ Personal</th>
-                                    <th><input type="text" th:value="*{fpDetails}" th:field="*{fpDetails}"></th>
-                                    <th><input type="text" th:value="*{fpClient1}" th:field="*{fpClient1}"></th>
-                                    <th><input type="text" th:value="*{fpClient2}" th:field="*{fpClient2}"></th>
-                                    <th><input type="text" th:value="*{fpJoint}" th:field="*{fpJoint}"></th>
-                                </tr>
-                                <tr class="danger">
-                                    <th scope="row">Other</th>
-                                    <th><input type="text" th:value="*{otherDetails}" th:field="*{otherDetails}"></th>
-                                    <th><input type="text" th:value="*{otherClient1}" th:field="*{otherClient1}"></th>
-                                    <th><input type="text" th:value="*{otherClient2}" th:field="*{otherClient2}"></th>
-                                    <th><input type="text" th:value="*{otherJoint}" th:field="*{otherJoint}"></th>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><b>TOTAL:</b></th>
-                                    <th><input type="text" th:value="*{totalDetails}" th:field="*{totalDetails}"></th>
-                                    <th><input type="text" th:value="*{totalClient1}" th:field="*{totalClient1}"></th>
-                                    <th><input type="text" th:value="*{totalClient2}" th:field="*{totalClient2}"></th>
-                                    <th><input type="text" th:value="*{totalJoint}" th:field="*{totalJoint}"></th>
-                                </tr>
-                                <tr class="success">
-                                    <td scope="row" colspan="2">LIFE ASSURANCE (in trust/ nominated/ Pilot Trust?)</td>
-                                    <th><input type="text" th:value="*{lifeAssClient1}" th:field="*{lifeAssClient1}">
-                                    </th>
-                                    <th><input type="text" th:value="*{lifeAssClient2}" th:field="*{lifeAssClient2}">
-                                    </th>
-                                    <th><input type="text" th:value="*{lifeAssJoint}" th:field="*{lifeAssJoint}"></th>
-                                </tr>
-                                <tr>
-                                    <td colspan="4">When did you last review your pension or other financial
-                                        arrangements? Would you like Steele Rose & Co Ltd to arrange for
-                                        a Financial Adviser to call you? No cost is involved and a financial review
-                                        could well save you money, improve your investment
-                                        income or increase your pension income.
-                                        (If YES Consultant please submit referral form)
-                                    </td>
-                                    <td><label><input type="radio" name="choice-radio" value="1"
-                                                      th:field="*{referralYes}">Yes</label>&nbsp;
-                                        <label><input type="radio" name="choice-radio" value="2"
-                                                      th:field="*{referralYes}">No</label></td>
-                                </tr>
-                                <tr>
-                                    <th colspan="5">DEATH IN SERVICE BENEFIT (SEE PILOT TRUSTS PAGE 6) AND ANY OTHER
-                                        FINANCIAL DETAILS?
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td colspan="5"><textarea th:value="*{financialDetails}"
-                                                              th:field="*{financialDetails}"></textarea></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="col-md-12">
-                            TOTAL ESTATE VALUE (LESS LIABILITIES, MORTGAGES, OVERDRAFTS, CREDIT CARDS ETC) £
-                            <input type="text" th:value="*{estateValue}" th:field="*{estateValue}"></div>
-                        <br>
-                        <div class="col-md-10">
-                            APPROXIMATE INHERITANCE TAX TO PAY £ <input type="text" th:value="*{taxToPay}"
-                                                                        th:field="*{taxToPay}">
-                        </div>
-                        <br>
-                        <div class="col-md-5">
-                            <input type="submit" class="btn btn-success" value="SAVE">
-                        </div>
-
-                    </form>
-
-                </div>
-            </div>
-        </div>
 
         <div class="tab-pane active" id="2">
             <div class="row" style="padding-top: 30px;">
@@ -644,8 +379,9 @@
 
         <div class="tab-pane" id="5">
 
-            <form action="#" th:action="@{/saveEstateAsset}" method="POST">
-                <div class="container">
+            <form th:object="${clientEP}" action="#" th:action="@{/saveEstateAsset}" method="POST">
+                <input type="hidden" class="form-group" th:field="*{clientId}"/>
+                <div class="container" sec:authorize="hasAuthority('ROLE_WILLS')">
                     <div class="row gutters">
                         <div class="col-lg-9">
                             <div class="card-body">
@@ -655,52 +391,74 @@
                                         <h3>&nbsp;</h3>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="text-right">
+
+                                        <div class="col-lg-8 text-right">
+                                            <label>Add other properties</label>
+                                            <button th:data-id="*{clientId}" type="button"
+                                                    class="btn btn-success btn-sm"
+                                                    onclick="addRow(this.getAttribute('data-id'))">&plus;
+                                            </button>
+                                        </div>
+                                        <div class="col-lg-4 text-right">
                                             <button type="submit" class="btn btn-danger">Save</button>
                                         </div>
+
                                     </div>
                                 </div>
 
-                                <div class="row" th:object="${estateProperty}">
+                                <!--LIST OF PROPERTIES-->
+                                <div id="propertyList">
+                                    <div th:class="${(status.index % 2) == 0} ? 'row item even' : 'row item odd'"
+                                         th:each="movie, status : ${clientEP.estateProperties}">
+                                        <input type="hidden" class="form-group"
+                                               th:field="*{estateProperties[__${status.index}__].id}"/>
+                                        <input type="hidden" class="form-group"
+                                               th:field="*{estateProperties[__${status.index}__].clientId}"/>
 
-                                    <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
-                                    <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
+                                        <div class="col-lg-6 padtop">
                                             <label>Estimated Estate Worth</label>
-                                            <input type="number" class="form-control" th:field="*{worth}"
+                                            <input type="number" class="form-control"
+                                                   th:field="*{estateProperties[__${status.index}__].worth}"
                                                    placeholder="estate worth" required autofocus>
                                             <label>Estimated Value</label>
-                                            <input type="number" class="form-control" th:field="*{value}"
+                                            <input type="number" class="form-control"
+                                                   th:field="*{estateProperties[__${status.index}__].value}"
                                                    placeholder="estimated value" required autofocus>
                                         </div>
-                                    </div>
 
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
+                                        <div class="col-lg-6 padtop">
                                             <label>Address</label>
-                                            <textarea class="form-control" rows="3" th:field="*{address}"
+                                            <textarea class="form-control" rows="3"
+                                                      th:field="*{estateProperties[__${status.index}__].address}"
                                                       placeholder="enter address"/>
+
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
+                                        <div class="col-lg-6 padtop">
                                             <label>Do you own property?</label> &nbsp;&nbsp;
-                                            <label><input type="radio" name="choice-radio" value="true" th:field="*{own}">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <label><input type="radio" name="choice-radio" value="false" th:field="*{own}">No</label>
+                                            <input type="radio" name="choice-radio" value="true"
+                                                   th:field="*{estateProperties[__${status.index}__].own}"> <label>Yes
+                                            &nbsp; &nbsp; No</label>
+                                            <input type="radio" name="choice-radio" value="false"
+                                                   th:field="*{estateProperties[__${status.index}__].own}">
+
+                                            <button class="btn btn-sm btn-danger badge pull-right" type="button"
+                                                    data-toggle="modal" data-target="#deleteEPModal" th:unless="*{estateProperties[__${status.index}__].id == null}"
+                                                    th:ep-id="*{estateProperties[__${status.index}__].id}" th:client-id="${show_client.id}"
+                                                    onclick="deleteEPModalContent(this, this.getAttribute('ep-id'), this.getAttribute('client-id'));">
+                                                    <i class="fa fa-remove"></i></button>
                                         </div>
+
                                     </div>
-
-
-
                                 </div>
 
-                                <div class="row" th:object="${kinInfo}">
+                                <hr>
+
+                                <div class="row kin-class" th:object="${clientEP.kinInfo}">
                                     <div class="col-lg-12" style="text-align: center; color: #b843ea">
                                         <h3>Next of Kin information</h3>
                                     </div>
-                                    <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
-                                    <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
+                                    <input type="hidden" class="form-group" th:field="*{id}"/>
+                                    <input type="hidden" class="form-group" th:field="*{clientId}"/>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Name</label>
@@ -718,7 +476,8 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" th:field="*{kinemail}" placeholder="email">
+                                            <input type="email" class="form-control" th:field="*{kinemail}"
+                                                   placeholder="email">
                                             <label>Phone</label>
                                             <input type="text" class="form-control" th:field="*{kinphone}"
                                                    placeholder="phone number">
@@ -734,12 +493,12 @@
                                     </div>
                                 </div>
 
-                                <div class="row" th:object="${familyContacts}">
+                                <div class="row" th:object="${clientEP.familyContact}">
                                     <div class="col-lg-12" style="text-align: center; color: #398439">
                                         <h3>Family contacts</h3>
                                     </div>
-                                    <input type="hidden" class="form-group" name="id" th:field="*{id}"/>
-                                    <input type="hidden" class="form-group" name="clientI" th:field="*{clientId}"/>
+                                    <input type="hidden" class="form-group" th:field="*{id}"/>
+                                    <input type="hidden" class="form-group" th:field="*{clientId}"/>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Name</label>
@@ -835,82 +594,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteEPModal" tabindex="-1" role="dialog" aria-labelledby="deleteEPModalTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteEPModalTitle">Delete Property</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/deleteEPModalProperty}" method="post">
+                <div class="modal-body">
+                    Are you sure you want to delete this property?
+                    <input type="hidden" class="form-control" id="deleteEPId" name="deleteEPId"/>
+                    <input type="hidden" class="form-control" id="clientEPId" name="clientEPId"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    function editModalContent(t, clientId, commentId, message) {
-        var modal = $('#editUserModal');
-        // change modal content
-        //  console.log('clientId:' + clientId + ', commentId:' + commentId + ', message:' + message);
-        modal.find('#commentId').val(commentId);
-        modal.find('#clientId').val(clientId);
-        modal.find('#commentMessage').val(message);
-    }
-
-    function deleteModalContent(t, clientId, commentId) {
-        var modal = $('#deleteModal');
-        // change modal content
-        //   console.log('clientId:' + clientId + ', commentId:' + commentId);
-        modal.find('#deleteId').val(commentId);
-        modal.find('#cltId').val(clientId);
-    }
-</script>
 
 <script type='text/javascript' src='http://code.jquery.com/jquery-1.8.2.js'></script>
 <script type='text/javascript' src="/scripts/bootstrap-typeahead.js"></script>
 <script type='text/javascript' src="/scripts/mention.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#message-text, #commentMessage").mention({
-            users: [{
-                name: 'AmyWinder',
-                username: 'AmyWinder ',
-                image: 'http://placekitten.com/25/25'
-            }, {
-                name: 'Dean',
-                username: 'Dean ',
-                image: 'http://placekitten.com/25/24'
-            }, {
-                name: 'Daniel',
-                username: 'Daniel ',
-                image: 'http://placekitten.com/25/23'
-            }, {
-                name: 'Dora',
-                username: 'Dora ',
-                image: 'http://placekitten.com/25/22'
-            }, {
-                name: 'Angela',
-                username: 'Angela ',
-                image: 'http://placekitten.com/25/21'
-            }, {
-                name: 'Hollie',
-                username: 'Hollie ',
-                image: 'http://placekitten.com/25/20'
-            }, {
-                name: 'SimonCooper',
-                username: 'SimonCooper ',
-                image: 'http://placekitten.com/24/20'
-            }, {
-                name: 'Stacie',
-                username: 'Stacie ',
-                image: 'http://placekitten.com/23/20'
-            }, {
-                name: 'Claire',
-                username: 'Claire ',
-                image: 'http://placekitten.com/22/20'
-            }, {
-                name: 'Sebastian',
-                username: 'Sebastian ',
-                image: 'http://placekitten.com/21/20'
-            }]
-        });
-
-    });
-</script>
+<script type="text/javascript" src="/js/show-client.js"></script>
 </body>
 </html>

@@ -8,11 +8,11 @@ public @Data class EstateReports {
 
     private Long id;
     private String clientName;
-    private Integer estateWorth;
-    private Integer estateValue;
+    private Double estateWorth;
+    private Double estateValue;
     private Long clientId;
 
-    public EstateReports(Long id, String clientName, Integer estateWorth, Integer estateValue, Long clientId) {
+    public EstateReports(Long id, String clientName, Double estateWorth, Double estateValue, Long clientId) {
         this.id = id;
         this.clientName = clientName;
         this.estateWorth = estateWorth;

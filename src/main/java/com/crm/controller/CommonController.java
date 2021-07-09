@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,16 +23,6 @@ public class CommonController {
     @Autowired
     public CommonController(CommonService commonService) {
         this.commonService = commonService;
-    }
-
-    @GetMapping("addEstateProperty/{id}")
-    public String addEstateProperty(@PathVariable("id") Long clientId, Model model) {
-
-        model.addAttribute("estateProperties", commonService.getEstateProperty(clientId));// getEstate());
-        model.addAttribute("kinInfo", commonService.getKinInfo(clientId));
-        model.addAttribute("familyContacts", commonService.getFamilyContacts(clientId));
-
-        return "estate_property";
     }
 
     @GetMapping("/estateReports")
@@ -52,5 +44,14 @@ public class CommonController {
 
         model.addAttribute("estateReport", commonService.findReports(eWorth, textWorth, eValue, textValue, choiceradio, maritalStatus));
         return "estate_reports";
+    }
+    @PostMapping("/deleteEPModalProperty")
+    public String deleteEPModalProperty(HttpServletRequest request, RedirectAttributes attributes) {
+        Long clientEPId = Long.valueOf(request.getParameter("clientEPId"));
+        Long deleteEPId = Long.valueOf(request.getParameter("deleteEPId"));
+
+        commonService.deleteComment(deleteEPId);
+        attributes.addAttribute("id", clientEPId);
+        return "redirect:/showClient/{id}";
     }
 }

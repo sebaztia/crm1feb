@@ -36,15 +36,16 @@ public class ActiveClientController {
         List<ClientDto> draftingList = clientService.findByStatus("Drafting");
         List<ClientDto> signingList = clientService.findByStatus("Signing");
         List<ClientDto> checkingList = clientService.findByStatus("Checking");
-        List<ClientDto> storedList = clientService.findByStatus("Stored");
+        List<ClientDto> closedList = clientService.findByStatus("Closed");
         List<ClientDto> archivedList = clientService.findByStatus("Archived");
 
         model.addAttribute("firstLists", firstLists);
         model.addAttribute("instructionsList", instructionsList);
         model.addAttribute("draftingList", draftingList);
+        model.addAttribute("preSignList", clientService.findByStatus("Pre-Signing"));
         model.addAttribute("signingList", signingList);
         model.addAttribute("checkingList", checkingList);
-        model.addAttribute("storedList", storedList);
+        model.addAttribute("closedList", closedList);
         model.addAttribute("archivedList", archivedList);
         model.addAttribute("recentActivities", recentActivityService.findAll());
 

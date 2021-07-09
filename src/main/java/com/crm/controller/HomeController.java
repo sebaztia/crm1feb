@@ -74,7 +74,7 @@ public class HomeController {
         model.addAttribute("users", getUserList());
         model.addAttribute("staffList", staffService.getAllStaff());
         model.addAttribute("staff", new Staff());
-        model.addAttribute("userDto", userService.getUserDto());
+       // model.addAttribute("userDto", userService.getUserDto());
 
         return "settings_page";
     }
@@ -93,9 +93,9 @@ public class HomeController {
     }
     @GetMapping("/updateUserDto")
     public @ResponseBody Object updateUserDto(@RequestParam Long userId, @RequestParam Boolean admin, @RequestParam Boolean roleUser,
-                      @RequestParam Boolean wills, @RequestParam Boolean leads)
+                      @RequestParam Boolean wills, @RequestParam Boolean leads, @RequestParam Boolean todo)
     {
-        return userService.updateRoles(userId, admin, roleUser, wills, leads);
+        return userService.updateRoles(userId, admin, roleUser, wills, leads, todo);
     }
 
     @GetMapping("/makeWillRole/{id}")

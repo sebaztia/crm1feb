@@ -7,4 +7,5 @@ public @Data class UserDto {
     private boolean admin;
     private boolean wills;
     private boolean leads;
+    private boolean todo;
 }

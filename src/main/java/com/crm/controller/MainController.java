@@ -69,9 +69,12 @@ public class MainController {
 
     @GetMapping("/reportsPage")
     public String reportsPage(Model model) {
-       /* model.addAttribute("totalLeadsClients", callListService.countByIsLeads());
-        model.addAttribute("totalLeadsArchive", callListService.countByLeadsArchive());*/
         return "report_dashboard";
+    }
+    @GetMapping("/todoList")
+    public String todoList(Model model) {
+        model.addAttribute("todoList", clientService.getTodoList());
+        return "todo_list";
     }
 
     @GetMapping("/getNotifications")

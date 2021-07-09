@@ -103,3 +103,16 @@
 input[type="range"] {
     width: 30px;
 }
+.padtop {
+    padding-top: 20px;
+}
+
+.even {
+    background-color: #f3f3f3;
+}
+.odd {
+    background-color: #ffffff;
+}
+.kin-class {
+    background-color: #b6f0e5;
+}

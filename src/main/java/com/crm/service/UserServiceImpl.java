@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map updateRoles(Long userId, Boolean admin, Boolean roleUser, Boolean wills, Boolean leads) {
+    public Map updateRoles(Long userId, Boolean admin, Boolean roleUser, Boolean wills, Boolean leads, Boolean todo) {
 
         User user = userRepository.findOne(userId);
         HashMap<String, String> result = new HashMap<>();
@@ -174,6 +174,10 @@ public class UserServiceImpl implements UserService {
                 roles.add(new Role("LEADS"));
             else
                 roles =  roles.stream().filter( r -> !r.getName().equals("LEADS")).collect(Collectors.toList());
+            if (todo)
+                roles.add(new Role("TODO"));
+            else
+                roles = roles.stream().filter(r -> !r.getName().equals("TODO")).collect(Collectors.toList());
 
             user.setRoles(roles);
             userRepository.save(user);
@@ -195,6 +199,8 @@ public class UserServiceImpl implements UserService {
                 dto.setWills(true);
             else if (role.getName().equals("LEADS"))
                 dto.setLeads(true);
+            else if (role.getName().equals("TODO"))
+                dto.setTodo(true);
         }
 
         return dto;
