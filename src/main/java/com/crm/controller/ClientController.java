@@ -189,7 +189,7 @@ public class ClientController {
     }
 
     private void saveNotification(String message, String author, Client client) {
-        String[] myArray = {"@AmyWinder", "@Dean", "@Daniel", "@Dora", "@Angela", "@Hollie", "@SimonCooper", "@Stacie", "@Claire", "@Sebastian"};
+        String[] myArray = {"@AmyWinder", "@Dean", "@Daniel", "@Lisa", "@Angela", "@Hollie", "@SimonCooper", "@Stacie", "@Claire", "@Sebastian", "@Jade"};
         for (String username : message.trim().split("\\s+")) {
             if (stringContainsItemFromList(username, myArray)) {
                 // userList.add(myUsers);
@@ -206,13 +206,14 @@ public class ClientController {
         userMap.put("@AmyWinder", "Amy");
         userMap.put("@Dean", "deansteele");
         userMap.put("@Daniel", "Daniel");
-        userMap.put("@Dora", "Dora");
+        userMap.put("@Lisa", "Lisa");
         userMap.put("@Angela", "Angela");
         userMap.put("@Hollie", "Hollie");
         userMap.put("@SimonCooper", "Simon");
         userMap.put("@Stacie", "Stacie Griffin");
         userMap.put("@Claire", "Claire Northcote");
         userMap.put("@Sebastian", "Sebastian");
+        userMap.put("@Jade", "Jade");
     }
 
     @PostMapping("/editComment")

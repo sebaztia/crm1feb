@@ -14,8 +14,8 @@ $(document).ready(function () {
             username: 'Daniel ',
             image: 'http://placekitten.com/25/23'
         }, {
-            name: 'Dora',
-            username: 'Dora ',
+            name: 'Lisa',
+            username: 'Lisa ',
             image: 'http://placekitten.com/25/22'
         }, {
             name: 'Angela',
@@ -36,6 +36,10 @@ $(document).ready(function () {
         }, {
             name: 'Claire',
             username: 'Claire ',
+            image: 'http://placekitten.com/22/20'
+        }, {
+            name: 'Jade',
+            username: 'Jade ',
             image: 'http://placekitten.com/22/20'
         }, {
             name: 'Sebastian',
